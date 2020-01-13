@@ -1,9 +1,13 @@
 
 ncid = netcdf.open('C:/Users/evenwa/Workspaces/Master/cmems_data/multiobs_001.nc');
+
 varids = netcdf.inqVarIDs(ncid);
 for i=1:length(varids)
    name = netcdf.inqVar(ncid, varids(i))
 end
+
+
+
 %%
 
 depth = netcdf.getVar(ncid, netcdf.inqVarID(ncid, 'depth'));
