@@ -2,12 +2,13 @@ version: '3'
 
 services:
     main-service:
+        container_name: conda-container
         build:
             context: ..
             dockerfile: .devcontainer/Dockerfile
         volumes:
             - ..:/workspace
-            - ../data:/data
+            - C:/Master/data:/workspace/data
         ports: 
             - 8000:8000
         command: sleep infinity

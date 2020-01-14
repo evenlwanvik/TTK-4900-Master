@@ -14,9 +14,9 @@ ARG USERNAME=ewanvik
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-# Uncomment the following COPY line and the corresponding lines in the `RUN` command if you wish to
-# include your requirements in the image itself.
-COPY requirements.txt /tmp/pip-tmp/
+# Copy environment.yml (if found) to a temp locaition so we update the environment. Also
+# copy "noop.txt" so the COPY instruction does not fail if no environment.yml exists.
+COPY .devcontainer/environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
 
 # Configure apt and install packages
 RUN apt-get update \
@@ -25,11 +25,10 @@ RUN apt-get update \
     # Verify git, process tools, lsb-release (common in install instructions for CLIs) installed
     && apt-get -y install git iproute2 procps iproute2 lsb-release zsh \
     #
-    # Install Oh-My-Zsh (preferred shell)
-    wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
+    && wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
     #
     # Install pylint
-    && /opt/conda/bin/pip install pylint \
+    #&& /opt/conda/bin/pip install pylint \
     #
     # Update Python environment based on environment.yml (if present)
     && if [ -f "/tmp/conda-tmp/environment.yml" ]; then /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml; fi \
@@ -43,15 +42,13 @@ RUN apt-get update \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     #
+    # Install Oh-My-Zsh (preferred shell)
+    #
+    #
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
-
-# If zsh not found - run seperate
-#RUN apt-get -y install zsh \\
-    # Install Oh-My-Zsh (preferred shell)
-    #wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
 
 
 # Switch back to dialog for any ad-hoc use of apt-get

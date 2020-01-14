@@ -1,0 +1,12 @@
+
+start virtualenv: go to venv/Scripts and run "activate.bat"
+
+Install rqeuirements: "pip install -r requirements.txt "
+
+Display netcdf metadata: "ncdump -h data/sCoast_surface_data/SINMOD_samp.nc"
+
+Create same conda env if working outside of container: "conda env create -f .devcontainer/environment.yml"
+
+List of conda envs: "conda env list"
+
+List of installed packages in env: "conda list -n myenv"
