@@ -1,4 +1,4 @@
-name: Oceanography
+name: oceanography
 channels:
   - conda-forge
   - pyviz
@@ -8,17 +8,18 @@ dependencies:
   - cartopy
   - pip
   - yaml
+  - netcdf4
+  - basemap
   # A lot of the packages gave error with conda, simply install pip and run pip for rest of packages
   - pip:
     - pyyaml
     - dask
-    - dask distributed --upgrade
+    #- dask distributed --upgrade
     - distributed
     - bottleneck
-    - netcdf4
     - xarray>=0.11.3
     - esmpy
-    - intake-xarray
+    - xarray
     - geopy
     - xesmf
     - xgcm>=0.2.0
