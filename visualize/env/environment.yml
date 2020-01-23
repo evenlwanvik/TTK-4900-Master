@@ -12,6 +12,7 @@ dependencies:
   - basemap
   # A lot of the packages gave error with conda, simply install pip and run pip for rest of packages
   - pip:
+    - opencv-python
     - pyyaml
     - dask
     #- dask distributed --upgrade

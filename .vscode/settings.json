@@ -1,3 +1,3 @@
 {
-    "python.pythonPath": "C:\\Users\\evenwa\\AppData\\Local\\Continuum\\anaconda3\\envs\\docker-conda-env\\python.exe"
+    "python.pythonPath": "/opt/conda/bin/python"
 }
