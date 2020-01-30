@@ -1,28 +1,75 @@
 import datetime
 import os
+import yaml
 
 #pyPath = 'C:/Users/alver/AppData/Local/Programs/Python/Python37/python.exe'
 pyPath = 'python'
 
-username = "ewanvik"
-password = "Waneve06978!"
-storePath = "C:/Users/evenwa/Workspaces/Master/cmems_data"
 
-# Global reanalysis (model):
-dataset = "phys"
-dt = datetime.timedelta(hours=1)
+# Open locally stored credentials
+conf = yaml.load(open('../config/credentials.yml'))
+username = conf['CMEMS-download']['credentials']['username']
+password = conf['CMEMS-download']['credentials']['password']
+
+# Choose directory
+storePath = "C:/Master/data/cmems_data/global_10km/"
+if not os.path.exists(storePath):
+    os.makedirs(storePath)
+
+# =========================================================
+# ======= GLOBAL_ANALYSIS_FORECAST_PHY_001_024-TDS ========
+# =========================================================
+
+# Choose service and product id
+serviceId = "GLOBAL_ANALYSIS_FORECAST_PHY_001_024-TDS"
+# In below product ID the variables are merged, while in "global-analysis-forecast-phy-001-024-hourly-t-u-v-ssh" the data is split.
+productId = "global-analysis-forecast-phy-001-024"
+variables = "--variable thetao --variable so --variable uo --variable vo --variable zos" 
+#productId = "global-analysis-forecast-phy-001-024-statics"
+#variables = "--variable deptho --variable mask" 
+
+# =========================================================
+# ======= GLOBAL_REANALYSIS_PHY_001_030-TDS ========
+# =========================================================
+"""
+# Choose service and product id
+serviceId = "GLOBAL_REANALYSIS_PHY_001_030-TDS"
+# In below product ID the variables are merged, while in "global-analysis-forecast-phy-001-024-hourly-t-u-v-ssh" the data is split.
+productId = "global-reanalysis-phy-001-030-daily"
+variables = "--variable thetao --variable so --variable uo --variable vo --variable zos --variable mlotst" 
+"""
+# =========================================================
+# ======= GLOBAL_ANALYSIS_FORECAST_WAV_001_027-TDS ========
+# =========================================================
+"""
+# Choose service and product id
+serviceId = "GLOBAL_ANALYSIS_FORECAST_WAV_001_027-TDS"
+# In below product ID the variables are merged, while in "global-analysis-forecast-phy-001-024-hourly-t-u-v-ssh" the data is split.
+productId = "global-reanalysis-phy-001-030-daily-statics"
+variables = "--variable deptho" 
+"""
+# =========================================================
+# =================== Date and lon/lat ====================
+# =========================================================
+
+dt = datetime.timedelta(days=0)
 duration = datetime.timedelta(days=1)
-filePrefix = "phys_"
+# Global reanalysis (model):
 
+# Physics
+filePrefix = "phys_noland_"
+# Bathmetry or statics
+#filePrefix = "bathmetry_"
 # Global reprocessed observations:
-#dataset = "multiobs"
-#dt = datetime.timedelta(hour=7)
-#duration = datetime.timedelta(days=6)
 #filePrefix = "multiobs_"
 
 latitude = [45, 90]
 longitude = [-60, 60]
-startT = datetime.datetime(2018,4,2,0,0,0)
+# lat/lon far from land for testing OW algorithm
+latitude = [45, 60]
+longitude = [-42, -15]
+
+startT = datetime.datetime(2018,1,1,0,0,0)
 
 N = 1
 time = startT
@@ -31,18 +78,18 @@ for i in range(0,N):
 
     n = str(i+1)
     filename = filePrefix+n.zfill(3)+".nc"
-
-    if dataset=="phys":
+    if filePrefix in ("phys_", "phys_noland_"):
         command = pyPath+" -m motuclient --motu http://nrt.cmems-du.eu/motu-web/Motu " \
-            +"--service-id NORTHWESTSHELF_ANALYSIS_FORECAST_PHY_004_013 --product-id NORTHWESTSHELF_ANALYSIS_FORECAST_PHY_004_013 " \
+            +"--service-id "+serviceId+" --product-id "+productId+" " \
             +"--longitude-min "+str(longitude[0])+" --longitude-max "+str(longitude[1])+" --latitude-min "+str(latitude[0])+" " \
             "--latitude-max "+str(latitude[1])+" " \
             +"--date-min \""+str(time)+"\" --date-max \""+str(tEnd)+"\""\
-            +" --depth-min 0.493 --depth-max 0.4942 --variable thetao --variable bottomT " \
-            +"--variable so --variable zos --variable uo --variable vo --variable mlotst --variable siconc " \
-            +"--variable sithick --variable usi --variable vsi --out-dir . --out-name "+filename+" " \
-            "--user "+username+" --pwd \""+password+"\""
-    elif dataset=="multiobs":
+            +" --depth-min -1 --depth-max 1 " \
+            +variables+ " " \
+            +"--out-dir . --out-name "+storePath+"/"+filename+" " \
+            +"--user "+username+" --pwd \""+password+"\""
+
+    elif filePrefix=="multiobs_":
         command = pyPath+" -m motuclient --motu http://my.cmems-du.eu/motu-web/Motu " \
             +"--service-id MULTIOBS_GLO_PHY_REP_015_002-TDS --product-id dataset-armor-3d-rep-weekly " \
             +"--longitude-min "+str(longitude[0])+" --longitude-max "+str(longitude[1])+" --latitude-min "+str(latitude[0])+" " \
@@ -52,6 +99,16 @@ for i in range(0,N):
             +"--variable to --variable so --variable zo --variable ugo --variable vgo --variable mlotst " \
             +"--out-dir . --out-name "+storePath+"/"+filename+" " \
             "--user "+username+" --pwd \""+password+"\""
+
+    elif filePrefix=="bathmetry_":
+        command = pyPath+" -m motuclient --motu http://nrt.cmems-du.eu/motu-web/Motu " \
+            +"--service-id "+serviceId+" --product-id "+productId+" " \
+            +"--longitude-min "+str(longitude[0])+" --longitude-max "+str(longitude[1])+" --latitude-min "+str(latitude[0])+" " \
+            "--latitude-max "+str(latitude[1])+" " \
+            +"--date-min \""+str(time)+"\" --date-max \""+str(tEnd)+"\""\
+            +variables+ " " \
+            +"--out-dir . --out-name "+storePath+"/"+filename+" " \
+            +"--user "+username+" --pwd \""+password+"\""
 
     print(command)
     os.system(command)

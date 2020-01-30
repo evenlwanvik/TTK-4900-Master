@@ -10,3 +10,5 @@ Create same conda env if working outside of container: "conda env create -f .dev
 List of conda envs: "conda env list"
 
 List of installed packages in env: "conda list -n myenv"
+
+Init zsh as conda terminal (enables conda environments): "conda init zsh"
