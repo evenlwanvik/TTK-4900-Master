@@ -53,7 +53,7 @@ variables = "--variable deptho"
 # =========================================================
 
 dt = datetime.timedelta(days=0)
-duration = datetime.timedelta(days=1)
+duration = datetime.timedelta(days=10)
 # Global reanalysis (model):
 
 # Physics
