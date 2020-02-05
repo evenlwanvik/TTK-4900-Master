@@ -1,16 +1,25 @@
 from eddies import load_netcdf4,eddy_detection,dataframe_eddies,plot_eddies,julianh2gregorian
-import os
 from matplotlib.patches import Rectangle
+from numpy import savez_compressed
 import matplotlib.pyplot as plt
-from math import cos, pi
-import numpy as np
-import xarray as xr
-import datetime
+from gui import show_figure
 from tools.bfs import bfs
+from math import cos, pi
 from operator import eq
+import xarray as xr
+import numpy as np
+import argparse
+import datetime
+import os
 import io
 import sys
-from gui import show_figure
+
+
+
+argp = argparse.ArgumentParser()
+argp.add_argument("-fp", "--fpath", default='C:/Master/data/cmems_data/global_10km/phys_noland_001.nc', help="rectangular patche size multiplier")
+argp.add_argument("-rs", "--size", default=1.5, help="rectangular patche size multiplier")
+argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/training_data/data/', help="training data save dir")
 
 def lon2km(lon, lat):
     """ Convert from longitudinal displacement to km """
@@ -67,13 +76,12 @@ def check_cyclone(flag):
 
 def main():
 
+    args, leftovers = argp.parse_known_args()
+
     print("\n--- loading netcdf")
 
-    # name of the netCDF data file
-    filepath = 'C:/Master/data/cmems_data/global_10km/phys_noland_001.nc'
-
     # load data
-    (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(filepath)
+    (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(args.fpath)
 
     # Confidence level, usually 90%
     R2_criterion = 0.9
@@ -92,9 +100,17 @@ def main():
     # z-level to plot.  Usually set to 0 for the surface.
     k_plot = 0
 
+    # Initializing lists for storing training data, format: [data(lon,lat),label]. 
+    # TODO: Change this to make it more scalable?
+    sst_train = []
+    ssl_train = []
+    uvel_train = []
+    vvel_train = []
+    phase_train = []
+
     # Create eddy images for each day in datase
-    for day in range(1):
-    #for day, time in enumerate(t):
+    for day, time in enumerate(t):
+    #for day in range(1):
 
         dateStr = "{:%d-%m-%Y}".format(datetime.date(1950, 1, 1) + datetime.timedelta(hours=float(t[day])) )
         print(f"--- Creating images for dataset {dateStr}")
@@ -125,38 +141,25 @@ def main():
         uvel = uvel_full[0,:,:].T
         vvel = vvel_full[0,:,:].T
 
-        images = [
-            {
-                'longitude': [],
-                'latitude': [],
-                'sst': [],
-                'ssl': [],
-                'uvel': [],
-                'vvel': [],
-                'phase': [],
-                'class': -1
-            }
-            for i in range(nEddies) 
-        ]
-
         # =========================================================
         # ======= Create rectangular patches around eddies ========
         # =========================================================
 
         print(f"---++ Creating rectangles for {nEddies} eddies")
 
-        for i, ctrIdx in enumerate(eddyCtrIdx): # nEddies
+        savedImgCounter = 0 # saved image counter for file ID
+        for eddyId, ctrIdx in enumerate(eddyCtrIdx): # nEddies
 
             ctrCoord = lon[ctrIdx[0]], lat[ctrIdx[1]]
             diameter_km = eddie_census[5][i] * 1000 # eddie_census is diameter in km
 
             bfs_diameter_km, bfs_center = eddy_metrics(OW_eddies, ctrIdx, lon, lat)
 
-            print(f"---++++ Creating rectangles for eddy {i} with center {ctrCoord} and diameter {diameter_km}")
+            print(f"---++++ Creating rectangles for eddy {eddyId} with center {ctrCoord} and diameter {diameter_km}")
             
             # Find rectangle metrics
-            height = 1.8 * abs(diameter_km / 110.54e3) # 1 deg = 110.54 km, 1.2 to be sure the image covers the eddy
-            width = 1.8 * abs(diameter_km / (111.320e3 * cos(lat[ctrIdx[1]]))) # 1 deg = 111.320*cos(latitude) km, using center latitude as ref
+            height = args.size * abs(diameter_km / 110.54e3) # 1 deg = 110.54 km, 1.2 to be sure the image covers the eddy
+            width = args.size * abs(diameter_km / (111.320e3 * cos(lat[ctrIdx[1]]))) # 1 deg = 111.320*cos(latitude) km, using center latitude as ref
             
             lon_bnds = ctrCoord[0]-width/2.0, ctrCoord[0]+width/2.0
             lat_bnds = ctrCoord[1]-height/2.0, ctrCoord[1]+height/2.0
@@ -172,8 +175,8 @@ def main():
             phase_eddy =   np.zeros((lonIdxs.size,latIdxs.size))
 
             # Positive rotation (counter-clockwise) is a cyclone in the northern hemisphere because of the coriolis effect
-            if (eddie_census[1][i] > 0.0): images[i]['class'] = 1 # 1 is a cyclone, 0 is nothing and -1 is anti-cyclone (negative rotation)
-            else: images[i]['class'] = -1
+            if (eddie_census[1][i] > 0.0): cyclone = 1 # 1 is a cyclone, 0 is nothing and -1 is anti-cyclone (negative rotation)
+            else: cyclone = -1
             
             for j, lo in enumerate(lonIdxs):
                 for k, la in enumerate(latIdxs):
@@ -185,47 +188,66 @@ def main():
                     # Calculate the phase angle (direction) of the current
                     with np.errstate(all='ignore'): # Disable zero div warning
                         phase_eddy[j,k] = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel[lo,la], uvel[lo,la]) ) + 180
-            
-            images[i]['longitude'] = lon[lonIdxs]
-            images[i]['latitude'] = lat[latIdxs]
-            images[i]['sst'] = sst_eddy
-            images[i]['ssl'] = ssl_eddy
-            images[i]['uvel'] = uvel_eddy
-            images[i]['vvel'] = vvel_eddy
-            images[i]['phase'] = phase_eddy
+                    
 
-        # =========================================================
-        # ======= Create images of the rectangular patches ========
-        # =========================================================
+            dirPath = 'C:/Master/TTK-4900-Master/images/'+dateStr+'/'
+            if not os.path.exists(dirPath):
+                os.makedirs(dirPath)
 
-        dirPath = 'C:/Master/TTK-4900-Master/images/'+dateStr+'/'
-        if not os.path.exists(dirPath):
-            os.makedirs(dirPath)
+            # =========================================================
+            # ======= Create images of the rectangular patches ========
+            # =========================================================
 
-        savedImgCounter = 0 # saved image counter for file ID
-        for imId in range(nEddies):
-            
             fig, axs = plt.subplots(2, 3, figsize=(10, 7), sharex=True, sharey=True)
-            lo = images[imId]['longitude']
-            la = images[imId]['latitude']
-            axs[0,0].contourf(lo, la, images[imId]['sst'].T, 10, cmap='rainbow')
-            axs[0,1].contourf(lo, la, images[imId]['ssl'].T, 10, cmap='rainbow')
-            axs[0,2].contourf(lo, la, images[imId]['uvel'].T, 10, cmap='rainbow')
-            axs[1,0].contourf(lo, la, images[imId]['vvel'].T, 10, cmap='rainbow')
-            axs[1,1].contourf(lo, la, images[imId]['phase'].T, 10, cmap='CMRmap')
-            title = dateStr + "_" + check_cyclone(images[imId]['class'])
+            lo = lon[lonIdxs]
+            la = lat[latIdxs]
+
+            axs[0,0].contourf(lo, la, sst_eddy.T, 10, cmap='rainbow')
+            axs[0,1].contourf(lo, la, ssl_eddy.T, 10, cmap='rainbow')
+            axs[0,2].contourf(lo, la, uvel_eddy.T, 10, cmap='rainbow')
+            axs[1,0].contourf(lo, la, vvel_eddy.T, 10, cmap='rainbow')
+            axs[1,1].contourf(lo, la, phase_eddy.T, 10, cmap='CMRmap')
+            title = dateStr + "_" + check_cyclone(cyclone)
             fig.suptitle(title, fontsize=16)
  
-            # Show figure as GUI and choose if data is to be stored as trainin data
+            # =========================================================
+            # === Use simple GUI for selecting correct annoted data ===
+            # =========================================================
+
             guiEvent, guiValues = show_figure(fig)
-            print(guiEvent)
             if guiEvent=='Yes':
                 savedImgCounter = savedImgCounter + 1 
                 imPath = dirPath + title + f"_{savedImgCounter}.png"   
                 plt.savefig(imPath, bbox_inches='tight')
-                print(f"Saving image {imId}")
+
+                sst_train.append([sst_eddy, cyclone]) # [data, label]
+                ssl_train.append([ssl_eddy, cyclone]) 
+                uvel_train.append([uvel_eddy, cyclone]) 
+                vvel_train.append([vvel_eddy, cyclone]) 
+                phase_train.append([phase_eddy, cyclone]) 
+                
+
+                print(f"---++++++ Saving image {eddyId}")   
             elif guiEvent=='No': 
-                print(f"Discarding image {imId}")
+                print(f"---++++++ Discarding image {eddyId}")
+
+    print(f"--- Compressing training data")
+
+    sst_train = np.array(sst_train)
+    ssl_train = np.array(ssl_train)
+    uvel_train = np.array(uvel_train)
+    vvel_train = np.array(vvel_train)
+    phase_train = np.array(phase_train)
+
+    print(sst_train.shape)
+    # Save data as compressed numpy array
+    savez_compressed(f'{args.savedir}/sst_train.npz', sst_train)
+    savez_compressed(f'{args.savedir}/ssl_train.npz', ssl_train)
+    savez_compressed(f'{args.savedir}/uvel_train.npz', uvel_train)
+    savez_compressed(f'{args.savedir}/vvel_train.npz', vvel_train)
+    savez_compressed(f'{args.savedir}/phase_train.npz', phase_train)
+
+    print(f"--- Training data complete")
 
 
 if __name__ == '__main__':

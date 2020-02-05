@@ -29,40 +29,19 @@ eddy_detection:
 """
 
 #import all necesary libraries
+from tools.load_nc import load_netcdf4
 import matplotlib.pyplot as plt
-import math
-import numpy as np
 import scipy.signal as sg
 import pandas as pd
-import netCDF4 as nc4 
+import numpy as np
 import datetime
-
-# Load netCDF4 data
-
-def load_netcdf4(filename):
-    ''' We omit the depth variable! '''
-    ds = nc4.Dataset(filename, 'r', format='NETCDF4') 
-    lon = ds.variables['longitude'][:]
-    lat = ds.variables['latitude'][:]
-    depth = ds.variables['depth'][:]
-    # Load zonal and meridional velocity, in m/s
-    u = ds.variables['uo'][:]
-    v = ds.variables['vo'][:]
-    # Load sea surface temperature
-    sst = ds.variables['thetao'][:].squeeze(axis=1)
-    # Load sea surface level
-    ssl = ds.variables['zos'][:]
-    # Load time in hours from 1950-01-01?
-    t = ds.variables['time'][:]
-    return (ds,t,lon,lat,depth,u,v,sst,ssl)
-    ds.close() 
+import math
 
 # Eddy detection algorithm
-def eddy_detection(lon,lat,depth,uvel,vvel,day,R2_criterion,OW_start,max_evaluation_points,min_eddie_cells):    
+def eddy_detection(lon,lat,depth,uvel,vvel,day,R2_criterion,OW_start,max_evaluation_points,min_eddie_cells):  
+
     ########################################################################
-    
     # Initialize variables
-        
     ########################################################################
     
     # We transpose the data to fit with the algorithm provided, the correct order is uvel(lon,lat,depth) while the original from the netCDF is uvel(time,lat,lon,depth)
@@ -108,9 +87,7 @@ def eddy_detection(lon,lat,depth,uvel,vvel,day,R2_criterion,OW_start,max_evaluat
         dz[nz-1] = depth[nz-1] - depth[nz-2]
     
     ########################################################################
-
     #  Compute Okubo-Weiss
-    
     ########################################################################
     
     uvel = uvel.filled(0.0)
@@ -136,10 +113,9 @@ def eddy_detection(lon,lat,depth,uvel,vvel,day,R2_criterion,OW_start,max_evaluat
         
     
     ########################################################################
-    
     #  Find local minimums in Okubo-Weiss field
-        
     ########################################################################
+
     # Efficiency note: Search for local minima could be merged with R2
     # algorithm below.
         
@@ -150,10 +126,9 @@ def eddy_detection(lon,lat,depth,uvel,vvel,day,R2_criterion,OW_start,max_evaluat
     
     
     ########################################################################
-    
     #  R2 algorithm
-    
     ########################################################################
+    
     print('Beginning R2 algorithm\n')
     # Set a maximum number of cells to search through, for initializing
     # arrays.
