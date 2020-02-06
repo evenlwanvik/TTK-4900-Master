@@ -1,10 +1,30 @@
 import xarray as xr
 from math import radians, cos, sin, asin, sqrt, pi
 import numpy as np
+import itertools
 import time
 
 # Eddy detection algorithm
-def detect_eddies(lon,lat,uvel,vvel): 
+def get_noneddies(t,lon,lat,uvel,vvel,sst,ssl,phase,OW_lim,nCells,nEddies,eddy_shape): 
+    """ 
+    Finds metrics such as index centroid and diameter of eddy 
+
+    Parameters:
+    ----------
+    OW_lim : float
+        OW value at which to create a binary mask of the map -> most likely neglecting the eddies 
+    n_cells : tuple
+        number of cells in the non-eddy grid 
+    nEddies : int
+        Number of eddies selected for training
+    shape : tuple
+        Array shape which will be used (lon,lat)
+
+    returns:
+    ----------
+    masked array of 
+
+    """
 
     ######################################################################
     #  Prepare variables
@@ -13,9 +33,9 @@ def detect_eddies(lon,lat,uvel,vvel):
     print("--- Calculating Okubo-Weiss ---")
     start_time = time.time()
 
-    # Transpose from u(lat,lon) to u(lon,lat)
-    uvel = uvel.transpose()
-    vvel = vvel.transpose()
+    # We transpose the data to fit with the algorithm provided, the correct order is uvel(lon,lat,depth) while the original from the netCDF is uvel(time,lat,lon,depth)
+    uvel = uvel[day,:,:,:].transpose(2,1,0)
+    vvel = vvel[day,:,:,:].transpose(2,1,0)
     # Fill the masked values with 0.0 for landmass
     uvel.set_fill_value(0.0)
     vvel.set_fill_value(0.0) 
@@ -31,10 +51,9 @@ def detect_eddies(lon,lat,uvel,vvel):
     x = np.zeros((nx,ny))
     y = np.zeros((nx,ny))
 
-    for i in range(0,nx):
-        for j in range(0,ny):
-            x[i,j] = 2.*pi*R*cos(lat[j]*pi/180.)*lon[i]/360.
-            y[i,j] = 2.*pi*R*lat[j]/360.
+    for i,j in itertools.product(range(nx), range(ny)):
+        x[i,j] = 2.*pi*R*cos(lat[j]*pi/180.)*lon[i]/360.
+        y[i,j] = 2.*pi*R*lat[j]/360.
 
     dx,dy,grid_area = grid_cell_area(x,y)
 
@@ -44,6 +63,7 @@ def detect_eddies(lon,lat,uvel,vvel):
 
     # Fill in mask with 0.0 to enable further calculations
     uvel = uvel.filled(0.0)
+    vvel = vvel.filled(0.0)
 
 
     # velocity derivatives
@@ -61,8 +81,60 @@ def detect_eddies(lon,lat,uvel,vvel):
     OW_std = np.sqrt( np.sum( np.multiply(ocean_mask,(OW_raw-OW_mean))**2 ) / n_ocean_cells ) # standard deviation
     OW = OW_raw / OW_std
 
+    # We create a mask with the possible location of non-eddies, meaning OW>0, i.e. the opposite of when identifying an eddy.
+    OW_noneddies = np.zeros(OW.shape,dtype=int)
+    OW_noneddies[np.where(OW > OW_lim)] = 1
+
     print("--- Finished after %f seconds ---" % (time.time() - start_time))
-    return OW, ocean_mask
+
+    # Pick 50 random non-eddy images around the map
+
+    ######################################################################
+    #  Return the measurement data for grids that only contains either vorticity- or strain-dominated region.
+    ######################################################################
+
+    # Number of grids to create per day
+    nGrids = int(nEddies/len(day))
+
+    # Create standard size of grid for which to find random cell
+    w = len(lon[0])
+    h = len(lat[0])
+    gridArea = w*h/nGrids # Area of each grid box
+    gridSide = sqrt(gridArea) # Side length of each grid box
+    n_lon = floor(w/boxSide)  # Number of boxes that fit along width
+    n_lat = floor(h/boxSide)
+
+    datasets = [sst, ssl, uvel, vvel, phase]
+    for ds in datasets:
+        for day, data in enumerate(ds):
+            subgrids = create_subgrids(data, n_lon, n_lat)
+            for grid in subgrids:
+                rand_lon = np.random.randint(0,n_lon)
+                rand_lat = np.random.randint(0,n_lat)
+                rand_image = grid[rand_lon:eddy_shape[0]][rand_lat:eddy_shape[1]]
+                print(rand_image.count)
+
+    return 0#OW_noneddies, ocean_mask
+
+
+def create_subgrids(arr, nrows, ncols):
+    """
+    Return an array of shape (n, nrows, ncols) where
+    n * nrows * ncols = arr.size
+    If arr is a 2D array, the returned array should look like n subblocks with
+    each subblock preserving the "physical" layout of arr.
+    """
+    h, w = arr.shape
+    assert h % nrows == 0, "{} rows is not evenly divisble by {}".format(h, nrows)
+    assert w % ncols == 0, "{} cols is not evenly divisble by {}".format(w, ncols)
+    return (arr.reshape(h//nrows, nrows, -1, ncols)
+               .swapaxes(1,2)
+               .reshape(-1, nrows, ncols))
+
+def noneddy_training_data():
+    """ Return the measurement data for grids that only contains either vorticity- or strain-dominated region. """
+
+
 
 def central_diff_2d(a,x,y):
 # Take the first derivative of a with respect to x and y using
