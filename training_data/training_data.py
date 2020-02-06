@@ -255,7 +255,7 @@ def main():
             
             plt.close(fig)
 
-
+        '''
         # For each eddy, find a non-eddy!
         # Find all possible noneddies, then find all viable options and find randomly select n images for each day. We only need to find for one
 
@@ -274,6 +274,7 @@ def main():
         noneddy_grids = random.sample(noneddy_grids, savedImgCounter)
         print(noneddy_grids)
         exit()
+        '''
         '''
         # Create standard size of grid for which to find random cell
         w = len(lon[0])
