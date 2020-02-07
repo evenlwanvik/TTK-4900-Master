@@ -19,10 +19,10 @@ I've created a semi-automated way of extracting annotated data from CMEMS global
         1. Append another axis with the given classifcation.
         1. If it is an eddy, append it to the training data, if not discard it entirelly.
     1. After n amount of valid eddies are found, find n non-eddy features.
-        1. It uses the standard frame (or the largest frame found for this day) to divide the whole grid of satellite data in to subgrids with this frame size.
+        1. It uses the average frame size of eddies (or the largest frame found for this day) to divide the whole grid of satellite data in to subgrids with this frame size.
         1. For each subgrid (an abundant amount of them) it discards the ones which has a cell with a cell masked as an eddy.
         1. From the remaining subgrids, it extracts n random subgrids to be used as non-eddies in the training set.
-2. Resize (cv2.resize(interpolate)) the image to a standard fram size (or the largest frame found for all days).
+2. Resize (cv2.resize(interpolate)) the image to a standard fram size (or the largest/average frame found for all days).
 3. Save dataset as a compressed numpy array.
   
 
