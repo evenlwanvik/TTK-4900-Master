@@ -39,10 +39,18 @@ def dim(a):
         return []
     return [len(a)] + dim(a[0])
 
-
 def find_max_dim(a):
     """" Find the largest dimension of list or array """
-    return max( [dim(i) for i in a] )
+    return max( [dim(i[0]) for i in a])
+
+def find_avg_dim(a):
+    """" Find the average frame size for both col and row """
+    x = np.array([dim(i[0]) for i in a])
+    return x.mean(axis=0, dtype=int)
+
+def index_list(ncols,nrows):
+    """" Create an array of dimension nrows x ncols with indeces as values """
+    return [[i*nrows+j for j in range(nrows)] for i in range(ncols)]
 
 
 def eddy_metrics(eddies_ma, centerIdxs, lon, lat):
@@ -142,6 +150,7 @@ def main():
         sys.stdout = sys.__stdout__
 
         # Also create mask of where non-eddies are
+        OW = OW[:,:,0] # just a quick fix to remove depth...
         OW_noneddies = np.zeros(OW.shape,dtype=int)
         OW_noneddies[np.where(OW > 0)] = 1 # non-eddy are as 1
         OW_noneddies = np.ma.masked_equal(OW_noneddies, 0) # rest is masked
@@ -160,6 +169,8 @@ def main():
         ssl = ssl_full[0,:,:].T
         uvel = uvel_full[0,:,:].T
         vvel = vvel_full[0,:,:].T
+        nLon = len(lon)
+        nLat = len(lat)
 
         # =========================================================
         # ======= Create rectangular patches around eddies ========
@@ -255,47 +266,41 @@ def main():
             
             plt.close(fig)
 
-        '''
+        
         # For each eddy, find a non-eddy!
         # Find all possible noneddies, then find all viable options and find randomly select n images for each day. We only need to find for one
 
         # We will create 100 more images than eddies that have been saved, from which the same amount of noneddies will be selected randomly from viable grids
-        nGrids = savedImgCounter*100
+        nGrids = savedImgCounter
 
         # Just use the largest dimension in training data so far, we will interpolate all grids that are not the biggest at the end anyways
-        grid_size = find_max_dim(sst_train[0])
+        subgrid_size = find_avg_dim(sst_train)
+        
+        # Apply the same mask as OW_noneddies to a 2d grid of indexes
+        idx_masked = np.ma.masked_where(OW_noneddies==1, index_list(nLon, nLat))
+    
+        # Find compatible dimension sizes for reshaping into subgrids, numpy needs evenly sized arrays
+        ncols = nLon # Column
+        while (ncols % subgrid_size[0]) != 0:
+            ncols = ncols-1
+        nrows = nLat # Row
+        while (nrows % subgrid_size[1]) != 0:
+            nrows = nrows-1
+        idx_masked = idx_masked[:ncols,:nrows]
+        # Create subgrids 
+        idx_subgrid = create_subgrids(idx_masked, subgrid_size[0], subgrid_size[1])
 
-        subgrids = create_subgrids(OW_noneddies, grid_size[0], grid_size[1])
-        noneddy_grids = []
-        for grid in subgrids:
-            if not np.ma.is_masked(grid):
-                noneddy_grids.append(grid) # Viable non-eddy grid
+        noneddy_idx_grids = []
+        print(idx_subgrid.shape)
+        for i, grid in enumerate(idx_subgrid):
+            if np.ma.is_masked(idx_subgrid[i]):
+                noneddy_idx_grids.append(grid)
         # pick same amount of noneddies as eddies randomly from viable non-eddies
-        noneddy_grids = random.sample(noneddy_grids, savedImgCounter)
-        print(noneddy_grids)
+        noneddy_idx_grids = np.array(noneddy_idx_grids)
+        print(noneddy_idx_grids.shape)
+        noneddy_idx_grids = random.sample(noneddy_idx_grids, nGrids)
+        print(noneddy_idx_grids.shape)
         exit()
-        '''
-        '''
-        # Create standard size of grid for which to find random cell
-        w = len(lon[0])
-        h = len(lat[0])
-        gridArea = w*h/nGrids # Area of each grid box
-        gridSide = sqrt(gridArea) # Side length of each grid box
-        n_lon = floor(w/boxSide)  # Number of boxes that fit along width
-        n_lat = floor(h/boxSide)
-
-        # Create nEddies*10 possible subgrids
-        subgrids = create_subgrids(data, n_lon, n_lat)
-        # Collect all subgrids that does not contain 
-        for grid in subgrids:
-            rand_lon = np.random.randint(0,n_lon)
-            rand_lat = np.random.randint(0,n_lat)
-
-
-            #rand_image = grid[rand_lon:eddy_shape[0]][rand_lat:eddy_shape[1]]
-            #print(rand_image.count)
-        '''
-
 
     sst_train = np.array(sst_train)
     ssl_train = np.array(ssl_train)
@@ -303,7 +308,7 @@ def main():
     vvel_train = np.array(vvel_train)
     phase_train = np.array(phase_train)
 
-    # number of "training eddies" :D:D
+    # number of training eddies -- Allow me to introduce (drumroll) "Teddies!" :D:D
     nTeddies = sst_train.shape[0]
 
     # =========================================================
@@ -396,7 +401,8 @@ def create_subgrids(arr, nrows, ncols):
     If arr is a 2D array, the returned array should look like n subblocks with
     each subblock preserving the "physical" layout of arr.
     """
-    h, w = arr.shape
+    h, w = arr.shape # original
+    #w, h = arr.shape
     assert h % nrows == 0, "{} rows is not evenly divisble by {}".format(h, nrows)
     assert w % ncols == 0, "{} cols is not evenly divisble by {}".format(w, ncols)
     return (arr.reshape(h//nrows, nrows, -1, ncols)
