@@ -8,6 +8,7 @@ from math import cos, pi
 from operator import eq
 import xarray as xr
 import numpy as np
+import itertools
 import argparse
 import datetime
 import random
@@ -39,18 +40,46 @@ def dim(a):
         return []
     return [len(a)] + dim(a[0])
 
+def shape(a):
+    """ Get the shape of list """
+    return (np.array(a).shape)
+
 def find_max_dim(a):
     """" Find the largest dimension of list or array """
     return max( [dim(i[0]) for i in a])
 
+
 def find_avg_dim(a):
-    """" Find the average frame size for both col and row """
+    """" Find the average frame size for both col and row, [0] since we want the training data, and not the label """
     x = np.array([dim(i[0]) for i in a])
     return x.mean(axis=0, dtype=int)
 
+
 def index_list(ncols,nrows):
     """" Create an array of dimension nrows x ncols with indeces as values """
-    return [[i*nrows+j for j in range(nrows)] for i in range(ncols)]
+    return [[(i,j) for j in range(nrows)] for i in range(ncols)]
+
+
+def random_grids(arr, nOut):
+    """ Get nOut random grids from arr """
+    nTot = shape(arr)[0]
+    x = random.sample(range(nTot), nOut)
+    return [ arr[i] for i in x ]
+
+
+def plot_grids(data, idx_grid, lon, lat, title="__"):
+    #"quickscript" to plot and investigate images
+    fig, axs = plt.subplots(2, 3, figsize=(10, 7), sharex=True, sharey=True)
+
+    axs[0,0].contourf(lon, lat, data[0].T, 10, cmap='rainbow')
+    axs[0,1].contourf(lon, lat, data[1].T, 10, cmap='rainbow')
+    axs[0,2].contourf(lon, lat, data[2].T, 10, cmap='rainbow')
+    axs[1,0].contourf(lon, lat, data[3].T, 10, cmap='rainbow')
+    axs[1,1].contourf(lon, lat, data[4].T, 10, cmap='CMRmap')
+    fig.suptitle(title, fontsize=16)
+
+    guiEvent, guiValues = show_figure(fig)
+    plt.close(fig)
 
 
 def eddy_metrics(eddies_ma, centerIdxs, lon, lat):
@@ -149,11 +178,6 @@ def main():
         # restore stdout
         sys.stdout = sys.__stdout__
 
-        # Also create mask of where non-eddies are
-        OW = OW[:,:,0] # just a quick fix to remove depth...
-        OW_noneddies = np.zeros(OW.shape,dtype=int)
-        OW_noneddies[np.where(OW > 0)] = 1 # non-eddy are as 1
-        OW_noneddies = np.ma.masked_equal(OW_noneddies, 0) # rest is masked
 
         # =========================================================
         # ============== Prepare datasets and lists ===============
@@ -165,10 +189,15 @@ def main():
             latIdx = np.argmax(lat>eddie_census[3,i])-1
             eddyCtrIdx.append( (lonIdx, latIdx) )
 
-        sst = sst_full[0,:,:].T
-        ssl = ssl_full[0,:,:].T
-        uvel = uvel_full[0,:,:].T
-        vvel = vvel_full[0,:,:].T
+        # Netcdf uses (lat,lon) we want to use (lon,lat) and discard the depth
+        sst = sst_full[day,:,:].T
+        ssl = ssl_full[day,:,:].T
+        uvel = uvel_full[day,0,:,:].T
+        vvel = vvel_full[day,0,:,:].T
+        # Calculate the phase angle (direction) of the current
+        with np.errstate(all='ignore'): # Disable zero div warning
+            phase = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel, uvel) ) + 180
+        OW = OW[:,:,0]
         nLon = len(lon)
         nLat = len(lat)
 
@@ -216,14 +245,13 @@ def main():
                     ssl_eddy[j,k] = ssl[lo,la]
                     uvel_eddy[j,k] = uvel[lo,la]
                     vvel_eddy[j,k] = vvel[lo,la]
-                    # Calculate the phase angle (direction) of the current
-                    with np.errstate(all='ignore'): # Disable zero div warning
-                        phase_eddy[j,k] = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel[lo,la], uvel[lo,la]) ) + 180  
+                    phase_eddy[j,k] = phase[lo,la]
 
             # =========================================================
             # ======= Create images of the rectangular patches ========
             # =========================================================
 
+            '''
             fig, axs = plt.subplots(2, 3, figsize=(10, 7), sharex=True, sharey=True)
             lo = lon[lonIdxs]
             la = lat[latIdxs]
@@ -235,7 +263,8 @@ def main():
             axs[1,1].contourf(lo, la, phase_eddy.T, 10, cmap='CMRmap')
             title = dateStr + "_" + check_cyclone(cyclone)
             fig.suptitle(title, fontsize=16)
- 
+            '''
+
             # =========================================================
             # === Use simple GUI for selecting correct annoted data ===
             # =========================================================
@@ -243,12 +272,12 @@ def main():
             #guiEvent, guiValues = show_figure(fig)
             guiEvent = 'Yes' # Omit GUI selection
             if guiEvent=='Yes':
+                savedImgCounter = savedImgCounter + 1
                 # Create images?
                 '''
                 dirPath = 'C:/Master/TTK-4900-Master/images/'+dateStr+'/'
                 if not os.path.exists(dirPath):
                     os.makedirs(dirPath)
-                savedImgCounter = savedImgCounter + 1 
                 imPath = dirPath + title + f"_{savedImgCounter}.png"   
                 plt.savefig(imPath, bbox_inches='tight')
                 '''
@@ -264,8 +293,60 @@ def main():
             elif guiEvent=='No': 
                 print(f"---++++++ Discarding image {eddyId}")
             
+            '''
             plt.close(fig)
+            '''
 
+
+        subgrid_size = find_avg_dim(sst_train)
+
+        # Iterate over as many subgrids we can, append all possible indeces
+
+        #idx_subgrids = 
+
+        #grid = np.ma.zeros(subgrid_size[0], subgrid_size[1])
+        loRange = range(0, nLon, subgrid_size[0])
+        laRange = range(0, nLat, subgrid_size[1])
+        nRows = loRange[-1]
+        nCols = laRange[-1]
+    
+        OW_noeddy = OW[:nRows,:nCols]
+        OW_noeddy = create_subgrids( np.ma.masked_where(OW_noeddy < -0.5, OW_noeddy), subgrid_size[0], subgrid_size[1])
+
+        # Get a 2d grid of indeces -> make it moldable to the average grid -> convert to subgrids
+        idx_subgrids = create_subgrids( np.array( index_list(nLon, nLat) )[:nRows,:nCols], subgrid_size[0], subgrid_size[1] )
+
+        noneddy_idx_subgrids = []
+        for i, grid in enumerate(OW_noeddy):
+            if np.ma.is_masked(grid):
+                noneddy_idx_subgrids.append(idx_subgrids[i])
+        # Further narrow the possible noneddies?
+        print(shape(idx_subgrids))
+        print(shape(noneddy_idx_subgrids))
+
+
+            
+        noneddy_idx_subgrids = random_grids(noneddy_idx_subgrids, savedImgCounter)
+
+        data = (sst, ssl, uvel, vvel, phase) # TODO: Initiate this one in the beginning of script
+        data_noeddy = [np.zeros(66,29,15,2) for i in range(5)]
+        
+        # TODO: YOU ARE WORKING ON AUTOMATIZING THE NOEDDY, TRYING TO FIND A SMART WAY TO PLOT THIS SHIT. WE SHOULD PROBABLY USE THIS APPROACH TO REDUCE THE TOTAL SIZE OF SCRIPT
+        
+        for idx_grid in noneddy_idx_subgrids:
+            for i in range(len(idx_grid)):
+                for j in range(len(idx_grid[0])):
+                    idx = idx_grid[i,j][0], idx_grid[i,j][1]
+                    #print(sst[idx])
+            exit()
+
+
+            plot_grids(data, idx_grid, lon, lat)
+        exit()
+
+        
+
+        '''
         
         # For each eddy, find a non-eddy!
         # Find all possible noneddies, then find all viable options and find randomly select n images for each day. We only need to find for one
@@ -275,32 +356,54 @@ def main():
 
         # Just use the largest dimension in training data so far, we will interpolate all grids that are not the biggest at the end anyways
         subgrid_size = find_avg_dim(sst_train)
-        
+        print(subgrid_size)
+        OW_noneddies = np.ma.masked_where(OW < -1, OW)
+        #print(OW_noneddies)
         # Apply the same mask as OW_noneddies to a 2d grid of indexes
-        idx_masked = np.ma.masked_where(OW_noneddies==1, index_list(nLon, nLat))
-    
+        #idx_masked = np.ma.masked_where(OW_noneddies==0, index_list(nLon, nLat))
+        #print(idx_masked)
         # Find compatible dimension sizes for reshaping into subgrids, numpy needs evenly sized arrays
         ncols = nLon # Column
+        print(f"full row size = {nLon}")
+        print(f"subgrid row size = {subgrid_size[0]}")
+        print(f"full column size = {nLon}")
+        print(f"subgrid column size = {subgrid_size[1]}")
         while (ncols % subgrid_size[0]) != 0:
             ncols = ncols-1
         nrows = nLat # Row
         while (nrows % subgrid_size[1]) != 0:
             nrows = nrows-1
-        idx_masked = idx_masked[:ncols,:nrows]
-        # Create subgrids 
-        idx_subgrid = create_subgrids(idx_masked, subgrid_size[0], subgrid_size[1])
+        # Create a grid of indeces which is able to be transformed to a subgrid according to 
+        #idx_masked = np.array(index_list(nLon, nLat))[:ncols,:nrows]
+        idx_masked = index_list(nLon, nLat)[:ncols][:nrows]
 
-        noneddy_idx_grids = []
-        print(idx_subgrid.shape)
-        for i, grid in enumerate(idx_subgrid):
-            if np.ma.is_masked(idx_subgrid[i]):
-                noneddy_idx_grids.append(grid)
+        # Create subgrids 
+        print(idx_masked)
+        idx_subgrids = create_subgrids(idx_masked, subgrid_size[0], subgrid_size[1])
+
+        noneddy_idx_subgrids = []
+        mask_threshold = 2 # Make this one more flexible, i.e. some relative value with respect to the size of the subgrid
+        for grid in idx_subgrids:
+            mask_counter = 0 # Counts how many cells that have a more negative value then previously masked
+            # TODO: Could probably just forget about the masks set earlier, and rather use the OW values directly to check for threshold, makes it more apparent what this bulk of code is doing
+            print(OW_noneddies[grid])
+            for i,j in itertools.product(range(subgrid_size[0]), range(subgrid_size[1])):
+                # If no mask is present at the given indeces, add to list of non-eddy feature subgrids
+                if np.ma.is_masked(OW_noneddies[i,j]):
+                    mask_counter = mask_counter + 1
+                    #print(f"number of negative OW cells: {mask_counter}")
+                    if mask_counter > mask_threshold: break    
+            if not (mask_counter > mask_threshold):
+                print("not masked")
+                noneddy_idx_subgrids.append(grid)
         # pick same amount of noneddies as eddies randomly from viable non-eddies
-        noneddy_idx_grids = np.array(noneddy_idx_grids)
-        print(noneddy_idx_grids.shape)
+        #noneddy_idx_grids = np.array(noneddy_idx_grids)
+        #print(noneddy_idx_grids)
+        print(np.array(noneddy_idx_grids).shape)
         noneddy_idx_grids = random.sample(noneddy_idx_grids, nGrids)
-        print(noneddy_idx_grids.shape)
+        #print(np.array(noneddy_idx_grids).shape)
         exit()
+        '''
 
     sst_train = np.array(sst_train)
     ssl_train = np.array(ssl_train)
@@ -401,13 +504,12 @@ def create_subgrids(arr, nrows, ncols):
     If arr is a 2D array, the returned array should look like n subblocks with
     each subblock preserving the "physical" layout of arr.
     """
-    h, w = arr.shape # original
-    #w, h = arr.shape
+    h, w = shape(arr)[0:2]
     assert h % nrows == 0, "{} rows is not evenly divisble by {}".format(h, nrows)
     assert w % ncols == 0, "{} cols is not evenly divisble by {}".format(w, ncols)
-    return (arr.reshape(h//nrows, nrows, -1, ncols)
+    return (arr.reshape(h//nrows, nrows, -1, ncols, 2)# last 2 is because array consists of 2d idx
                .swapaxes(1,2)
-               .reshape(-1, nrows, ncols))
+               .reshape(-1, nrows, ncols, 2)) 
 
 
 
