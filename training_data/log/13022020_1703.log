@@ -1,0 +1,14 @@
+17:03:13,984 root INFO --- loading netcdf
+17:03:14,454 root INFO --- Creating images for dataset 22-05-2018
+17:03:16,75 root INFO ---++ Creating rectangles for 6 eddies
+17:03:16,75 root INFO ---++++ Creating rectangles for anticyclone with center (-25.083334, 58.666668) and diameter 19.960450729440495
+17:03:16,76 root INFO ---++++ Argmin center -> lon: -25.0, Center lat: 58.66666793823242
+17:03:19,828 root INFO ---++++++ Discarding image 0
+17:03:19,829 root INFO ---++++ Creating rectangles for anticyclone with center (-34.166668, 50.083332) and diameter 45.850557949508946
+17:03:19,830 root INFO ---++++ Argmin center -> lon: -34.16666793823242, Center lat: 50.16666793823242
+17:03:21,579 root INFO ---++++++ Discarding image 1
+17:03:21,579 root INFO ---++++ Creating rectangles for cyclone with center (-21.833334, 58.25) and diameter 62.706827509144304
+17:03:21,589 root INFO ---++++ Argmax center -> lon: -22.0, Center lat: 58.16666793823242
+17:04:30,637 root INFO ---++++++ Saving image 2 as an eddy
+17:04:30,637 root INFO ---++++ Creating rectangles for anticyclone with center (-41.666668, 46.25) and diameter 41.70996715984822
+17:04:30,638 root INFO ---++++ Argmin center -> lon: -41.5, Center lat: 46.5

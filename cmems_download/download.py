@@ -52,8 +52,8 @@ variables = "--variable deptho"
 # =================== Date and lon/lat ====================
 # =========================================================
 
-dt = datetime.timedelta(days=0)
-duration = datetime.timedelta(days=10)
+dt = datetime.timedelta(days=10)
+duration = datetime.timedelta(days=200)
 # Global reanalysis (model):
 
 # Physics

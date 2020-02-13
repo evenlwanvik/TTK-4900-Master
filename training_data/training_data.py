@@ -4,6 +4,7 @@ from numpy import savez_compressed
 import matplotlib.pyplot as plt
 from gui import show_figure
 from tools.bfs import bfs
+from datetime import date
 from math import cos, pi
 from operator import eq
 import xarray as xr
@@ -11,6 +12,7 @@ import numpy as np
 import itertools
 import argparse
 import datetime
+import logging
 import random
 import cv2
 import os
@@ -22,7 +24,71 @@ from noneddy import get_noneddies
 argp = argparse.ArgumentParser()
 argp.add_argument("-fp", "--fpath", default='C:/Master/data/cmems_data/global_10km/phys_noland_001.nc', help="rectangular patche size multiplier")
 argp.add_argument("-rs", "--size", default=1.5, help="rectangular patche size multiplier")
-argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/training_data/data/', help="training data save dir")
+argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/training_data/data/200_days_2018', help="training data save dir")
+
+
+'''
+# Log all output
+logDir = f"{os.path.dirname(os.path.realpath(__file__))}/log"
+if not os.path.exists(logDir):
+    os.makedirs(logDir)
+
+#
+
+logger = logging.getLogger()
+fh = logging.FileHandler(f"{logDir}/script log_{datetime.datetime.now().strftime('%d%m%Y_%H%M')}.log")
+fh.setLevel(logging.INFO) # or any level you want
+logging.addHandler(fh)
+'''
+
+logPath = f"{os.path.dirname(os.path.realpath(__file__))}/log"
+logName = f"{datetime.datetime.now().strftime('%d%m%Y_%H%M')}.log"
+
+if not os.path.exists(logPath):
+    os.makedirs(logPath)
+
+'''
+logging.basicConfig(filename=logname,
+                            filemode='a',
+                            format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                            datefmt='%H:%M:%S',
+                            level=logging.DEBUG)
+
+logging.info("Running Urban Planning")
+
+self.logger = logging.getLogger('urbanGUI')
+'''
+
+'''
+
+logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+rootLogger = logging.getLogger()
+
+fileHandler = logging.FileHandler("{0}/{1}".format(logPath, logName), mode='w+')
+fileHandler.setFormatter(logFormatter)
+rootLogger.addHandler(fileHandler)
+
+consoleHandler = logging.StreamHandler()
+consoleHandler.setFormatter(logFormatter)
+rootLogger.addHandler(consoleHandler)
+'''
+
+logging.basicConfig(filename="{0}/{1}".format(logPath, logName),
+                            filemode='w+',
+                            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                            datefmt='%H:%M:%S',
+                            level=logging.INFO)
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+
 
 def lon2km(lon, lat):
     """ Convert from longitudinal displacement to km """
@@ -67,19 +133,38 @@ def random_grids(arr, nOut):
     return [ arr[i] for i in x ]
 
 
-def plot_grids(data, idx_grid, lon, lat, title="__"):
+def create_subgrids(arr, nrows, ncols, inner=1):
+    """
+    Return an array of shape (n, nrows, ncols) where
+    n * nrows * ncols = arr.size
+    If arr is a 2D array, the returned array should look like n subblocks with
+    each subblock preserving the "physical" layout of arr.
+    'inner' tells the dimension of the array elements, i.e. 2 if tuple, 1 if single element
+    """
+    h, w = shape(arr)[0:2]
+    assert h % nrows == 0, "{} rows is not evenly divisble by {}".format(h, nrows)
+    assert w % ncols == 0, "{} cols is not evenly divisble by {}".format(w, ncols)
+    return (arr.reshape(h//nrows, nrows, -1, ncols, inner)# last 2 is because array consists of 2d idx
+               .swapaxes(1,2)
+               .reshape(-1, nrows, ncols, inner)) 
+
+
+def plot_grids(data, lon, lat, title="__"):
     #"quickscript" to plot and investigate images
     fig, axs = plt.subplots(2, 3, figsize=(10, 7), sharex=True, sharey=True)
-
     axs[0,0].contourf(lon, lat, data[0].T, 10, cmap='rainbow')
     axs[0,1].contourf(lon, lat, data[1].T, 10, cmap='rainbow')
     axs[0,2].contourf(lon, lat, data[2].T, 10, cmap='rainbow')
     axs[1,0].contourf(lon, lat, data[3].T, 10, cmap='rainbow')
     axs[1,1].contourf(lon, lat, data[4].T, 10, cmap='CMRmap')
+    axs[1,2].contourf(lon, lat, data[5].T, 10)
+
     fig.suptitle(title, fontsize=16)
 
     guiEvent, guiValues = show_figure(fig)
     plt.close(fig)
+
+    return guiEvent
 
 
 def eddy_metrics(eddies_ma, centerIdxs, lon, lat):
@@ -129,13 +214,13 @@ def main():
 
     args, leftovers = argp.parse_known_args()
 
-    print("\n--- loading netcdf")
+    logging.info("--- loading netcdf")
 
     # load data
     (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(args.fpath)
 
     # Confidence level, usually 90%
-    R2_criterion = 0.9
+    R2_criterion = 0.95
 
     # OW value at which to begin the evaluation of R2, default was -1, want to use -8 to be absolutely sure
     OW_start = -8.0
@@ -143,29 +228,21 @@ def main():
     # Number of local minima to evaluate using R2 method.
     # Set low (like 20) to see a few R2 eddies quickly.
     # Set high (like 1e5) to find all eddies in domain.
-    max_evaluation_points = 2000 #set to 2000 to capture avery minima, there should be around 1800
+    max_evaluation_points = 10000 
 
     # Minimum number of cells required to be identified as an eddie.
-    min_eddie_cells = 2 # set to 3 to be coherent with the use of the R2 method, 3 points seems like a reasonable minimun for a correlation 
+    min_eddie_cells = 4 # set to 3 to be coherent with the use of the R2 method, 3 points seems like a reasonable minimun for a correlation 
 
     # z-level to plot.  Usually set to 0 for the surface.
     k_plot = 0
 
-    # Initializing lists for storing training data, format: [data(lon,lat),label]. 
-    # TODO: Change this to make it more scalable?
-    sst_train = []
-    ssl_train = []
-    uvel_train = []
-    vvel_train = []
-    phase_train = []
-    nDataset = 5
-
     # Create eddy images for each day in datase
     #for day, time in enumerate(t):
-    for day in range(2): # Run through code quickly 
+    # Shuffle the time so that the expert won't see the same long-lasting eddies
+    for day in random.sample(range(0, len(t)), len(t)): 
 
         dateStr = "{:%d-%m-%Y}".format(datetime.date(1950, 1, 1) + datetime.timedelta(hours=float(t[day])) )
-        print(f"--- Creating images for dataset {dateStr}")
+        logging.info(f"--- Creating images for dataset {dateStr}")
 
         # create a text trap
         text_trap = io.StringIO()
@@ -178,6 +255,12 @@ def main():
         # restore stdout
         sys.stdout = sys.__stdout__
 
+        sst_train = []
+        ssl_train = []
+        uvel_train = []
+        vvel_train = []
+        phase_train = []
+        nDataset = 5
 
         # =========================================================
         # ============== Prepare datasets and lists ===============
@@ -201,77 +284,95 @@ def main():
         nLon = len(lon)
         nLat = len(lat)
 
+        datasets = (sst, ssl, uvel, vvel, phase, OW) 
+        
         # =========================================================
         # ======= Create rectangular patches around eddies ========
         # =========================================================
 
-        print(f"---++ Creating rectangles for {nEddies} eddies")
+        logging.info(f"---++ Creating rectangles for {nEddies} eddies")
 
         savedImgCounter = 0 # saved image counter for file ID
         for eddyId, ctrIdx in enumerate(eddyCtrIdx): # nEddies
 
             ctrCoord = lon[ctrIdx[0]], lat[ctrIdx[1]]
-            diameter_km = eddie_census[5][i] * 1000 # eddie_census is diameter in km
+            diameter_km = eddie_census[5][eddyId]
 
             bfs_diameter_km, bfs_center = eddy_metrics(OW_eddies, ctrIdx, lon, lat)
 
-            print(f"---++++ Creating rectangles for eddy {eddyId} with center {ctrCoord} and diameter {diameter_km}")
+            # Positive rotation (counter-clockwise) is a cyclone in the northern hemisphere because of the coriolis effect
+            if (eddie_census[1][eddyId] > 0.0): cyclone = 1 # 1 is a cyclone, 0 is nothing and -1 is anti-cyclone (negative rotation)
+            else: cyclone = -1
+
+            logging.info(f"---++++ Creating rectangles for {check_cyclone(cyclone)} with center {ctrCoord} and diameter {diameter_km}")
             
             # Find rectangle metrics
-            height = args.size * abs(diameter_km / 110.54e3) # 1 deg = 110.54 km, 1.2 to be sure the image covers the eddy
-            width = args.size * abs(diameter_km / (111.320e3 * cos(lat[ctrIdx[1]]))) # 1 deg = 111.320*cos(latitude) km, using center latitude as ref
+            height = args.size * abs(diameter_km / 110.54) # 1 deg = 110.54 km, 1.2 to be sure the image covers the eddy
+            width = args.size * abs(diameter_km / (111.320 * cos(lat[ctrIdx[1]]))) # 1 deg = 111.320*cos(latitude) km, using center latitude as ref
             
+            #---- TODO: I DO THIS TWICE NOW! CREATE FUNCTION? -----
+
             lon_bnds = ctrCoord[0]-width/2.0, ctrCoord[0]+width/2.0
             lat_bnds = ctrCoord[1]-height/2.0, ctrCoord[1]+height/2.0
             
             # Indeces of current eddy image
             lonIdxs = np.where((lon > lon_bnds[0]) & (lon < lon_bnds[1]))[0]
             latIdxs = np.where((lat > lat_bnds[0]) & (lat < lat_bnds[1]))[0]
+
+            eddy_data = np.array([np.zeros((lonIdxs.size,latIdxs.size)) for _ in range(6)])
             
-            sst_eddy   =   np.zeros((lonIdxs.size,latIdxs.size))
-            ssl_eddy   =   np.zeros((lonIdxs.size,latIdxs.size))
-            uvel_eddy  =   np.zeros((lonIdxs.size,latIdxs.size))
-            vvel_eddy  =   np.zeros((lonIdxs.size,latIdxs.size))
-            phase_eddy =   np.zeros((lonIdxs.size,latIdxs.size))
+            for i, lo in enumerate(lonIdxs):
+                for j, la in enumerate(latIdxs):
+                    for k, eddy in enumerate(datasets):
+                        eddy_data[k,i,j] = eddy[lo,la]
 
-            # Positive rotation (counter-clockwise) is a cyclone in the northern hemisphere because of the coriolis effect
-            if (eddie_census[1][i] > 0.0): cyclone = 1 # 1 is a cyclone, 0 is nothing and -1 is anti-cyclone (negative rotation)
-            else: cyclone = -1
-            
-            for j, lo in enumerate(lonIdxs):
-                for k, la in enumerate(latIdxs):
-                    #idx = j*latIdxs.size + k
-                    sst_eddy[j,k] = sst[lo,la]
-                    ssl_eddy[j,k] = ssl[lo,la]
-                    uvel_eddy[j,k] = uvel[lo,la]
-                    vvel_eddy[j,k] = vvel[lo,la]
-                    phase_eddy[j,k] = phase[lo,la]
-
-            # =========================================================
-            # ======= Create images of the rectangular patches ========
-            # =========================================================
-
-            '''
-            fig, axs = plt.subplots(2, 3, figsize=(10, 7), sharex=True, sharey=True)
             lo = lon[lonIdxs]
             la = lat[latIdxs]
-
-            axs[0,0].contourf(lo, la, sst_eddy.T, 10, cmap='rainbow')
-            axs[0,1].contourf(lo, la, ssl_eddy.T, 10, cmap='rainbow')
-            axs[0,2].contourf(lo, la, uvel_eddy.T, 10, cmap='rainbow')
-            axs[1,0].contourf(lo, la, vvel_eddy.T, 10, cmap='rainbow')
-            axs[1,1].contourf(lo, la, phase_eddy.T, 10, cmap='CMRmap')
             title = dateStr + "_" + check_cyclone(cyclone)
-            fig.suptitle(title, fontsize=16)
-            '''
+  
+            # Plot and flag to save eddy
+            #add = plot_grids(eddy_data, lo, la, title)
 
-            # =========================================================
-            # === Use simple GUI for selecting correct annoted data ===
-            # =========================================================
+            #----------------------------------------------------------
+
+            # Find the center from water level
+            if cyclone==1:
+                idx = np.unravel_index(eddy_data[1].argmax(), eddy_data[1].shape)
+                ctrCoord = lon[lonIdxs[idx[0]]], lat[latIdxs[idx[1]]]
+                logging.info(f"---++++ Argmax center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
+            else:
+                idx = np.unravel_index(eddy_data[1].argmin(), eddy_data[1].shape)
+                ctrCoord = lon[lonIdxs[idx[0]]], lat[latIdxs[idx[1]]]
+                logging.info(f"---++++ Argmin center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
+
+             #---- TODO: I DO IT AGAIN TO FIND WATER LEVEL CENTER -----
+
+            lon_bnds = ctrCoord[0]-width/2.0, ctrCoord[0]+width/2.0
+            lat_bnds = ctrCoord[1]-height/2.0, ctrCoord[1]+height/2.0
+            
+            # Indeces of current eddy image
+            lonIdxs = np.where((lon > lon_bnds[0]) & (lon < lon_bnds[1]))[0]
+            latIdxs = np.where((lat > lat_bnds[0]) & (lat < lat_bnds[1]))[0]
+
+            eddy_data = np.array([np.zeros((lonIdxs.size,latIdxs.size)) for _ in range(6)])
+            
+            for i, lo in enumerate(lonIdxs):
+                for j, la in enumerate(latIdxs):
+                    for k, eddy in enumerate(datasets):
+                        eddy_data[k,i,j] = eddy[lo,la]
+
+            #----------------------------------------------------------
+            
+            lo = lon[lonIdxs]
+            la = lat[latIdxs]
+            title = dateStr + "_" + check_cyclone(cyclone)
+  
+            # Plot and flag to save eddy
+            add = plot_grids(eddy_data, lo, la, title)
 
             #guiEvent, guiValues = show_figure(fig)
-            guiEvent = 'Yes' # Omit GUI selection
-            if guiEvent=='Yes':
+            #add = 'Yes' # Bypass GUI selection
+            if add=='Yes':
                 savedImgCounter = savedImgCounter + 1
                 # Create images?
                 '''
@@ -282,135 +383,130 @@ def main():
                 plt.savefig(imPath, bbox_inches='tight')
                 '''
 
-                sst_train.append([sst_eddy, cyclone]) # [data, label]
-                ssl_train.append([ssl_eddy, cyclone]) 
-                uvel_train.append([uvel_eddy, cyclone]) 
-                vvel_train.append([vvel_eddy, cyclone]) 
-                phase_train.append([phase_eddy, cyclone]) 
+                sst_train.append([eddy_data[0], cyclone]) # [data, label]
+                ssl_train.append([eddy_data[1], cyclone]) 
+                uvel_train.append([eddy_data[2], cyclone]) 
+                vvel_train.append([eddy_data[3], cyclone]) 
+                phase_train.append([eddy_data[4], cyclone]) 
 
-                print(f"---++++++ Saving image {eddyId}")   
+                logging.info(f"---++++++ Saving image {eddyId} as an eddy")   
 
-            elif guiEvent=='No': 
-                print(f"---++++++ Discarding image {eddyId}")
+            else: 
+                logging.info(f"---++++++ Discarding image {eddyId}")
             
-            '''
-            plt.close(fig)
-            '''
+        # =========================================================
+        # ================ Select non-eddy images =================
+        # =========================================================
 
+        if savedImgCounter <= 0:
+            logging.info(f"---++++++ No eddies found")
+            continue   
 
-        subgrid_size = find_avg_dim(sst_train)
+        # Subgrid (sg) longitude and latitude length
+        sgLon, sgLat = find_avg_dim(sst_train) 
 
-        # Iterate over as many subgrids we can, append all possible indeces
-
-        #idx_subgrids = 
-
-        #grid = np.ma.zeros(subgrid_size[0], subgrid_size[1])
-        loRange = range(0, nLon, subgrid_size[0])
-        laRange = range(0, nLat, subgrid_size[1])
-        nRows = loRange[-1]
-        nCols = laRange[-1]
+        loRange, laRange = range(0, nLon, sgLon), range(0, nLat, sgLat)
     
-        OW_noeddy = OW[:nRows,:nCols]
-        OW_noeddy = create_subgrids( np.ma.masked_where(OW_noeddy < -0.5, OW_noeddy), subgrid_size[0], subgrid_size[1])
+        # Create OW array of compatible dimensions for comparing masks
+        OW_noeddy = OW[:loRange[-1],:laRange[-1]]
+        OW_noeddy = create_subgrids( np.ma.masked_where(OW_noeddy < -0.8, OW_noeddy), sgLon, sgLat, 1 )
 
         # Get a 2d grid of indeces -> make it moldable to the average grid -> convert to subgrids
-        idx_subgrids = create_subgrids( np.array( index_list(nLon, nLat) )[:nRows,:nCols], subgrid_size[0], subgrid_size[1] )
+        idx_subgrids = create_subgrids( np.array( index_list(nLon, nLat) )[:loRange[-1],:laRange[-1]], sgLon, sgLat, 2 )
 
         noneddy_idx_subgrids = []
         for i, grid in enumerate(OW_noeddy):
-            if np.ma.is_masked(grid):
+            if not np.ma.is_masked(grid):
                 noneddy_idx_subgrids.append(idx_subgrids[i])
-        # Further narrow the possible noneddies?
-        print(shape(idx_subgrids))
-        print(shape(noneddy_idx_subgrids))
 
-
-            
-        noneddy_idx_subgrids = random_grids(noneddy_idx_subgrids, savedImgCounter)
-
-        data = (sst, ssl, uvel, vvel, phase) # TODO: Initiate this one in the beginning of script
-        data_noeddy = [np.zeros(66,29,15,2) for i in range(5)]
+        nNoneddies = len(noneddy_idx_subgrids)
+        data_noeddy = np.array([[np.zeros((sgLon,sgLat)) for _ in range(nNoneddies)] for _ in range(6)])
         
-        # TODO: YOU ARE WORKING ON AUTOMATIZING THE NOEDDY, TRYING TO FIND A SMART WAY TO PLOT THIS SHIT. WE SHOULD PROBABLY USE THIS APPROACH TO REDUCE THE TOTAL SIZE OF SCRIPT
-        
-        for idx_grid in noneddy_idx_subgrids:
+        # Shuffle the noneddies and loop thorugh untill we have chosen the same amount of non-eddies as eddies
+        random.shuffle(noneddy_idx_subgrids)
+        added = 0
+        for grid_id, idx_grid in enumerate(noneddy_idx_subgrids):
+            OW_ = np.zeros((idx_grid.shape[:2]))
             for i in range(len(idx_grid)):
                 for j in range(len(idx_grid[0])):
                     idx = idx_grid[i,j][0], idx_grid[i,j][1]
-                    #print(sst[idx])
-            exit()
+                    for k in range(len(data_noeddy)):
+                        data_noeddy[k,grid_id,i,j] = datasets[k][idx]
+            #print(idx_grid)
+            lo, la = lon[idx_grid[:,0,0]], lat[idx_grid[0,:,1]]
+            title = dateStr + "_noeddy"
+            add = plot_grids(data_noeddy[:,grid_id,:,:], lo, la, title)
+            if add=='Yes':
+                added = added + 1
+                sst_train.append([data_noeddy[0,grid_id,:,:], 0]) # [data, label]
+                ssl_train.append([data_noeddy[0,grid_id,:,:], 0]) 
+                uvel_train.append([data_noeddy[0,grid_id,:,:], 0]) 
+                vvel_train.append([data_noeddy[0,grid_id,:,:], 0]) 
+                phase_train.append([data_noeddy[0,grid_id,:,:], 0])
+                logging.info(f"---++++++ Saving noneddy")       
+            if added >= savedImgCounter:
+                break
 
+        # =========================================================
+        # ============== Interpolate ==============
+        # =========================================================
 
-            plot_grids(data, idx_grid, lon, lat)
-        exit()
+        #sst_out = np.array(sst_train)
+        #ssl_out = np.array(ssl_train)
+        #uvel_out = np.array(uvel_train)
+        #vvel_out = np.array(vvel_train)
+        #phase_out = np.array(phase_train)
+        #nTeddies = sst_out.shape[0]
 
-        
 
         '''
+        # The standard grid size we will use
+        grid_size = find_avg_dim(sst_out)
+        #grid_size = find_max_dim(sst_out)
         
-        # For each eddy, find a non-eddy!
-        # Find all possible noneddies, then find all viable options and find randomly select n images for each day. We only need to find for one
-
-        # We will create 100 more images than eddies that have been saved, from which the same amount of noneddies will be selected randomly from viable grids
-        nGrids = savedImgCounter
-
-        # Just use the largest dimension in training data so far, we will interpolate all grids that are not the biggest at the end anyways
-        subgrid_size = find_avg_dim(sst_train)
-        print(subgrid_size)
-        OW_noneddies = np.ma.masked_where(OW < -1, OW)
-        #print(OW_noneddies)
-        # Apply the same mask as OW_noneddies to a 2d grid of indexes
-        #idx_masked = np.ma.masked_where(OW_noneddies==0, index_list(nLon, nLat))
-        #print(idx_masked)
-        # Find compatible dimension sizes for reshaping into subgrids, numpy needs evenly sized arrays
-        ncols = nLon # Column
-        print(f"full row size = {nLon}")
-        print(f"subgrid row size = {subgrid_size[0]}")
-        print(f"full column size = {nLon}")
-        print(f"subgrid column size = {subgrid_size[1]}")
-        while (ncols % subgrid_size[0]) != 0:
-            ncols = ncols-1
-        nrows = nLat # Row
-        while (nrows % subgrid_size[1]) != 0:
-            nrows = nrows-1
-        # Create a grid of indeces which is able to be transformed to a subgrid according to 
-        #idx_masked = np.array(index_list(nLon, nLat))[:ncols,:nrows]
-        idx_masked = index_list(nLon, nLat)[:ncols][:nrows]
-
-        # Create subgrids 
-        print(idx_masked)
-        idx_subgrids = create_subgrids(idx_masked, subgrid_size[0], subgrid_size[1])
-
-        noneddy_idx_subgrids = []
-        mask_threshold = 2 # Make this one more flexible, i.e. some relative value with respect to the size of the subgrid
-        for grid in idx_subgrids:
-            mask_counter = 0 # Counts how many cells that have a more negative value then previously masked
-            # TODO: Could probably just forget about the masks set earlier, and rather use the OW values directly to check for threshold, makes it more apparent what this bulk of code is doing
-            print(OW_noneddies[grid])
-            for i,j in itertools.product(range(subgrid_size[0]), range(subgrid_size[1])):
-                # If no mask is present at the given indeces, add to list of non-eddy feature subgrids
-                if np.ma.is_masked(OW_noneddies[i,j]):
-                    mask_counter = mask_counter + 1
-                    #print(f"number of negative OW cells: {mask_counter}")
-                    if mask_counter > mask_threshold: break    
-            if not (mask_counter > mask_threshold):
-                print("not masked")
-                noneddy_idx_subgrids.append(grid)
-        # pick same amount of noneddies as eddies randomly from viable non-eddies
-        #noneddy_idx_grids = np.array(noneddy_idx_grids)
-        #print(noneddy_idx_grids)
-        print(np.array(noneddy_idx_grids).shape)
-        noneddy_idx_grids = random.sample(noneddy_idx_grids, nGrids)
-        #print(np.array(noneddy_idx_grids).shape)
-        exit()
+        # Save the resizing till the actual training begins, keep the size differences
+        for i in range(nTeddies):
+            sst_out[i][0] = np.array(sst_out[i][0], dtype='float32') # convert to numpy array
+            sst_out[i][0] = cv2.resize(sst_out[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+            ssl_out[i][0] = np.array(ssl_out[i][0], dtype='float32') # convert to numpy array
+            ssl_out[i][0] = cv2.resize(ssl_out[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+            uvel_out[i][0] = np.array(uvel_out[i][0], dtype='float32') # convert to numpy array
+            uvel_out[i][0] = cv2.resize(uvel_out[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+            vvel_out[i][0] = np.array(vvel_out[i][0], dtype='float32') # convert to numpy array
+            vvel_out[i][0] = cv2.resize(vvel_out[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+            phase_out[i][0] = np.array(phase_out[i][0], dtype='float32') # convert to numpy array
+            phase_out[i][0] = cv2.resize(phase_out[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
         '''
 
-    sst_train = np.array(sst_train)
-    ssl_train = np.array(ssl_train)
-    uvel_train = np.array(uvel_train)
-    vvel_train = np.array(vvel_train)
-    phase_train = np.array(phase_train)
+        logging.info(f"--- Compressing and storing training data so far")
 
+
+        # =========================================================
+        # ========== Save data as compressed numpy array ==========
+        # =========================================================
+
+        # If folder doesn't exist, create folder and just save the data for the first day
+        if not os.path.exists(args.savedir):
+            os.makedirs(args.savedir)
+            savez_compressed( f'{args.savedir}/sst_train.npz', sst_train)
+            savez_compressed( f'{args.savedir}/ssl_train.npz', ssl_train)
+            savez_compressed( f'{args.savedir}/uvel_train.npz', uvel_train)
+            savez_compressed( f'{args.savedir}/vvel_train.npz', vvel_train)
+            savez_compressed( f'{args.savedir}/phase_train.npz', phase_train)
+        # If not, we open and append to the existing data
+        else:
+            with np.load(f'{args.savedir}/sst_train.npz', 'w+', allow_pickle=True) as data:
+                savez_compressed( f'{args.savedir}/sst_train.npz', np.append(data['arr_0'], sst_train, axis=0))
+            with np.load(f'{args.savedir}/ssl_train.npz', 'w+', allow_pickle=True) as data:
+                savez_compressed( f'{args.savedir}/ssl_train.npz', np.append(data['arr_0'], ssl_train, axis=0))
+            with np.load(f'{args.savedir}/uvel_train.npz', 'w+', allow_pickle=True) as data:
+                savez_compressed(f'{args.savedir}/uvel_train.npz', np.append(data['arr_0'], uvel_train, axis=0))
+            with np.load(f'{args.savedir}/vvel_train.npz', 'w+', allow_pickle=True) as data:
+                savez_compressed(f'{args.savedir}/vvel_train.npz', np.append(data['arr_0'], vvel_train, axis=0))
+            with np.load(f'{args.savedir}/phase_train.npz', 'w+', allow_pickle=True) as data:
+                savez_compressed(f'{args.savedir}/phase_train.npz', np.append(data['arr_0'], phase_train, axis=0))
+
+    '''
     # number of training eddies -- Allow me to introduce (drumroll) "Teddies!" :D:D
     nTeddies = sst_train.shape[0]
 
@@ -419,68 +515,22 @@ def main():
     # =========================================================
 
     # The standard grid size we will use
-    grid_size = find_max_dim(sst_train[0])
+    grid_size = find_avg_dim(sst_train[0])
 
     # Interpolate the images to fit the standard rectangle size. Arrays needs to be float32 numpy arrays for cv2 to do its magic
     # [i] eddie [0] training data ([1] is label)
     for i in range(nTeddies):
         sst_train[i][0] = np.array(sst_train[i][0], dtype='float32') # convert to numpy array
-        sst_train[i][0] = cv2.resize(sst_train[i][0], dsize=(frame_size[0], frame_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+        sst_train[i][0] = cv2.resize(sst_train[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
         ssl_train[i][0] = np.array(ssl_train[i][0], dtype='float32') # convert to numpy array
-        ssl_train[i][0] = cv2.resize(ssl_train[i][0], dsize=(frame_size[0], frame_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+        ssl_train[i][0] = cv2.resize(ssl_train[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
         uvel_train[i][0] = np.array(uvel_train[i][0], dtype='float32') # convert to numpy array
-        uvel_train[i][0] = cv2.resize(uvel_train[i][0], dsize=(frame_size[0], frame_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+        uvel_train[i][0] = cv2.resize(uvel_train[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
         vvel_train[i][0] = np.array(vvel_train[i][0], dtype='float32') # convert to numpy array
-        vvel_train[i][0] = cv2.resize(vvel_train[i][0], dsize=(frame_size[0], frame_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+        vvel_train[i][0] = cv2.resize(vvel_train[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
         phase_train[i][0] = np.array(phase_train[i][0], dtype='float32') # convert to numpy array
-        phase_train[i][0] = cv2.resize(phase_train[i][0], dsize=(frame_size[0], frame_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
+        phase_train[i][0] = cv2.resize(phase_train[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
 
-
-    '''
-    # Or do it more complex, but compressed like this? I prefer readable?
-    sst_train = np.array([cv2.resize(np.array(sst_train[i]), dsize=(frame_size[0], frame_size[0]), interpolation=cv2.INTER_CUBIC) for i in range(nTeddies)])
-    ssl_train = np.array([cv2.resize(np.array(ssl_train[i], dtype='float32'), dsize=(frame_size[1], frame_size[1]), interpolation=cv2.INTER_CUBIC) for i in range(nTeddies)])
-    uvel_train = np.array([cv2.resize(np.array(sst_train[i], dtype='float32'), dsize=(frame_size[2], frame_size[2]), interpolation=cv2.INTER_CUBIC) for i in range(nTeddies)])
-    vvel_train = np.array([cv2.resize(np.array(ssl_train[i], dtype='float32'), dsize=(frame_size[3], frame_size[3]), interpolation=cv2.INTER_CUBIC) for i in range(nTeddies)])
-    phase_train = np.array([cv2.resize(np.array(sst_train[i], dtype='float32'), dsize=(frame_size[4], frame_size[4]), interpolation=cv2.INTER_CUBIC) for i in range(nTeddies)])
-    '''
-
-
-    '''
-    # =========================================================
-    # ============== Find non-eddy training data ==============
-    # =========================================================
-
-    # The arrays looks like this so far: [grid][x/y][lon][lat]
-
-    # Mark anywhere with positive OW value
-    OW_noneddies = np.zeros(OW.shape,dtype=int)
-    OW_noneddies[np.where(OW > 0)] = 1
-
-    # Find all possible noneddies, then find all viable options and find randomly select n images for each day. We only need to find for one
-
-    # Number of viable noneddy grids we will find for each day
-    nGridsPerDay = int(nEddies/len(day))
-
-    # Create standard size of grid for which to find random cell
-    w = len(lon[0])
-    h = len(lat[0])
-    gridArea = w*h/nGrids # Area of each grid box
-    gridSide = sqrt(gridArea) # Side length of each grid box
-    n_lon = floor(w/boxSide)  # Number of boxes that fit along width
-    n_lat = floor(h/boxSide)
-
-    #datasets = [sst, ssl, uvel, vvel, phase]
-    #for ds in datasets:
-    for day, data in enumerate(ds):
-        subgrids = create_subgrids(data, n_lon, n_lat)
-        # Collect all subgrids that does not contain 
-        for grid in subgrids:
-            rand_lon = np.random.randint(0,n_lon)
-            rand_lat = np.random.randint(0,n_lat)
-            rand_image = grid[rand_lon:eddy_shape[0]][rand_lat:eddy_shape[1]]
-            print(rand_image.count)
-    '''
     # =========================================================
     # ========= Store as compressed numpy array (npz) =========
     # =========================================================
@@ -495,45 +545,7 @@ def main():
     savez_compressed(f'{args.savedir}/phase_train.npz', phase_train)
 
     print(f"--- Training data complete")
-
-
-def create_subgrids(arr, nrows, ncols):
-    """
-    Return an array of shape (n, nrows, ncols) where
-    n * nrows * ncols = arr.size
-    If arr is a 2D array, the returned array should look like n subblocks with
-    each subblock preserving the "physical" layout of arr.
-    """
-    h, w = shape(arr)[0:2]
-    assert h % nrows == 0, "{} rows is not evenly divisble by {}".format(h, nrows)
-    assert w % ncols == 0, "{} cols is not evenly divisble by {}".format(w, ncols)
-    return (arr.reshape(h//nrows, nrows, -1, ncols, 2)# last 2 is because array consists of 2d idx
-               .swapaxes(1,2)
-               .reshape(-1, nrows, ncols, 2)) 
-
-
+    '''
 
 if __name__ == '__main__':
     main()
-
-
-
-'''
-#"quickscript" to plot and investigate images
-fig, axs = plt.subplots(2, 3, figsize=(10, 7), sharex=True, sharey=True)
-lo = lon[lonIdxs]
-la = lat[latIdxs]
-
-lo = range(frame_size[0])
-la = range(frame_size[1])
-axs[0,0].contourf(lo, la, sst_train[0][0], 10, cmap='rainbow')
-axs[0,1].contourf(lo, la, ssl_train[0][0], 10, cmap='rainbow')
-axs[0,2].contourf(lo, la, uvel_train[0][0], 10, cmap='rainbow')
-axs[1,0].contourf(lo, la, vvel_train[0][0], 10, cmap='rainbow')
-axs[1,1].contourf(lo, la, phase_train[0][0], 10, cmap='CMRmap')
-title = dateStr + "_" + check_cyclone(cyclone)
-fig.suptitle(title, fontsize=16)
-
-guiEvent, guiValues = show_figure(fig)
-plt.close(fig)
-'''
