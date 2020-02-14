@@ -2080,3 +2080,1780 @@
 2020-02-14 11:32:37,606 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.0, 50.166668) and diameter 54.3823350764647
 2020-02-14 11:32:37,608 - Training Data - INFO - +++ Argmax center -> lon: -41.0, Center lat: 49.83333206176758
 2020-02-14 11:32:38,943 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:33:01,558 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:03,180 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:05,023 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:05,024 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:33:05,301 - Training Data - INFO - Creating images for dataset 03-04-2018
+2020-02-14 11:33:06,806 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 11:33:06,807 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.0, 48.416668) and diameter 26.966472259935347
+2020-02-14 11:33:06,809 - Training Data - INFO - +++ Argmin center -> lon: -38.41666793823242, Center lat: 48.58333206176758
+2020-02-14 11:33:09,312 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:33:09,314 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 46.666668) and diameter 58.81211001307679
+2020-02-14 11:33:09,317 - Training Data - INFO - +++ Argmin center -> lon: -41.58333206176758, Center lat: 46.58333206176758
+2020-02-14 11:33:10,598 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:33:10,600 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.083332, 51.583332) and diameter 24.738202040553606
+2020-02-14 11:33:10,602 - Training Data - INFO - +++ Argmin center -> lon: -32.5, Center lat: 51.66666793823242
+2020-02-14 11:33:11,902 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:33:11,904 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-20.25, 48.333332) and diameter 50.558866221138786
+2020-02-14 11:33:11,909 - Training Data - INFO - +++ Argmin center -> lon: -20.25, Center lat: 48.33333206176758
+2020-02-14 11:33:13,310 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:33:13,311 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.916668, 50.166668) and diameter 48.120024177606886
+2020-02-14 11:33:13,314 - Training Data - INFO - +++ Argmin center -> lon: -35.0, Center lat: 50.25
+2020-02-14 11:33:15,069 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:33:15,070 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.0, 47.166668) and diameter 31.127922928407358
+2020-02-14 11:33:15,072 - Training Data - INFO - +++ Argmin center -> lon: -34.16666793823242, Center lat: 47.16666793823242
+2020-02-14 11:33:16,455 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:33:16,457 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.166666, 50.416668) and diameter 85.80113629018204
+2020-02-14 11:33:16,462 - Training Data - INFO - +++ Argmin center -> lon: -31.33333396911621, Center lat: 50.41666793823242
+2020-02-14 11:33:17,860 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 11:33:21,613 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:23,223 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:28,882 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:32,132 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:33,836 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:35,829 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:35,829 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:33:36,111 - Training Data - INFO - Creating images for dataset 20-01-2018
+2020-02-14 11:33:37,560 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:33:37,560 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.416668, 47.166668) and diameter 46.454033906484526
+2020-02-14 11:33:37,562 - Training Data - INFO - +++ Argmax center -> lon: -40.41666793823242, Center lat: 47.25
+2020-02-14 11:33:39,364 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:33:39,365 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.833332, 47.833332) and diameter 82.63265238022255
+2020-02-14 11:33:39,370 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 47.91666793823242
+2020-02-14 11:33:40,757 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:33:40,758 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.0, 51.583332) and diameter 37.79811399800247
+2020-02-14 11:33:40,763 - Training Data - INFO - +++ Argmin center -> lon: -38.0, Center lat: 51.83333206176758
+2020-02-14 11:33:44,763 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:33:44,765 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 50.583332) and diameter 77.98435680452764
+2020-02-14 11:33:44,770 - Training Data - INFO - +++ Argmin center -> lon: -41.83333206176758, Center lat: 50.66666793823242
+2020-02-14 11:33:46,623 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:33:46,624 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.25, 51.916668) and diameter 21.76162319275768
+2020-02-14 11:33:46,628 - Training Data - INFO - +++ Argmax center -> lon: -37.16666793823242, Center lat: 51.83333206176758
+2020-02-14 11:33:49,085 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:33:51,918 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:53,867 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:56,172 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:33:56,174 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:33:56,462 - Training Data - INFO - Creating images for dataset 04-02-2018
+2020-02-14 11:33:58,090 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 11:33:58,090 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-42.0, 46.416668) and diameter 32.494132869584355
+2020-02-14 11:33:58,092 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 46.41666793823242
+2020-02-14 11:34:02,229 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:34:02,230 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-32.833332, 51.833332) and diameter 47.98556139425963
+2020-02-14 11:34:02,261 - Training Data - INFO - +++ Argmax center -> lon: -17.58333396911621, Center lat: 51.58333206176758
+2020-02-14 11:34:04,562 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:34:04,563 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.666668, 47.333332) and diameter 173.86980552376573
+2020-02-14 11:34:04,577 - Training Data - INFO - +++ Argmax center -> lon: -40.75, Center lat: 47.25
+2020-02-14 11:34:06,229 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:34:06,230 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.166668, 57.833332) and diameter 28.555368946465624
+2020-02-14 11:34:06,235 - Training Data - INFO - +++ Argmin center -> lon: -36.16666793823242, Center lat: 57.91666793823242
+2020-02-14 11:34:11,045 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:34:11,114 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:34:11,402 - Training Data - INFO - Creating images for dataset 14-04-2018
+2020-02-14 11:34:12,939 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:34:12,940 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.333332, 47.5) and diameter 66.14679256211151
+2020-02-14 11:34:12,942 - Training Data - INFO - +++ Argmin center -> lon: -39.75, Center lat: 47.5
+2020-02-14 11:34:16,267 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:34:16,268 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-30.833334, 59.75) and diameter 30.551040597399442
+2020-02-14 11:34:16,270 - Training Data - INFO - +++ Argmax center -> lon: -30.66666603088379, Center lat: 59.58333206176758
+2020-02-14 11:34:18,732 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:34:18,734 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.083332, 48.333332) and diameter 35.20905724554378
+2020-02-14 11:34:18,737 - Training Data - INFO - +++ Argmin center -> lon: -37.83333206176758, Center lat: 48.5
+2020-02-14 11:34:20,854 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:34:20,855 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.166668, 49.333332) and diameter 46.24853995964564
+2020-02-14 11:34:20,858 - Training Data - INFO - +++ Argmin center -> lon: -40.25, Center lat: 49.41666793823242
+2020-02-14 11:34:22,379 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:34:22,380 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.75, 49.0) and diameter 60.70000865346664
+2020-02-14 11:34:22,386 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 49.0
+2020-02-14 11:34:25,762 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:34:29,102 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:34:29,103 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:34:29,395 - Training Data - INFO - Creating images for dataset 20-03-2018
+2020-02-14 11:34:30,838 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:34:30,839 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.166668, 47.75) and diameter 33.26302735734367
+2020-02-14 11:34:30,840 - Training Data - INFO - +++ Argmin center -> lon: -38.25, Center lat: 47.75
+2020-02-14 11:34:32,668 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:34:32,669 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.583332, 46.75) and diameter 29.981366991971782
+2020-02-14 11:34:32,673 - Training Data - INFO - +++ Argmax center -> lon: -38.58333206176758, Center lat: 46.75
+2020-02-14 11:34:36,701 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:34:36,702 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-36.25, 57.333332) and diameter 20.33629778729173
+2020-02-14 11:34:36,705 - Training Data - INFO - +++ Argmax center -> lon: -36.41666793823242, Center lat: 57.33333206176758
+2020-02-14 11:34:38,948 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:34:38,950 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.666668, 47.666668) and diameter 58.8218893233967
+2020-02-14 11:34:38,953 - Training Data - INFO - +++ Argmin center -> lon: -41.58333206176758, Center lat: 47.75
+2020-02-14 11:34:40,683 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:34:40,685 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.583332, 50.583332) and diameter 20.427703480674925
+2020-02-14 11:34:40,687 - Training Data - INFO - +++ Argmax center -> lon: -39.66666793823242, Center lat: 50.5
+2020-02-14 11:34:49,341 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:34:49,342 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.833332, 49.75) and diameter 31.491257654316463
+2020-02-14 11:34:49,345 - Training Data - INFO - +++ Argmin center -> lon: -38.83333206176758, Center lat: 49.66666793823242
+2020-02-14 11:34:50,971 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:34:53,514 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:34:54,996 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:34:57,148 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:34:57,149 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:34:57,441 - Training Data - INFO - Creating images for dataset 05-07-2018
+2020-02-14 11:34:58,901 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 11:34:58,902 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.5, 47.083332) and diameter 83.15353142739862
+2020-02-14 11:34:58,905 - Training Data - INFO - +++ Argmin center -> lon: -40.66666793823242, Center lat: 47.33333206176758
+2020-02-14 11:35:00,510 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:35:00,512 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.166668, 52.25) and diameter 20.070908069549102
+2020-02-14 11:35:00,514 - Training Data - INFO - +++ Argmin center -> lon: -39.16666793823242, Center lat: 52.33333206176758
+2020-02-14 11:35:03,882 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:35:03,884 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-42.0, 51.0) and diameter 23.49955586973036
+2020-02-14 11:35:03,885 - Training Data - INFO - +++ Argmax center -> lon: -41.83333206176758, Center lat: 50.91666793823242
+2020-02-14 11:35:06,370 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:35:06,372 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.5, 47.833332) and diameter 85.06918772808261
+2020-02-14 11:35:06,377 - Training Data - INFO - +++ Argmax center -> lon: -39.41666793823242, Center lat: 47.66666793823242
+2020-02-14 11:35:10,722 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:35:19,684 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:35:20,971 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:35:20,972 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:35:21,266 - Training Data - INFO - Creating images for dataset 01-04-2018
+2020-02-14 11:35:22,690 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:35:22,691 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.5, 46.5) and diameter 53.49552757661905
+2020-02-14 11:35:22,693 - Training Data - INFO - +++ Argmax center -> lon: -33.5, Center lat: 46.58333206176758
+2020-02-14 11:35:24,683 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:35:24,684 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.25, 50.166668) and diameter 40.16027795177329
+2020-02-14 11:35:24,686 - Training Data - INFO - +++ Argmin center -> lon: -35.33333206176758, Center lat: 50.25
+2020-02-14 11:35:27,882 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:35:27,884 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.166668, 47.083332) and diameter 62.74090875390547
+2020-02-14 11:35:27,888 - Training Data - INFO - +++ Argmin center -> lon: -34.25, Center lat: 47.16666793823242
+2020-02-14 11:35:29,633 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:35:29,635 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.166668, 49.416668) and diameter 20.671281437610563
+2020-02-14 11:35:29,638 - Training Data - INFO - +++ Argmin center -> lon: -38.25, Center lat: 49.5
+2020-02-14 11:35:32,962 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:35:32,962 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-42.0, 48.0) and diameter 20.99847601166153
+2020-02-14 11:35:32,965 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 47.91666793823242
+2020-02-14 11:35:36,915 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:35:38,689 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:35:40,442 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:35:42,299 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:35:42,300 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:35:42,595 - Training Data - INFO - Creating images for dataset 01-01-2018
+2020-02-14 11:35:44,272 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:35:44,273 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.5, 48.416668) and diameter 81.33862102185849
+2020-02-14 11:35:44,280 - Training Data - INFO - +++ Argmin center -> lon: -40.5, Center lat: 48.41666793823242
+2020-02-14 11:35:46,002 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:35:46,003 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.833332, 47.916668) and diameter 68.5888892387464
+2020-02-14 11:35:46,007 - Training Data - INFO - +++ Argmax center -> lon: -38.83333206176758, Center lat: 47.83333206176758
+2020-02-14 11:35:47,210 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:35:47,212 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.833332, 50.583332) and diameter 53.46701048529765
+2020-02-14 11:35:47,215 - Training Data - INFO - +++ Argmin center -> lon: -40.66666793823242, Center lat: 50.58333206176758
+2020-02-14 11:35:48,717 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:35:48,719 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 52.666668) and diameter 33.58661038904634
+2020-02-14 11:35:48,721 - Training Data - INFO - +++ Argmin center -> lon: -41.25, Center lat: 52.75
+2020-02-14 11:35:52,212 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:35:52,213 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.75, 47.666668) and diameter 89.584454818669
+2020-02-14 11:35:52,218 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 47.75
+2020-02-14 11:35:53,635 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:35:53,636 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.916668, 58.25) and diameter 36.46141130110215
+2020-02-14 11:35:53,642 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 58.41666793823242
+2020-02-14 11:35:56,889 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 11:35:58,954 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:36:00,491 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:36:05,152 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:36:08,131 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:36:08,132 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:36:08,427 - Training Data - INFO - Creating images for dataset 06-01-2018
+2020-02-14 11:36:10,037 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 11:36:10,037 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.833332, 47.666668) and diameter 73.85917908999305
+2020-02-14 11:36:10,040 - Training Data - INFO - +++ Argmax center -> lon: -39.0, Center lat: 47.66666793823242
+2020-02-14 11:36:12,458 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:36:12,458 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.083332, 50.416668) and diameter 64.10519532112048
+2020-02-14 11:36:12,463 - Training Data - INFO - +++ Argmin center -> lon: -40.08333206176758, Center lat: 50.58333206176758
+2020-02-14 11:36:13,635 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:36:13,637 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.416668, 51.916668) and diameter 44.26563060810717
+2020-02-14 11:36:13,648 - Training Data - INFO - +++ Argmin center -> lon: -39.16666793823242, Center lat: 52.16666793823242
+2020-02-14 11:36:15,745 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:36:15,746 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.666668, 47.75) and diameter 87.52001673329136
+2020-02-14 11:36:15,751 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 47.75
+2020-02-14 11:36:17,520 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:36:17,522 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.833332, 51.666668) and diameter 24.73315438625518
+2020-02-14 11:36:17,527 - Training Data - INFO - +++ Argmax center -> lon: -33.83333206176758, Center lat: 51.58333206176758
+2020-02-14 11:36:19,499 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:36:19,501 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.583332, 51.75) and diameter 55.941554255321364
+2020-02-14 11:36:19,509 - Training Data - INFO - +++ Argmax center -> lon: -41.33333206176758, Center lat: 51.66666793823242
+2020-02-14 11:36:22,370 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 11:36:22,371 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.25, 51.083332) and diameter 53.02109023032788
+2020-02-14 11:36:22,374 - Training Data - INFO - +++ Argmin center -> lon: -31.75, Center lat: 51.41666793823242
+2020-02-14 11:36:25,029 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 11:36:26,568 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:36:30,194 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:36:32,201 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:36:37,348 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:36:37,349 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:36:37,650 - Training Data - INFO - Creating images for dataset 19-02-2018
+2020-02-14 11:36:39,185 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:36:39,185 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.5, 50.666668) and diameter 22.048095253567055
+2020-02-14 11:36:39,186 - Training Data - INFO - +++ Argmax center -> lon: -40.58333206176758, Center lat: 50.58333206176758
+2020-02-14 11:36:42,048 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:36:42,050 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.583332, 46.916668) and diameter 107.76413849961001
+2020-02-14 11:36:42,055 - Training Data - INFO - +++ Argmin center -> lon: -40.41666793823242, Center lat: 47.0
+2020-02-14 11:36:43,297 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:36:43,298 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.25, 45.833332) and diameter 24.708093546371348
+2020-02-14 11:36:43,301 - Training Data - INFO - +++ Argmin center -> lon: -40.83333206176758, Center lat: 46.0
+2020-02-14 11:36:50,487 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:36:50,488 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 49.25) and diameter 70.327188758601
+2020-02-14 11:36:50,492 - Training Data - INFO - +++ Argmin center -> lon: -41.75, Center lat: 49.08333206176758
+2020-02-14 11:36:54,018 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:36:54,019 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.416668, 51.5) and diameter 20.226417827201786
+2020-02-14 11:36:54,024 - Training Data - INFO - +++ Argmin center -> lon: -40.5, Center lat: 51.58333206176758
+2020-02-14 11:36:56,640 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:37:00,659 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:37:00,661 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:37:00,962 - Training Data - INFO - Creating images for dataset 25-06-2018
+2020-02-14 11:37:02,281 - Training Data - INFO - + Creating rectangles for 3 eddies
+2020-02-14 11:37:02,281 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.166668, 49.75) and diameter 30.29824408295864
+2020-02-14 11:37:02,283 - Training Data - INFO - +++ Argmax center -> lon: -41.25, Center lat: 49.66666793823242
+2020-02-14 11:37:03,735 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:37:03,736 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.416668, 45.666668) and diameter 37.10737549986161
+2020-02-14 11:37:03,741 - Training Data - INFO - +++ Argmin center -> lon: -40.5, Center lat: 45.75
+2020-02-14 11:37:08,816 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:37:08,817 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.5, 51.916668) and diameter 21.738395300956615
+2020-02-14 11:37:08,822 - Training Data - INFO - +++ Argmin center -> lon: -27.41666603088379, Center lat: 51.91666793823242
+2020-02-14 11:37:12,583 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:37:22,353 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:37:22,354 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:37:22,658 - Training Data - INFO - Creating images for dataset 13-05-2018
+2020-02-14 11:37:24,140 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:37:24,141 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.333332, 47.583332) and diameter 34.39874933686383
+2020-02-14 11:37:24,142 - Training Data - INFO - +++ Argmin center -> lon: -33.58333206176758, Center lat: 47.75
+2020-02-14 11:37:26,354 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:37:26,355 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.333332, 50.25) and diameter 22.153681962103242
+2020-02-14 11:37:26,357 - Training Data - INFO - +++ Argmax center -> lon: -39.41666793823242, Center lat: 50.16666793823242
+2020-02-14 11:37:28,731 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:37:28,732 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.75, 45.666668) and diameter 83.88865713152354
+2020-02-14 11:37:28,747 - Training Data - INFO - +++ Argmax center -> lon: -40.66666793823242, Center lat: 45.66666793823242
+2020-02-14 11:37:32,439 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:37:32,441 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.5, 48.75) and diameter 51.693208425019606
+2020-02-14 11:37:32,457 - Training Data - INFO - +++ Argmax center -> lon: -34.16666793823242, Center lat: 49.0
+2020-02-14 11:37:34,520 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:37:34,521 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.75, 50.333332) and diameter 31.29292371690113
+2020-02-14 11:37:34,524 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 50.33333206176758
+2020-02-14 11:37:38,369 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:37:38,371 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.666668, 46.583332) and diameter 57.58879808555961
+2020-02-14 11:37:38,375 - Training Data - INFO - +++ Argmin center -> lon: -40.83333206176758, Center lat: 46.75
+2020-02-14 11:37:40,882 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:37:42,678 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:37:45,538 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:37:45,540 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:37:45,847 - Training Data - INFO - Creating images for dataset 18-01-2018
+2020-02-14 11:37:47,366 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:37:47,367 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.0, 52.083332) and diameter 39.29590361725202
+2020-02-14 11:37:47,370 - Training Data - INFO - +++ Argmin center -> lon: -40.83333206176758, Center lat: 52.25
+2020-02-14 11:37:51,430 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:37:51,431 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.166668, 47.916668) and diameter 56.1752484058661
+2020-02-14 11:37:51,436 - Training Data - INFO - +++ Argmin center -> lon: -38.33333206176758, Center lat: 48.0
+2020-02-14 11:37:53,728 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:37:53,730 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.25, 47.333332) and diameter 37.54105532520921
+2020-02-14 11:37:53,732 - Training Data - INFO - +++ Argmax center -> lon: -40.33333206176758, Center lat: 47.33333206176758
+2020-02-14 11:37:55,006 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:37:55,007 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.833332, 50.416668) and diameter 56.56878010204592
+2020-02-14 11:37:55,010 - Training Data - INFO - +++ Argmin center -> lon: -41.91666793823242, Center lat: 50.66666793823242
+2020-02-14 11:38:02,721 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:38:02,722 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.083332, 51.583332) and diameter 35.006454523656096
+2020-02-14 11:38:02,728 - Training Data - INFO - +++ Argmin center -> lon: -38.16666793823242, Center lat: 51.66666793823242
+2020-02-14 11:38:05,358 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:38:05,359 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.916668, 47.833332) and diameter 83.87700912453644
+2020-02-14 11:38:05,365 - Training Data - INFO - +++ Argmin center -> lon: -35.83333206176758, Center lat: 47.91666793823242
+2020-02-14 11:38:06,978 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:38:15,312 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:38:17,130 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:38:27,259 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:38:27,260 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:38:27,568 - Training Data - INFO - Creating images for dataset 17-02-2018
+2020-02-14 11:38:29,091 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:38:29,092 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.166668, 51.333332) and diameter 38.765463659475216
+2020-02-14 11:38:29,095 - Training Data - INFO - +++ Argmax center -> lon: -40.66666793823242, Center lat: 51.08333206176758
+2020-02-14 11:38:32,888 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:38:32,890 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.833332, 50.166668) and diameter 29.028925669845336
+2020-02-14 11:38:32,892 - Training Data - INFO - +++ Argmin center -> lon: -39.66666793823242, Center lat: 50.16666793823242
+2020-02-14 11:38:35,601 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:38:35,602 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.25, 47.166668) and diameter 105.21482099302915
+2020-02-14 11:38:35,609 - Training Data - INFO - +++ Argmin center -> lon: -40.08333206176758, Center lat: 47.08333206176758
+2020-02-14 11:38:37,343 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:38:37,345 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 48.75) and diameter 57.044453435227915
+2020-02-14 11:38:37,356 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.58333206176758
+2020-02-14 11:38:39,598 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:38:39,600 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.166668, 45.833332) and diameter 28.970332533528868
+2020-02-14 11:38:39,603 - Training Data - INFO - +++ Argmin center -> lon: -40.91666793823242, Center lat: 46.0
+2020-02-14 11:38:48,399 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:38:48,401 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.083332, 47.25) and diameter 71.67736263283157
+2020-02-14 11:38:48,405 - Training Data - INFO - +++ Argmin center -> lon: -36.08333206176758, Center lat: 47.16666793823242
+2020-02-14 11:38:50,086 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:38:59,345 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:01,282 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:02,759 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:02,760 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:39:03,071 - Training Data - INFO - Creating images for dataset 18-06-2018
+2020-02-14 11:39:04,566 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:39:04,567 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.25, 46.833332) and diameter 59.956079731332494
+2020-02-14 11:39:04,569 - Training Data - INFO - +++ Argmin center -> lon: -40.66666793823242, Center lat: 46.91666793823242
+2020-02-14 11:39:10,528 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:39:10,529 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.583332, 45.0) and diameter 65.21187025766187
+2020-02-14 11:39:10,534 - Training Data - INFO - +++ Argmax center -> lon: -39.66666793823242, Center lat: 45.0
+2020-02-14 11:39:13,807 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:39:13,809 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.25, 50.666668) and diameter 50.66213156086794
+2020-02-14 11:39:13,812 - Training Data - INFO - +++ Argmin center -> lon: -33.58333206176758, Center lat: 50.75
+2020-02-14 11:39:16,806 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:39:16,807 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.333332, 48.333332) and diameter 36.21558671836746
+2020-02-14 11:39:16,810 - Training Data - INFO - +++ Argmax center -> lon: -41.25, Center lat: 48.16666793823242
+2020-02-14 11:39:20,893 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:39:20,895 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.166666, 52.083332) and diameter 71.68291808888435
+2020-02-14 11:39:20,903 - Training Data - INFO - +++ Argmin center -> lon: -27.25, Center lat: 52.0
+2020-02-14 11:39:23,150 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:39:27,959 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:29,584 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:29,585 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:39:29,901 - Training Data - INFO - Creating images for dataset 30-03-2018
+2020-02-14 11:39:31,487 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:39:31,488 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.583332, 50.25) and diameter 45.07070770357855
+2020-02-14 11:39:31,490 - Training Data - INFO - +++ Argmin center -> lon: -35.66666793823242, Center lat: 50.33333206176758
+2020-02-14 11:39:34,231 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:39:34,233 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 46.666668) and diameter 40.64539776052859
+2020-02-14 11:39:34,237 - Training Data - INFO - +++ Argmin center -> lon: -41.66666793823242, Center lat: 46.75
+2020-02-14 11:39:35,654 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:39:35,656 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.333334, 50.25) and diameter 81.70976662664914
+2020-02-14 11:39:35,660 - Training Data - INFO - +++ Argmin center -> lon: -31.41666603088379, Center lat: 50.33333206176758
+2020-02-14 11:39:36,997 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:39:36,997 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.166668, 56.333332) and diameter 31.161128117633446
+2020-02-14 11:39:37,001 - Training Data - INFO - +++ Argmin center -> lon: -36.25, Center lat: 56.33333206176758
+2020-02-14 11:39:38,262 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:39:38,263 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.583332, 51.5) and diameter 26.11379520860078
+2020-02-14 11:39:38,266 - Training Data - INFO - +++ Argmin center -> lon: -39.25, Center lat: 51.66666793823242
+2020-02-14 11:39:41,622 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:39:41,623 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.416668, 47.083332) and diameter 57.215962379445294
+2020-02-14 11:39:41,628 - Training Data - INFO - +++ Argmin center -> lon: -34.33333206176758, Center lat: 47.16666793823242
+2020-02-14 11:39:43,664 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:39:46,185 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:47,478 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:49,215 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:50,687 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:39:50,689 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:39:51,006 - Training Data - INFO - Creating images for dataset 14-02-2018
+2020-02-14 11:39:52,551 - Training Data - INFO - + Creating rectangles for 9 eddies
+2020-02-14 11:39:52,552 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 52.0) and diameter 25.99865244062306
+2020-02-14 11:39:52,554 - Training Data - INFO - +++ Argmin center -> lon: -41.91666793823242, Center lat: 52.08333206176758
+2020-02-14 11:39:56,654 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:39:56,655 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.416668, 50.333332) and diameter 54.78174753647054
+2020-02-14 11:39:56,658 - Training Data - INFO - +++ Argmin center -> lon: -32.58333206176758, Center lat: 50.66666793823242
+2020-02-14 11:39:59,629 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:39:59,631 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.666668, 47.25) and diameter 80.66248244628176
+2020-02-14 11:39:59,635 - Training Data - INFO - +++ Argmin center -> lon: -39.66666793823242, Center lat: 47.25
+2020-02-14 11:40:01,447 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:40:01,448 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.916668, 50.583332) and diameter 26.37587978460503
+2020-02-14 11:40:01,450 - Training Data - INFO - +++ Argmax center -> lon: -33.91666793823242, Center lat: 50.58333206176758
+2020-02-14 11:40:03,598 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:40:03,600 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.083332, 45.0) and diameter 24.888743947205207
+2020-02-14 11:40:03,602 - Training Data - INFO - +++ Argmax center -> lon: -39.91666793823242, Center lat: 45.0
+2020-02-14 11:40:06,398 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:40:06,398 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.916668, 50.5) and diameter 34.40420098646553
+2020-02-14 11:40:06,402 - Training Data - INFO - +++ Argmin center -> lon: -39.75, Center lat: 50.58333206176758
+2020-02-14 11:40:09,110 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 11:40:09,111 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.583332, 51.583332) and diameter 56.455025771652394
+2020-02-14 11:40:09,119 - Training Data - INFO - +++ Argmax center -> lon: -40.91666793823242, Center lat: 51.25
+2020-02-14 11:40:11,638 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 11:40:11,639 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.0, 47.5) and diameter 27.202456292333917
+2020-02-14 11:40:11,641 - Training Data - INFO - +++ Argmax center -> lon: -41.08333206176758, Center lat: 47.5
+2020-02-14 11:40:13,778 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-14 11:40:13,779 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.0, 47.083332) and diameter 70.0484727073655
+2020-02-14 11:40:13,782 - Training Data - INFO - +++ Argmin center -> lon: -36.0, Center lat: 47.16666793823242
+2020-02-14 11:40:15,720 - Training Data - INFO - +++++ Saving image 8 as an eddy
+2020-02-14 11:40:17,665 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:40:19,173 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:40:20,614 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:40:37,296 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:40:37,298 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:40:37,615 - Training Data - INFO - Creating images for dataset 24-06-2018
+2020-02-14 11:40:39,002 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:40:39,002 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.083332, 47.25) and diameter 29.860546547982203
+2020-02-14 11:40:39,004 - Training Data - INFO - +++ Argmax center -> lon: -39.08333206176758, Center lat: 47.25
+2020-02-14 11:40:40,620 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:40:40,622 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.583332, 45.666668) and diameter 36.05298780818559
+2020-02-14 11:40:40,628 - Training Data - INFO - +++ Argmin center -> lon: -40.75, Center lat: 45.83333206176758
+2020-02-14 11:40:42,486 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:40:42,487 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.666668, 50.583332) and diameter 50.121758165171656
+2020-02-14 11:40:42,492 - Training Data - INFO - +++ Argmin center -> lon: -39.33333206176758, Center lat: 50.91666793823242
+2020-02-14 11:40:45,352 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:40:45,353 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.25, 51.0) and diameter 31.095462191017877
+2020-02-14 11:40:45,355 - Training Data - INFO - +++ Argmin center -> lon: -33.41666793823242, Center lat: 50.91666793823242
+2020-02-14 11:40:46,933 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:40:46,935 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.5, 52.0) and diameter 47.89406812421734
+2020-02-14 11:40:46,940 - Training Data - INFO - +++ Argmin center -> lon: -27.41666603088379, Center lat: 52.0
+2020-02-14 11:40:52,270 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:40:55,478 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:40:57,415 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:40:59,277 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:40:59,278 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:40:59,602 - Training Data - INFO - Creating images for dataset 09-07-2018
+2020-02-14 11:41:01,164 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 11:41:01,164 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.166668, 47.166668) and diameter 61.48904909152492
+2020-02-14 11:41:01,167 - Training Data - INFO - +++ Argmin center -> lon: -40.5, Center lat: 47.58333206176758
+2020-02-14 11:41:02,812 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:41:02,814 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.0, 52.083332) and diameter 45.65008892295901
+2020-02-14 11:41:02,818 - Training Data - INFO - +++ Argmin center -> lon: -39.0, Center lat: 52.08333206176758
+2020-02-14 11:41:09,995 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:41:09,996 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.25, 48.166668) and diameter 46.80780024526505
+2020-02-14 11:41:10,001 - Training Data - INFO - +++ Argmin center -> lon: -36.83333206176758, Center lat: 48.25
+2020-02-14 11:41:16,247 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:41:16,249 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.916668, 48.166668) and diameter 57.36329014080659
+2020-02-14 11:41:16,255 - Training Data - INFO - +++ Argmax center -> lon: -38.83333206176758, Center lat: 48.08333206176758
+2020-02-14 11:41:18,030 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:41:24,149 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:41:27,635 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:41:27,636 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:41:27,958 - Training Data - INFO - Creating images for dataset 11-07-2018
+2020-02-14 11:41:29,468 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:41:29,468 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.583332, 48.583332) and diameter 55.75297860447274
+2020-02-14 11:41:29,477 - Training Data - INFO - +++ Argmin center -> lon: -41.33333206176758, Center lat: 48.25
+2020-02-14 11:41:32,012 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:41:32,013 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.666668, 48.083332) and diameter 22.645889488042137
+2020-02-14 11:41:32,017 - Training Data - INFO - +++ Argmax center -> lon: -38.66666793823242, Center lat: 48.0
+2020-02-14 11:41:33,406 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:41:33,408 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.0, 47.416668) and diameter 48.649441280975566
+2020-02-14 11:41:33,410 - Training Data - INFO - +++ Argmin center -> lon: -40.33333206176758, Center lat: 47.58333206176758
+2020-02-14 11:41:37,605 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:41:37,607 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.583332, 50.5) and diameter 47.22818092729944
+2020-02-14 11:41:37,610 - Training Data - INFO - +++ Argmin center -> lon: -40.33333206176758, Center lat: 50.5
+2020-02-14 11:41:39,598 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:41:39,600 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.416668, 51.916668) and diameter 30.748877016513163
+2020-02-14 11:41:39,607 - Training Data - INFO - +++ Argmin center -> lon: -38.75, Center lat: 52.08333206176758
+2020-02-14 11:41:42,140 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:41:44,675 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:41:44,677 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:41:44,996 - Training Data - INFO - Creating images for dataset 23-02-2018
+2020-02-14 11:41:46,847 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:41:46,848 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.0, 49.25) and diameter 163.00334380914435
+2020-02-14 11:41:46,863 - Training Data - INFO - +++ Argmin center -> lon: -37.91666793823242, Center lat: 49.91666793823242
+2020-02-14 11:42:01,076 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:42:01,078 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.666668, 50.083332) and diameter 41.902089044289404
+2020-02-14 11:42:01,081 - Training Data - INFO - +++ Argmin center -> lon: -39.41666793823242, Center lat: 50.33333206176758
+2020-02-14 11:42:03,447 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:42:03,449 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.25, 46.75) and diameter 114.09224961753183
+2020-02-14 11:42:03,454 - Training Data - INFO - +++ Argmin center -> lon: -41.0, Center lat: 46.83333206176758
+2020-02-14 11:42:04,996 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:42:04,998 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-28.75, 52.333332) and diameter 52.97542670879291
+2020-02-14 11:42:05,002 - Training Data - INFO - +++ Argmin center -> lon: -28.91666603088379, Center lat: 52.66666793823242
+2020-02-14 11:42:10,158 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:42:10,160 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.75, 51.666668) and diameter 27.329305234349
+2020-02-14 11:42:10,166 - Training Data - INFO - +++ Argmin center -> lon: -40.91666793823242, Center lat: 51.83333206176758
+2020-02-14 11:42:12,306 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:42:36,244 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:42:36,245 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:42:36,570 - Training Data - INFO - Creating images for dataset 04-07-2018
+2020-02-14 11:42:38,048 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 11:42:38,048 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.5, 48.416668) and diameter 41.73916459433821
+2020-02-14 11:42:38,051 - Training Data - INFO - +++ Argmin center -> lon: -40.5, Center lat: 48.58333206176758
+2020-02-14 11:42:40,813 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:42:40,816 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.5, 47.083332) and diameter 75.74040357254603
+2020-02-14 11:42:40,822 - Training Data - INFO - +++ Argmin center -> lon: -40.91666793823242, Center lat: 47.16666793823242
+2020-02-14 11:42:42,372 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:42:42,374 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.0, 45.25) and diameter 45.64969792538116
+2020-02-14 11:42:42,377 - Training Data - INFO - +++ Argmin center -> lon: -39.0, Center lat: 45.33333206176758
+2020-02-14 11:42:45,516 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:42:45,518 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.166668, 45.916668) and diameter 67.03239168686672
+2020-02-14 11:42:45,523 - Training Data - INFO - +++ Argmax center -> lon: -41.08333206176758, Center lat: 45.91666793823242
+2020-02-14 11:42:47,339 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:42:55,237 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:42:59,734 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:43:01,259 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:43:01,261 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:43:01,600 - Training Data - INFO - Creating images for dataset 10-01-2018
+2020-02-14 11:43:03,332 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:43:03,333 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.75, 47.833332) and diameter 94.30939720982992
+2020-02-14 11:43:03,337 - Training Data - INFO - +++ Argmin center -> lon: -35.83333206176758, Center lat: 47.91666793823242
+2020-02-14 11:43:04,839 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:43:04,841 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.333332, 47.416668) and diameter 54.43512222430197
+2020-02-14 11:43:04,844 - Training Data - INFO - +++ Argmax center -> lon: -39.41666793823242, Center lat: 47.5
+2020-02-14 11:43:06,227 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:43:06,229 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.333332, 50.583332) and diameter 49.3422207974354
+2020-02-14 11:43:06,231 - Training Data - INFO - +++ Argmin center -> lon: -39.58333206176758, Center lat: 50.66666793823242
+2020-02-14 11:43:07,755 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:43:07,756 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.25, 51.75) and diameter 50.04227422887682
+2020-02-14 11:43:07,769 - Training Data - INFO - +++ Argmin center -> lon: -36.16666793823242, Center lat: 52.0
+2020-02-14 11:43:09,748 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:43:09,749 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.666668, 51.75) and diameter 76.12996892328641
+2020-02-14 11:43:09,774 - Training Data - INFO - +++ Argmax center -> lon: -29.16666603088379, Center lat: 51.25
+2020-02-14 11:43:11,708 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:43:13,544 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:43:24,386 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:43:26,843 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:43:26,843 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:43:27,176 - Training Data - INFO - Creating images for dataset 11-04-2018
+2020-02-14 11:43:28,592 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:43:28,592 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.333334, 50.5) and diameter 23.61996939620033
+2020-02-14 11:43:28,593 - Training Data - INFO - +++ Argmin center -> lon: -31.33333396911621, Center lat: 50.5
+2020-02-14 11:43:30,502 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:43:30,504 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-29.583334, 50.416668) and diameter 38.248044134925266
+2020-02-14 11:43:30,506 - Training Data - INFO - +++ Argmax center -> lon: -29.83333396911621, Center lat: 50.16666793823242
+2020-02-14 11:43:32,450 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:43:32,451 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-28.666666, 51.833332) and diameter 42.73665187718857
+2020-02-14 11:43:32,483 - Training Data - INFO - +++ Argmin center -> lon: -38.08333206176758, Center lat: 52.08333206176758
+2020-02-14 11:43:34,066 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:43:34,068 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.5, 47.25) and diameter 75.19730544614399
+2020-02-14 11:43:34,071 - Training Data - INFO - +++ Argmin center -> lon: -40.0, Center lat: 47.25
+2020-02-14 11:43:36,371 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:43:36,373 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.5, 48.416668) and diameter 28.28486334422959
+2020-02-14 11:43:36,375 - Training Data - INFO - +++ Argmin center -> lon: -38.33333206176758, Center lat: 48.5
+2020-02-14 11:43:38,332 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:43:38,333 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.666668, 49.25) and diameter 25.36118034809881
+2020-02-14 11:43:38,337 - Training Data - INFO - +++ Argmin center -> lon: -40.66666793823242, Center lat: 49.33333206176758
+2020-02-14 11:43:39,770 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:43:42,305 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:43:42,307 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:43:42,639 - Training Data - INFO - Creating images for dataset 28-05-2018
+2020-02-14 11:43:44,186 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:43:44,186 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.0, 46.25) and diameter 94.47289896633995
+2020-02-14 11:43:44,191 - Training Data - INFO - +++ Argmax center -> lon: -39.08333206176758, Center lat: 46.33333206176758
+2020-02-14 11:43:45,915 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:43:45,916 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.75, 46.833332) and diameter 38.685269921717754
+2020-02-14 11:43:45,919 - Training Data - INFO - +++ Argmin center -> lon: -41.75, Center lat: 46.91666793823242
+2020-02-14 11:43:47,906 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:43:47,906 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 48.916668) and diameter 24.00020912784749
+2020-02-14 11:43:47,911 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 49.0
+2020-02-14 11:43:50,827 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:43:50,828 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.083332, 51.25) and diameter 44.604203461639976
+2020-02-14 11:43:50,832 - Training Data - INFO - +++ Argmin center -> lon: -36.66666793823242, Center lat: 51.25
+2020-02-14 11:43:56,945 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:43:56,947 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.916668, 58.75) and diameter 18.470843301488742
+2020-02-14 11:43:56,949 - Training Data - INFO - +++ Argmin center -> lon: -36.0, Center lat: 58.66666793823242
+2020-02-14 11:44:01,958 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:44:04,689 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:44:06,179 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:44:09,555 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:44:09,556 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:44:09,893 - Training Data - INFO - Creating images for dataset 22-03-2018
+2020-02-14 11:44:11,423 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:44:11,424 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.5, 50.583332) and diameter 31.208273377649444
+2020-02-14 11:44:11,426 - Training Data - INFO - +++ Argmax center -> lon: -39.66666793823242, Center lat: 50.41666793823242
+2020-02-14 11:44:17,043 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:44:17,045 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 47.666668) and diameter 77.67267939723287
+2020-02-14 11:44:17,050 - Training Data - INFO - +++ Argmin center -> lon: -41.5, Center lat: 47.75
+2020-02-14 11:44:18,891 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:44:18,892 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.75, 51.083332) and diameter 44.639041370356935
+2020-02-14 11:44:18,895 - Training Data - INFO - +++ Argmin center -> lon: -34.5, Center lat: 51.16666793823242
+2020-02-14 11:44:24,050 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:44:24,051 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.333332, 51.583332) and diameter 36.855945539100844
+2020-02-14 11:44:24,056 - Training Data - INFO - +++ Argmin center -> lon: -37.33333206176758, Center lat: 51.66666793823242
+2020-02-14 11:44:28,460 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:44:28,461 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-29.666666, 51.75) and diameter 50.0385246283019
+2020-02-14 11:44:28,473 - Training Data - INFO - +++ Argmin center -> lon: -33.25, Center lat: 51.75
+2020-02-14 11:44:30,410 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:44:30,412 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.75, 49.0) and diameter 54.935604462156924
+2020-02-14 11:44:30,417 - Training Data - INFO - +++ Argmin center -> lon: -38.83333206176758, Center lat: 49.08333206176758
+2020-02-14 11:44:32,412 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 11:44:41,290 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:44:42,626 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:44:44,651 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:44:44,652 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:44:45,036 - Training Data - INFO - Creating images for dataset 16-02-2018
+2020-02-14 11:44:46,565 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 11:44:46,566 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.25, 47.333332) and diameter 63.201416845158846
+2020-02-14 11:44:46,568 - Training Data - INFO - +++ Argmax center -> lon: -41.08333206176758, Center lat: 47.66666793823242
+2020-02-14 11:44:48,524 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:44:48,526 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.333332, 51.416668) and diameter 65.4395834112645
+2020-02-14 11:44:48,531 - Training Data - INFO - +++ Argmax center -> lon: -41.08333206176758, Center lat: 51.0
+2020-02-14 11:44:51,211 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:44:51,213 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.916668, 47.166668) and diameter 102.64810856700389
+2020-02-14 11:44:51,218 - Training Data - INFO - +++ Argmin center -> lon: -39.91666793823242, Center lat: 47.16666793823242
+2020-02-14 11:44:52,496 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:44:52,498 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.666668, 48.5) and diameter 63.71951325090695
+2020-02-14 11:44:52,504 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.5
+2020-02-14 11:44:54,746 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:44:54,747 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.333332, 51.25) and diameter 37.03153738021645
+2020-02-14 11:44:54,750 - Training Data - INFO - +++ Argmin center -> lon: -37.08333206176758, Center lat: 51.33333206176758
+2020-02-14 11:45:00,732 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:45:00,733 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.75, 50.5) and diameter 36.38884421420573
+2020-02-14 11:45:00,737 - Training Data - INFO - +++ Argmax center -> lon: -33.66666793823242, Center lat: 50.41666793823242
+2020-02-14 11:45:02,466 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:45:04,762 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:45:06,082 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:45:07,867 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:45:07,867 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:45:08,208 - Training Data - INFO - Creating images for dataset 04-01-2018
+2020-02-14 11:45:09,739 - Training Data - INFO - + Creating rectangles for 3 eddies
+2020-02-14 11:45:09,740 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.5, 47.666668) and diameter 21.021138047344657
+2020-02-14 11:45:09,741 - Training Data - INFO - +++ Argmax center -> lon: -38.58333206176758, Center lat: 47.75
+2020-02-14 11:45:18,735 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:45:18,735 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.416668, 51.666668) and diameter 24.73823341920316
+2020-02-14 11:45:18,738 - Training Data - INFO - +++ Argmax center -> lon: -41.33333206176758, Center lat: 51.58333206176758
+2020-02-14 11:45:20,768 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:45:20,768 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.416668, 50.416668) and diameter 76.49036789388921
+2020-02-14 11:45:20,771 - Training Data - INFO - +++ Argmin center -> lon: -40.33333206176758, Center lat: 50.5
+2020-02-14 11:45:22,376 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:45:23,889 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:45:26,382 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:45:26,383 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:45:26,724 - Training Data - INFO - Creating images for dataset 10-04-2018
+2020-02-14 11:45:28,181 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 11:45:28,181 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.583332, 47.5) and diameter 40.24152870119818
+2020-02-14 11:45:28,183 - Training Data - INFO - +++ Argmax center -> lon: -38.83333206176758, Center lat: 47.25
+2020-02-14 11:45:30,345 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:45:30,346 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.666668, 48.416668) and diameter 46.67155133059301
+2020-02-14 11:45:30,349 - Training Data - INFO - +++ Argmin center -> lon: -38.41666793823242, Center lat: 48.66666793823242
+2020-02-14 11:45:32,472 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:45:32,472 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.666668, 47.083332) and diameter 70.14293854110609
+2020-02-14 11:45:32,475 - Training Data - INFO - +++ Argmin center -> lon: -40.08333206176758, Center lat: 47.08333206176758
+2020-02-14 11:45:34,963 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:45:34,963 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.166668, 47.333332) and diameter 35.498037684736914
+2020-02-14 11:45:34,965 - Training Data - INFO - +++ Argmin center -> lon: -38.0, Center lat: 47.5
+2020-02-14 11:45:37,831 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:45:37,831 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.666668, 49.25) and diameter 36.84978143542729
+2020-02-14 11:45:37,834 - Training Data - INFO - +++ Argmin center -> lon: -40.75, Center lat: 49.33333206176758
+2020-02-14 11:45:42,897 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:45:42,897 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.833332, 50.166668) and diameter 48.04853849746067
+2020-02-14 11:45:42,899 - Training Data - INFO - +++ Argmin center -> lon: -32.75, Center lat: 50.41666793823242
+2020-02-14 11:45:45,378 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 11:45:45,378 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-29.833334, 50.583332) and diameter 38.23352122412224
+2020-02-14 11:45:45,380 - Training Data - INFO - +++ Argmax center -> lon: -30.08333396911621, Center lat: 50.33333206176758
+2020-02-14 11:45:47,474 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 11:45:52,120 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:45:52,120 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:45:52,458 - Training Data - INFO - Creating images for dataset 13-06-2018
+2020-02-14 11:45:53,950 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 11:45:53,950 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.583332, 46.5) and diameter 50.58355538937375
+2020-02-14 11:45:53,953 - Training Data - INFO - +++ Argmin center -> lon: -41.0, Center lat: 46.75
+2020-02-14 11:45:55,633 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:45:55,634 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.25, 52.083332) and diameter 76.33331597302892
+2020-02-14 11:45:55,642 - Training Data - INFO - +++ Argmin center -> lon: -27.33333396911621, Center lat: 52.08333206176758
+2020-02-14 11:46:09,519 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:46:09,519 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.25, 48.166668) and diameter 36.27628162912324
+2020-02-14 11:46:09,522 - Training Data - INFO - +++ Argmin center -> lon: -35.08333206176758, Center lat: 48.33333206176758
+2020-02-14 11:46:11,900 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:46:11,900 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.916668, 51.75) and diameter 50.85342666822038
+2020-02-14 11:46:11,910 - Training Data - INFO - +++ Argmax center -> lon: -37.25, Center lat: 51.41666793823242
+2020-02-14 11:46:13,713 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:46:13,713 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.25, 49.416668) and diameter 57.258440612731114
+2020-02-14 11:46:13,716 - Training Data - INFO - +++ Argmin center -> lon: -32.08333206176758, Center lat: 49.41666793823242
+2020-02-14 11:46:15,096 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:46:15,097 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.416668, 50.25) and diameter 30.16085520433602
+2020-02-14 11:46:15,098 - Training Data - INFO - +++ Argmin center -> lon: -36.58333206176758, Center lat: 50.33333206176758
+2020-02-14 11:46:18,487 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 11:46:18,488 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-30.583334, 49.833332) and diameter 51.906053289865696
+2020-02-14 11:46:18,490 - Training Data - INFO - +++ Argmax center -> lon: -30.5, Center lat: 49.66666793823242
+2020-02-14 11:46:20,312 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 11:46:22,904 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:46:28,534 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:46:31,425 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:46:33,639 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:46:33,640 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:46:33,980 - Training Data - INFO - Creating images for dataset 22-01-2018
+2020-02-14 11:46:35,521 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 11:46:35,522 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.75, 47.833332) and diameter 79.42042206842756
+2020-02-14 11:46:35,526 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 47.91666793823242
+2020-02-14 11:46:37,072 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:46:37,073 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.583332, 47.166668) and diameter 74.70975773848828
+2020-02-14 11:46:37,076 - Training Data - INFO - +++ Argmax center -> lon: -40.58333206176758, Center lat: 47.16666793823242
+2020-02-14 11:46:38,455 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:46:38,455 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.5, 52.0) and diameter 37.61703874863476
+2020-02-14 11:46:38,459 - Training Data - INFO - +++ Argmin center -> lon: -39.25, Center lat: 52.25
+2020-02-14 11:46:44,327 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:46:44,328 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.916668, 51.0) and diameter 39.85575127185252
+2020-02-14 11:46:44,330 - Training Data - INFO - +++ Argmin center -> lon: -39.75, Center lat: 51.25
+2020-02-14 11:46:46,896 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:46:46,897 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 50.916668) and diameter 51.98026366260317
+2020-02-14 11:46:46,899 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 50.66666793823242
+2020-02-14 11:46:58,281 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:46:58,281 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.75, 51.75) and diameter 23.308159400881664
+2020-02-14 11:46:58,283 - Training Data - INFO - +++ Argmax center -> lon: -41.58333206176758, Center lat: 51.66666793823242
+2020-02-14 11:47:00,966 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 11:47:00,967 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.083332, 48.166668) and diameter 73.05251119857941
+2020-02-14 11:47:00,971 - Training Data - INFO - +++ Argmin center -> lon: -38.91666793823242, Center lat: 48.08333206176758
+2020-02-14 11:47:02,478 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 11:47:05,768 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:47:07,599 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:47:09,279 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:47:12,045 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:47:12,045 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:47:12,391 - Training Data - INFO - Creating images for dataset 26-02-2018
+2020-02-14 11:47:13,864 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:47:13,864 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.583332, 49.0) and diameter 56.976111592917746
+2020-02-14 11:47:13,869 - Training Data - INFO - +++ Argmax center -> lon: -40.41666793823242, Center lat: 48.91666793823242
+2020-02-14 11:47:20,184 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:47:20,186 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 46.416668) and diameter 51.38120507133523
+2020-02-14 11:47:20,189 - Training Data - INFO - +++ Argmin center -> lon: -41.41666793823242, Center lat: 46.5
+2020-02-14 11:47:21,805 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:47:21,807 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.666668, 50.916668) and diameter 70.72762546172396
+2020-02-14 11:47:21,810 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 51.33333206176758
+2020-02-14 11:47:25,320 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:47:25,321 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.166668, 45.5) and diameter 27.68725289006842
+2020-02-14 11:47:25,328 - Training Data - INFO - +++ Argmin center -> lon: -35.25, Center lat: 45.66666793823242
+2020-02-14 11:47:27,320 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:47:27,322 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.666668, 56.916668) and diameter 32.82469502653829
+2020-02-14 11:47:27,325 - Training Data - INFO - +++ Argmin center -> lon: -36.83333206176758, Center lat: 56.83333206176758
+2020-02-14 11:47:29,591 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 11:47:32,029 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:47:34,111 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:47:35,511 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:47:35,513 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:47:35,864 - Training Data - INFO - Creating images for dataset 13-02-2018
+2020-02-14 11:47:37,362 - Training Data - INFO - + Creating rectangles for 3 eddies
+2020-02-14 11:47:37,362 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.75, 52.083332) and diameter 62.75836840906548
+2020-02-14 11:47:37,367 - Training Data - INFO - +++ Argmin center -> lon: -41.91666793823242, Center lat: 52.0
+2020-02-14 11:47:40,551 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:47:40,552 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.916668, 51.5) and diameter 37.859185117118045
+2020-02-14 11:47:40,556 - Training Data - INFO - +++ Argmin center -> lon: -39.41666793823242, Center lat: 51.75
+2020-02-14 11:47:42,385 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:47:42,386 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.333332, 48.916668) and diameter 71.61424971200061
+2020-02-14 11:47:42,392 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.58333206176758
+2020-02-14 11:47:44,286 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:47:44,286 - Training Data - INFO - +++++ No eddies found
+2020-02-14 11:47:44,289 - Training Data - INFO - Creating images for dataset 20-02-2018
+2020-02-14 11:47:45,913 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:47:45,913 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.916668, 51.0) and diameter 41.52143126441946
+2020-02-14 11:47:45,916 - Training Data - INFO - +++ Argmax center -> lon: -40.0, Center lat: 50.91666793823242
+2020-02-14 11:47:51,607 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 11:47:51,609 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.75, 49.333332) and diameter 85.09259738826044
+2020-02-14 11:47:51,613 - Training Data - INFO - +++ Argmin center -> lon: -41.83333206176758, Center lat: 49.16666793823242
+2020-02-14 11:47:54,004 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:47:54,006 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.75, 47.166668) and diameter 111.50676702653577
+2020-02-14 11:47:54,013 - Training Data - INFO - +++ Argmin center -> lon: -40.58333206176758, Center lat: 46.91666793823242
+2020-02-14 11:47:55,552 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:47:55,553 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.5, 49.666668) and diameter 35.71215154343049
+2020-02-14 11:47:55,555 - Training Data - INFO - +++ Argmin center -> lon: -39.25, Center lat: 49.83333206176758
+2020-02-14 11:47:57,951 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 11:47:57,951 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 51.75) and diameter 28.57608473119607
+2020-02-14 11:47:57,956 - Training Data - INFO - +++ Argmin center -> lon: -39.41666793823242, Center lat: 51.91666793823242
+2020-02-14 11:47:59,804 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 11:48:01,566 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:48:01,567 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:48:01,917 - Training Data - INFO - Creating images for dataset 27-01-2018
+2020-02-14 11:48:03,591 - Training Data - INFO - + Creating rectangles for 3 eddies
+2020-02-14 11:48:03,592 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.916668, 47.833332) and diameter 138.61722415056164
+2020-02-14 11:48:03,603 - Training Data - INFO - +++ Argmin center -> lon: -39.08333206176758, Center lat: 47.83333206176758
+2020-02-14 11:48:04,873 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:48:04,874 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.916668, 50.0) and diameter 51.560025118232545
+2020-02-14 11:48:04,877 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 50.16666793823242
+2020-02-14 11:48:09,167 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 11:48:09,168 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.833332, 48.166668) and diameter 59.29594947876873
+2020-02-14 11:48:09,172 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.16666793823242
+2020-02-14 11:48:11,581 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 11:48:17,182 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:48:17,184 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:48:17,538 - Training Data - INFO - Creating images for dataset 03-06-2018
+2020-02-14 11:48:19,021 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 11:48:19,021 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-34.25, 46.75) and diameter 76.13532034503869
+2020-02-14 11:48:19,025 - Training Data - INFO - +++ Argmax center -> lon: -34.33333206176758, Center lat: 46.66666793823242
+2020-02-14 11:48:22,737 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:48:22,739 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.166668, 46.5) and diameter 86.67855783905296
+2020-02-14 11:48:22,743 - Training Data - INFO - +++ Argmin center -> lon: -41.75, Center lat: 46.83333206176758
+2020-02-14 11:48:25,444 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 11:48:25,446 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.333332, 45.833332) and diameter 45.40870973895281
+2020-02-14 11:48:25,450 - Training Data - INFO - +++ Argmax center -> lon: -39.33333206176758, Center lat: 45.83333206176758
+2020-02-14 11:48:28,197 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 11:48:28,199 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.833332, 58.833332) and diameter 38.47424771272872
+2020-02-14 11:48:28,202 - Training Data - INFO - +++ Argmin center -> lon: -35.91666793823242, Center lat: 58.83333206176758
+2020-02-14 11:48:55,919 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 11:49:01,839 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:49:03,766 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:49:05,365 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:49:08,977 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 11:49:08,978 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 11:49:09,353 - Training Data - INFO - Creating images for dataset 15-06-2018
+2020-02-14 11:49:10,780 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 11:49:10,780 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.5, 45.083332) and diameter 89.61813448775901
+2020-02-14 11:49:10,785 - Training Data - INFO - +++ Argmax center -> lon: -39.58333206176758, Center lat: 45.16666793823242
+2020-02-14 11:49:16,736 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 11:49:16,737 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.916668, 48.083332) and diameter 38.2500332075191
+2020-02-14 11:49:16,741 - Training Data - INFO - +++ Argmin center -> lon: -34.91666793823242, Center lat: 48.33333206176758
+2020-02-14 12:40:33,364 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 12:40:33,365 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.0, 51.666668) and diameter 24.73066004814333
+2020-02-14 12:40:33,369 - Training Data - INFO - +++ Argmax center -> lon: -39.91666793823242, Center lat: 51.83333206176758
+2020-02-14 12:40:36,610 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:40:36,611 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.916666, 49.333332) and diameter 47.025747000064904
+2020-02-14 12:40:36,613 - Training Data - INFO - +++ Argmin center -> lon: -31.91666603088379, Center lat: 49.41666793823242
+2020-02-14 12:40:38,483 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:40:38,484 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.166668, 48.916668) and diameter 52.178077428289754
+2020-02-14 12:40:38,489 - Training Data - INFO - +++ Argmax center -> lon: -41.33333206176758, Center lat: 48.66666793823242
+2020-02-14 12:40:41,419 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:40:44,572 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:40:50,996 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:40:52,532 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:40:52,532 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:40:52,891 - Training Data - INFO - Creating images for dataset 27-02-2018
+2020-02-14 12:40:54,418 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 12:40:54,419 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 51.0) and diameter 77.20470433550078
+2020-02-14 12:40:54,422 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 51.5
+2020-02-14 12:41:25,570 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 12:41:25,571 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.333332, 49.083332) and diameter 64.64458000337133
+2020-02-14 12:41:25,576 - Training Data - INFO - +++ Argmax center -> lon: -40.41666793823242, Center lat: 48.91666793823242
+2020-02-14 12:41:27,219 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:41:27,220 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 46.333332) and diameter 61.433576632538845
+2020-02-14 12:41:27,223 - Training Data - INFO - +++ Argmin center -> lon: -41.41666793823242, Center lat: 46.41666793823242
+2020-02-14 12:41:28,643 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:41:28,644 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.75, 47.583332) and diameter 27.189487319438975
+2020-02-14 12:41:28,646 - Training Data - INFO - +++ Argmin center -> lon: -36.75, Center lat: 47.5
+2020-02-14 12:41:30,268 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:41:30,269 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.0, 54.416668) and diameter 27.650137750923186
+2020-02-14 12:41:30,271 - Training Data - INFO - +++ Argmin center -> lon: -39.91666793823242, Center lat: 54.41666793823242
+2020-02-14 12:41:31,893 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 12:41:34,811 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:41:38,673 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:41:42,283 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:42:17,986 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:42:17,986 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:42:18,349 - Training Data - INFO - Creating images for dataset 02-01-2018
+2020-02-14 12:42:19,973 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 12:42:19,974 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.666668, 47.833332) and diameter 74.81908372975569
+2020-02-14 12:42:19,977 - Training Data - INFO - +++ Argmax center -> lon: -38.83333206176758, Center lat: 47.83333206176758
+2020-02-14 12:42:48,066 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:42:48,067 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.5, 48.416668) and diameter 72.76001843156875
+2020-02-14 12:42:48,073 - Training Data - INFO - +++ Argmin center -> lon: -40.41666793823242, Center lat: 48.5
+2020-02-14 12:43:04,081 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:43:04,082 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.75, 47.666668) and diameter 88.35237591784012
+2020-02-14 12:43:04,086 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 47.75
+2020-02-14 12:43:06,577 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:43:06,577 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.666668, 50.5) and diameter 39.16734028547024
+2020-02-14 12:43:06,579 - Training Data - INFO - +++ Argmin center -> lon: -40.5, Center lat: 50.5
+2020-02-14 12:43:10,162 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:43:28,466 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:43:45,070 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:43:46,744 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:43:49,064 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:43:49,065 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:43:49,432 - Training Data - INFO - Creating images for dataset 06-04-2018
+2020-02-14 12:43:50,986 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 12:43:50,986 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.416666, 50.583332) and diameter 75.19796486569203
+2020-02-14 12:43:50,990 - Training Data - INFO - +++ Argmin center -> lon: -31.33333396911621, Center lat: 50.5
+2020-02-14 12:44:27,516 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:44:27,517 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.166668, 49.333332) and diameter 47.00251285011211
+2020-02-14 12:44:27,520 - Training Data - INFO - +++ Argmax center -> lon: -40.16666793823242, Center lat: 49.33333206176758
+2020-02-14 12:44:32,657 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:44:32,657 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-15.333333, 55.75) and diameter 24.80286321121907
+2020-02-14 12:44:32,659 - Training Data - INFO - +++ Argmin center -> lon: -15.416666984558105, Center lat: 55.83333206176758
+2020-02-14 12:44:57,608 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 12:44:57,609 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.666668, 48.916668) and diameter 20.76452237016342
+2020-02-14 12:44:57,610 - Training Data - INFO - +++ Argmin center -> lon: -40.75, Center lat: 49.0
+2020-02-14 12:45:23,296 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 12:45:23,297 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.25, 47.583332) and diameter 21.052038316889817
+2020-02-14 12:45:23,298 - Training Data - INFO - +++ Argmin center -> lon: -38.16666793823242, Center lat: 47.58333206176758
+2020-02-14 12:45:25,343 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:45:25,344 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.583332, 50.25) and diameter 79.44119665319523
+2020-02-14 12:45:25,347 - Training Data - INFO - +++ Argmin center -> lon: -34.66666793823242, Center lat: 50.33333206176758
+2020-02-14 12:45:27,417 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 12:45:27,418 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 46.333332) and diameter 47.68021317331039
+2020-02-14 12:45:27,420 - Training Data - INFO - +++ Argmin center -> lon: -41.5, Center lat: 46.41666793823242
+2020-02-14 12:45:28,785 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 12:45:32,793 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:45:35,799 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:45:37,272 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:45:38,969 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:45:38,969 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:45:39,342 - Training Data - INFO - Creating images for dataset 21-05-2018
+2020-02-14 12:45:40,997 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 12:45:40,998 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-16.916666, 53.25) and diameter 37.998415202499636
+2020-02-14 12:45:41,000 - Training Data - INFO - +++ Argmax center -> lon: -16.83333396911621, Center lat: 53.25
+2020-02-14 12:49:46,422 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:49:46,423 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.166668, 46.333332) and diameter 95.24880064565114
+2020-02-14 12:49:46,428 - Training Data - INFO - +++ Argmax center -> lon: -40.0, Center lat: 46.16666793823242
+2020-02-14 12:49:55,231 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:49:55,232 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-28.0, 52.083332) and diameter 54.402075120961165
+2020-02-14 12:49:55,237 - Training Data - INFO - +++ Argmin center -> lon: -28.33333396911621, Center lat: 52.41666793823242
+2020-02-14 12:49:59,543 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 12:49:59,543 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.333332, 50.166668) and diameter 42.75264755055913
+2020-02-14 12:49:59,545 - Training Data - INFO - +++ Argmin center -> lon: -34.33333206176758, Center lat: 50.41666793823242
+2020-02-14 12:50:03,542 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 12:50:03,542 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.916668, 51.666668) and diameter 32.964698055525865
+2020-02-14 12:50:03,545 - Training Data - INFO - +++ Argmin center -> lon: -36.91666793823242, Center lat: 51.66666793823242
+2020-02-14 12:50:05,910 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:50:05,910 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.5, 50.666668) and diameter 60.83602800087227
+2020-02-14 12:50:05,913 - Training Data - INFO - +++ Argmin center -> lon: -38.58333206176758, Center lat: 50.66666793823242
+2020-02-14 12:50:08,629 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 12:50:16,295 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:50:24,454 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:50:25,844 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:50:25,845 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:50:26,217 - Training Data - INFO - Creating images for dataset 21-04-2018
+2020-02-14 12:50:27,679 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 12:50:27,679 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.833332, 47.5) and diameter 53.781305935267305
+2020-02-14 12:50:27,682 - Training Data - INFO - +++ Argmax center -> lon: -38.0, Center lat: 47.41666793823242
+2020-02-14 12:51:01,838 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 12:51:01,838 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-22.166666, 55.333332) and diameter 42.560063393918945
+2020-02-14 12:51:01,842 - Training Data - INFO - +++ Argmin center -> lon: -22.33333396911621, Center lat: 55.25
+2020-02-14 12:51:04,396 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:51:04,397 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-31.083334, 50.0) and diameter 42.768436608630935
+2020-02-14 12:51:04,399 - Training Data - INFO - +++ Argmax center -> lon: -30.91666603088379, Center lat: 50.0
+2020-02-14 12:51:08,324 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:51:08,325 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.0, 48.833332) and diameter 54.35372384152764
+2020-02-14 12:51:08,332 - Training Data - INFO - +++ Argmin center -> lon: -38.41666793823242, Center lat: 49.0
+2020-02-14 12:51:11,951 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 12:51:11,952 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.666668, 48.333332) and diameter 64.3804312359078
+2020-02-14 12:51:11,957 - Training Data - INFO - +++ Argmax center -> lon: -37.91666793823242, Center lat: 47.91666793823242
+2020-02-14 12:51:25,693 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:51:28,154 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:51:30,013 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:51:30,014 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:51:30,391 - Training Data - INFO - Creating images for dataset 07-01-2018
+2020-02-14 12:51:32,050 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 12:51:32,050 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.833332, 51.666668) and diameter 73.33903758153349
+2020-02-14 12:51:32,060 - Training Data - INFO - +++ Argmax center -> lon: -35.83333206176758, Center lat: 51.25
+2020-02-14 12:53:36,453 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 12:53:36,453 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.75, 47.75) and diameter 85.81596366388476
+2020-02-14 12:53:36,458 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 47.83333206176758
+2020-02-14 12:53:38,119 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:53:38,120 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.916668, 50.5) and diameter 79.59457076443967
+2020-02-14 12:53:38,123 - Training Data - INFO - +++ Argmin center -> lon: -39.91666793823242, Center lat: 50.58333206176758
+2020-02-14 12:53:39,787 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:53:39,788 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.166668, 47.583332) and diameter 55.046805641018295
+2020-02-14 12:53:39,790 - Training Data - INFO - +++ Argmax center -> lon: -39.16666793823242, Center lat: 47.58333206176758
+2020-02-14 12:53:41,540 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:53:41,541 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.416668, 51.833332) and diameter 35.84377114562212
+2020-02-14 12:53:41,562 - Training Data - INFO - +++ Argmin center -> lon: -36.33333206176758, Center lat: 52.0
+2020-02-14 12:53:43,514 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:53:43,514 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.333332, 49.75) and diameter 23.80042379042187
+2020-02-14 12:53:43,516 - Training Data - INFO - +++ Argmax center -> lon: -41.33333206176758, Center lat: 49.66666793823242
+2020-02-14 12:53:54,419 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 12:54:01,698 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:54:03,235 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:54:05,688 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:54:05,688 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:54:06,066 - Training Data - INFO - Creating images for dataset 09-03-2018
+2020-02-14 12:54:07,643 - Training Data - INFO - + Creating rectangles for 9 eddies
+2020-02-14 12:54:07,643 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.666668, 50.833332) and diameter 38.131799246254815
+2020-02-14 12:54:07,645 - Training Data - INFO - +++ Argmin center -> lon: -40.91666793823242, Center lat: 51.08333206176758
+2020-02-14 12:54:11,657 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 12:54:11,658 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.0, 51.25) and diameter 65.59285963251732
+2020-02-14 12:54:11,661 - Training Data - INFO - +++ Argmax center -> lon: -40.16666793823242, Center lat: 50.83333206176758
+2020-02-14 12:54:15,778 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 12:54:15,778 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.0, 48.333332) and diameter 44.32791931637612
+2020-02-14 12:54:15,782 - Training Data - INFO - +++ Argmin center -> lon: -38.0, Center lat: 48.33333206176758
+2020-02-14 12:54:17,354 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:54:17,355 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-30.166666, 50.583332) and diameter 41.675843855328964
+2020-02-14 12:54:17,358 - Training Data - INFO - +++ Argmin center -> lon: -30.08333396911621, Center lat: 50.66666793823242
+2020-02-14 12:54:21,865 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:54:21,866 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.916668, 46.333332) and diameter 23.01202559968457
+2020-02-14 12:54:21,867 - Training Data - INFO - +++ Argmin center -> lon: -37.83333206176758, Center lat: 46.25
+2020-02-14 12:54:24,177 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 12:54:24,177 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.333332, 47.5) and diameter 91.87869513320774
+2020-02-14 12:54:24,182 - Training Data - INFO - +++ Argmin center -> lon: -41.41666793823242, Center lat: 47.5
+2020-02-14 12:54:27,003 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 12:54:27,003 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.666668, 48.75) and diameter 48.09276606792237
+2020-02-14 12:54:27,012 - Training Data - INFO - +++ Argmax center -> lon: -40.75, Center lat: 48.75
+2020-02-14 12:54:42,609 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 12:54:42,610 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.75, 46.083332) and diameter 30.207837611368006
+2020-02-14 12:54:42,615 - Training Data - INFO - +++ Argmax center -> lon: -41.41666793823242, Center lat: 46.0
+2020-02-14 12:54:45,025 - Training Data - INFO - +++++ Discarding image 7
+2020-02-14 12:54:45,027 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.416668, 57.25) and diameter 41.43998701807736
+2020-02-14 12:54:45,031 - Training Data - INFO - +++ Argmin center -> lon: -35.5, Center lat: 57.41666793823242
+2020-02-14 12:54:46,482 - Training Data - INFO - +++++ Saving image 8 as an eddy
+2020-02-14 12:54:48,977 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:54:50,212 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:54:52,019 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:54:53,665 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:54:55,665 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:54:55,667 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:54:56,053 - Training Data - INFO - Creating images for dataset 19-07-2018
+2020-02-14 12:54:57,596 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 12:54:57,597 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.083332, 51.5) and diameter 41.26918201567916
+2020-02-14 12:54:57,600 - Training Data - INFO - +++ Argmin center -> lon: -36.0, Center lat: 51.58333206176758
+2020-02-14 12:55:00,481 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:55:00,483 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.166668, 49.083332) and diameter 57.486513698661575
+2020-02-14 12:55:00,487 - Training Data - INFO - +++ Argmax center -> lon: -38.08333206176758, Center lat: 49.08333206176758
+2020-02-14 12:55:02,585 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:55:02,586 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.166668, 47.25) and diameter 33.386391789389386
+2020-02-14 12:55:02,589 - Training Data - INFO - +++ Argmin center -> lon: -39.33333206176758, Center lat: 47.33333206176758
+2020-02-14 12:55:05,026 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 12:55:05,028 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.583332, 47.833332) and diameter 61.87360432797403
+2020-02-14 12:55:05,032 - Training Data - INFO - +++ Argmax center -> lon: -37.66666793823242, Center lat: 47.75
+2020-02-14 12:55:06,961 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:55:06,962 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.916666, 50.666668) and diameter 44.85466633395429
+2020-02-14 12:55:06,966 - Training Data - INFO - +++ Argmin center -> lon: -32.0, Center lat: 50.66666793823242
+2020-02-14 12:55:09,701 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 12:55:09,702 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.5, 50.166668) and diameter 56.109542040335626
+2020-02-14 12:55:09,705 - Training Data - INFO - +++ Argmin center -> lon: -33.25, Center lat: 50.5
+2020-02-14 12:55:15,707 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 12:55:30,553 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:55:32,479 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:55:36,721 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:55:38,507 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:55:38,508 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:55:38,893 - Training Data - INFO - Creating images for dataset 22-04-2018
+2020-02-14 12:55:40,285 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 12:55:40,286 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.083332, 47.833332) and diameter 46.95189245161312
+2020-02-14 12:55:40,288 - Training Data - INFO - +++ Argmin center -> lon: -39.08333206176758, Center lat: 47.91666793823242
+2020-02-14 12:55:42,203 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:55:42,205 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.916668, 46.916668) and diameter 40.605233094364145
+2020-02-14 12:55:42,207 - Training Data - INFO - +++ Argmin center -> lon: -37.66666793823242, Center lat: 46.91666793823242
+2020-02-14 12:55:48,642 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 12:55:48,644 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.416668, 48.166668) and diameter 39.17546018956403
+2020-02-14 12:55:48,648 - Training Data - INFO - +++ Argmax center -> lon: -40.41666793823242, Center lat: 48.16666793823242
+2020-02-14 12:55:50,376 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:55:50,377 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.583332, 50.416668) and diameter 46.48446366881489
+2020-02-14 12:55:50,380 - Training Data - INFO - +++ Argmin center -> lon: -38.83333206176758, Center lat: 50.5
+2020-02-14 12:55:52,842 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 12:55:56,624 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:55:58,330 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:55:58,331 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:55:58,718 - Training Data - INFO - Creating images for dataset 11-06-2018
+2020-02-14 12:56:00,384 - Training Data - INFO - + Creating rectangles for 9 eddies
+2020-02-14 12:56:00,384 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.583332, 45.416668) and diameter 77.95796795630984
+2020-02-14 12:56:00,395 - Training Data - INFO - +++ Argmax center -> lon: -39.58333206176758, Center lat: 45.41666793823242
+2020-02-14 12:56:07,738 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 12:56:07,739 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.166668, 49.416668) and diameter 50.655637243951965
+2020-02-14 12:56:07,742 - Training Data - INFO - +++ Argmin center -> lon: -32.08333206176758, Center lat: 49.41666793823242
+2020-02-14 12:56:09,339 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:56:09,340 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.833332, 48.583332) and diameter 69.33679116262104
+2020-02-14 12:56:09,351 - Training Data - INFO - +++ Argmax center -> lon: -40.75, Center lat: 48.16666793823242
+2020-02-14 12:56:11,523 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 12:56:11,524 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.166666, 52.083332) and diameter 69.14295631388295
+2020-02-14 12:56:11,533 - Training Data - INFO - +++ Argmin center -> lon: -27.25, Center lat: 52.08333206176758
+2020-02-14 12:56:18,936 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 12:56:18,938 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-25.5, 57.75) and diameter 28.614389327990402
+2020-02-14 12:56:18,942 - Training Data - INFO - +++ Argmin center -> lon: -25.41666603088379, Center lat: 57.75
+2020-02-14 12:56:20,522 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 12:56:20,523 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 52.916668) and diameter 21.495879708816283
+2020-02-14 12:56:20,527 - Training Data - INFO - +++ Argmin center -> lon: -41.5, Center lat: 52.91666793823242
+2020-02-14 12:56:27,899 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 12:56:27,900 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.75, 50.5) and diameter 58.993865774038056
+2020-02-14 12:56:27,903 - Training Data - INFO - +++ Argmin center -> lon: -38.66666793823242, Center lat: 50.5
+2020-02-14 12:56:29,650 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 12:56:29,651 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-30.75, 49.583332) and diameter 40.43100170074822
+2020-02-14 12:56:29,655 - Training Data - INFO - +++ Argmax center -> lon: -30.5, Center lat: 49.58333206176758
+2020-02-14 12:56:31,352 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-14 12:56:31,354 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.0, 46.333332) and diameter 83.68031562848383
+2020-02-14 12:56:31,359 - Training Data - INFO - +++ Argmin center -> lon: -41.41666793823242, Center lat: 46.75
+2020-02-14 12:56:32,976 - Training Data - INFO - +++++ Saving image 8 as an eddy
+2020-02-14 12:56:38,122 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:56:40,296 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:56:41,904 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:56:43,770 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:56:45,128 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:56:45,129 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:56:45,520 - Training Data - INFO - Creating images for dataset 26-06-2018
+2020-02-14 12:56:46,966 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 12:56:46,967 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.5, 51.916668) and diameter 49.325587367487735
+2020-02-14 12:56:46,978 - Training Data - INFO - +++ Argmin center -> lon: -27.41666603088379, Center lat: 51.91666793823242
+2020-02-14 12:56:48,968 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 12:56:48,969 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.25, 45.666668) and diameter 45.421222002125766
+2020-02-14 12:56:48,976 - Training Data - INFO - +++ Argmin center -> lon: -37.58333206176758, Center lat: 45.41666793823242
+2020-02-14 12:56:50,689 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 12:56:50,689 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.416668, 50.166668) and diameter 20.52067837346065
+2020-02-14 12:56:50,692 - Training Data - INFO - +++ Argmax center -> lon: -41.33333206176758, Center lat: 50.08333206176758
+2020-02-14 12:56:52,438 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 12:56:52,440 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.583332, 50.25) and diameter 41.84066591893914
+2020-02-14 12:56:52,442 - Training Data - INFO - +++ Argmin center -> lon: -39.33333206176758, Center lat: 50.25
+2020-02-14 12:56:54,274 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:56:54,275 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-42.0, 46.416668) and diameter 33.66719941684022
+2020-02-14 12:56:54,277 - Training Data - INFO - +++ Argmin center -> lon: -41.91666793823242, Center lat: 46.58333206176758
+2020-02-14 12:56:56,450 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:56:56,452 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.416668, 49.75) and diameter 25.241413572648064
+2020-02-14 12:56:56,454 - Training Data - INFO - +++ Argmax center -> lon: -41.25, Center lat: 49.75
+2020-02-14 12:56:58,265 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 12:57:01,828 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:03,079 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:03,080 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:57:03,519 - Training Data - INFO - Creating images for dataset 01-02-2018
+2020-02-14 12:57:05,232 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 12:57:05,233 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.333332, 47.25) and diameter 31.094168371200443
+2020-02-14 12:57:05,235 - Training Data - INFO - +++ Argmax center -> lon: -41.16666793823242, Center lat: 47.16666793823242
+2020-02-14 12:57:12,385 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:57:12,386 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 48.5) and diameter 37.15629456010565
+2020-02-14 12:57:12,391 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.33333206176758
+2020-02-14 12:57:14,810 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:57:14,812 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.25, 47.666668) and diameter 54.96331206536221
+2020-02-14 12:57:14,814 - Training Data - INFO - +++ Argmin center -> lon: -39.25, Center lat: 47.75
+2020-02-14 12:57:17,369 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:57:17,371 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-32.666668, 51.75) and diameter 60.99217581180603
+2020-02-14 12:57:17,387 - Training Data - INFO - +++ Argmax center -> lon: -29.25, Center lat: 51.5
+2020-02-14 12:57:19,471 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 12:57:19,472 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.916668, 50.083332) and diameter 58.727734103319534
+2020-02-14 12:57:19,477 - Training Data - INFO - +++ Argmin center -> lon: -38.58333206176758, Center lat: 50.08333206176758
+2020-02-14 12:57:23,082 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 12:57:26,558 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:27,921 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:29,472 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:31,199 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:31,200 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:57:31,598 - Training Data - INFO - Creating images for dataset 18-04-2018
+2020-02-14 12:57:33,212 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 12:57:33,214 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-28.333334, 52.416668) and diameter 47.026883395961704
+2020-02-14 12:57:33,215 - Training Data - INFO - +++ Argmin center -> lon: -28.75, Center lat: 52.33333206176758
+2020-02-14 12:57:36,512 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:57:36,512 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-27.5, 52.0) and diameter 35.771939913818336
+2020-02-14 12:57:36,517 - Training Data - INFO - +++ Argmax center -> lon: -27.5, Center lat: 52.08333206176758
+2020-02-14 12:57:38,478 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 12:57:38,480 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.583332, 48.166668) and diameter 50.60251564796771
+2020-02-14 12:57:38,484 - Training Data - INFO - +++ Argmax center -> lon: -39.66666793823242, Center lat: 48.25
+2020-02-14 12:57:39,937 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:57:39,938 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.083334, 50.583332) and diameter 64.16155555937132
+2020-02-14 12:57:39,943 - Training Data - INFO - +++ Argmin center -> lon: -31.16666603088379, Center lat: 50.58333206176758
+2020-02-14 12:57:42,057 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:57:42,058 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.75, 48.833332) and diameter 44.96170717182562
+2020-02-14 12:57:42,066 - Training Data - INFO - +++ Argmin center -> lon: -38.33333206176758, Center lat: 49.0
+2020-02-14 12:57:44,078 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:57:47,044 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:48,913 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:53,682 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:57:53,683 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:57:54,085 - Training Data - INFO - Creating images for dataset 10-07-2018
+2020-02-14 12:57:55,973 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 12:57:55,974 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.0, 47.25) and diameter 52.380168268441004
+2020-02-14 12:57:55,976 - Training Data - INFO - +++ Argmin center -> lon: -40.33333206176758, Center lat: 47.5
+2020-02-14 12:57:58,967 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:57:58,969 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.583332, 48.083332) and diameter 41.035968988372055
+2020-02-14 12:57:58,973 - Training Data - INFO - +++ Argmax center -> lon: -38.83333206176758, Center lat: 48.08333206176758
+2020-02-14 12:58:00,480 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:58:00,481 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.25, 48.75) and diameter 62.38310134736394
+2020-02-14 12:58:00,502 - Training Data - INFO - +++ Argmax center -> lon: -39.33333206176758, Center lat: 48.33333206176758
+2020-02-14 12:58:02,668 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 12:58:02,669 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.666668, 50.666668) and diameter 44.865689576548874
+2020-02-14 12:58:02,672 - Training Data - INFO - +++ Argmin center -> lon: -40.41666793823242, Center lat: 50.75
+2020-02-14 12:58:06,783 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 12:58:06,785 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.583332, 45.416668) and diameter 47.197707360284014
+2020-02-14 12:58:06,792 - Training Data - INFO - +++ Argmin center -> lon: -33.41666793823242, Center lat: 45.58333206176758
+2020-02-14 12:58:08,568 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:58:08,570 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.833332, 51.583332) and diameter 38.67048786109974
+2020-02-14 12:58:08,574 - Training Data - INFO - +++ Argmin center -> lon: -37.83333206176758, Center lat: 51.83333206176758
+2020-02-14 12:58:10,967 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 12:58:10,969 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.75, 48.666668) and diameter 58.23242199882202
+2020-02-14 12:58:10,993 - Training Data - INFO - +++ Argmin center -> lon: -41.33333206176758, Center lat: 48.33333206176758
+2020-02-14 12:58:12,546 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 12:58:16,433 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:58:23,056 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:58:23,057 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:58:23,462 - Training Data - INFO - Creating images for dataset 08-01-2018
+2020-02-14 12:58:25,094 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 12:58:25,094 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.666668, 48.666668) and diameter 68.03712197386214
+2020-02-14 12:58:25,123 - Training Data - INFO - +++ Argmin center -> lon: -38.75, Center lat: 48.75
+2020-02-14 12:58:27,040 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 12:58:27,041 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.333332, 51.833332) and diameter 41.948993036719784
+2020-02-14 12:58:27,074 - Training Data - INFO - +++ Argmin center -> lon: -36.25, Center lat: 52.08333206176758
+2020-02-14 12:58:29,360 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 12:58:29,361 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.083334, 51.166668) and diameter 54.30712506732377
+2020-02-14 12:58:29,366 - Training Data - INFO - +++ Argmin center -> lon: -31.66666603088379, Center lat: 51.41666793823242
+2020-02-14 12:58:36,127 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 12:58:36,129 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.25, 49.75) and diameter 27.89027257008941
+2020-02-14 12:58:36,131 - Training Data - INFO - +++ Argmax center -> lon: -41.25, Center lat: 49.75
+2020-02-14 12:58:37,464 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:58:37,465 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.25, 47.583332) and diameter 53.73681046890992
+2020-02-14 12:58:37,468 - Training Data - INFO - +++ Argmax center -> lon: -39.25, Center lat: 47.58333206176758
+2020-02-14 12:58:38,702 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 12:58:38,703 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.75, 51.75) and diameter 73.81007943480029
+2020-02-14 12:58:38,727 - Training Data - INFO - +++ Argmax center -> lon: -29.33333396911621, Center lat: 51.33333206176758
+2020-02-14 12:58:40,853 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 12:58:40,854 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.666668, 50.5) and diameter 58.42875417367748
+2020-02-14 12:58:40,859 - Training Data - INFO - +++ Argmin center -> lon: -39.83333206176758, Center lat: 50.58333206176758
+2020-02-14 12:58:42,198 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 12:58:44,848 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:58:46,425 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:58:48,769 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:58:48,771 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:58:49,167 - Training Data - INFO - Creating images for dataset 08-03-2018
+2020-02-14 12:58:50,595 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 12:58:50,595 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 46.5) and diameter 52.072138091568384
+2020-02-14 12:58:50,598 - Training Data - INFO - +++ Argmin center -> lon: -41.5, Center lat: 46.5
+2020-02-14 12:58:59,252 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:58:59,253 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.666668, 49.75) and diameter 20.61249084939828
+2020-02-14 12:58:59,257 - Training Data - INFO - +++ Argmin center -> lon: -39.58333206176758, Center lat: 49.83333206176758
+2020-02-14 12:59:01,934 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 12:59:01,936 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.916668, 51.333332) and diameter 60.18510314165482
+2020-02-14 12:59:01,941 - Training Data - INFO - +++ Argmax center -> lon: -40.08333206176758, Center lat: 51.25
+2020-02-14 12:59:06,069 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:59:06,069 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.666668, 48.75) and diameter 50.30855992998898
+2020-02-14 12:59:06,083 - Training Data - INFO - +++ Argmax center -> lon: -40.66666793823242, Center lat: 48.75
+2020-02-14 12:59:07,861 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 12:59:07,862 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.833332, 48.333332) and diameter 41.83040665666829
+2020-02-14 12:59:07,867 - Training Data - INFO - +++ Argmin center -> lon: -37.83333206176758, Center lat: 48.25
+2020-02-14 12:59:09,342 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 12:59:09,344 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-35.75, 51.5) and diameter 50.91472920975394
+2020-02-14 12:59:09,348 - Training Data - INFO - +++ Argmax center -> lon: -35.83333206176758, Center lat: 51.41666793823242
+2020-02-14 12:59:10,744 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 12:59:12,769 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:59:15,023 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:59:16,861 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:59:20,831 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:59:20,833 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:59:21,237 - Training Data - INFO - Creating images for dataset 06-05-2018
+2020-02-14 12:59:22,724 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 12:59:22,725 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.416668, 45.333332) and diameter 73.44233188508458
+2020-02-14 12:59:22,730 - Training Data - INFO - +++ Argmax center -> lon: -41.33333206176758, Center lat: 45.41666793823242
+2020-02-14 12:59:25,150 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 12:59:25,152 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.666666, 52.25) and diameter 75.34948579171059
+2020-02-14 12:59:25,158 - Training Data - INFO - +++ Argmin center -> lon: -31.83333396911621, Center lat: 52.16666793823242
+2020-02-14 12:59:28,007 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 12:59:28,008 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-35.5, 59.166668) and diameter 29.98197270429655
+2020-02-14 12:59:28,011 - Training Data - INFO - +++ Argmax center -> lon: -35.5, Center lat: 59.16666793823242
+2020-02-14 12:59:31,863 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 12:59:31,864 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.916668, 51.5) and diameter 47.37657372111014
+2020-02-14 12:59:31,870 - Training Data - INFO - +++ Argmin center -> lon: -39.91666793823242, Center lat: 51.58333206176758
+2020-02-14 12:59:33,745 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 12:59:33,747 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.083332, 52.166668) and diameter 42.588011601414905
+2020-02-14 12:59:33,752 - Training Data - INFO - +++ Argmin center -> lon: -39.0, Center lat: 52.25
+2020-02-14 12:59:38,119 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 12:59:45,079 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:59:48,697 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:59:51,670 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:59:53,944 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 12:59:53,946 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 12:59:54,356 - Training Data - INFO - Creating images for dataset 29-01-2018
+2020-02-14 12:59:56,138 - Training Data - INFO - + Creating rectangles for 3 eddies
+2020-02-14 12:59:56,139 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.666668, 48.25) and diameter 65.72918553407929
+2020-02-14 12:59:56,143 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.25
+2020-02-14 12:59:58,679 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 12:59:58,680 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.166668, 47.833332) and diameter 155.00809256800392
+2020-02-14 12:59:58,693 - Training Data - INFO - +++ Argmin center -> lon: -39.16666793823242, Center lat: 47.83333206176758
+2020-02-14 13:00:00,076 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:00:00,078 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-32.666668, 51.916668) and diameter 47.2470630820769
+2020-02-14 13:00:00,087 - Training Data - INFO - +++ Argmax center -> lon: -29.25, Center lat: 51.66666793823242
+2020-02-14 13:00:01,780 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:00:04,580 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:00:04,582 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:00:04,991 - Training Data - INFO - Creating images for dataset 25-04-2018
+2020-02-14 13:00:06,659 - Training Data - INFO - + Creating rectangles for 9 eddies
+2020-02-14 13:00:06,660 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.333332, 46.25) and diameter 33.69458626636922
+2020-02-14 13:00:06,662 - Training Data - INFO - +++ Argmin center -> lon: -38.0, Center lat: 46.25
+2020-02-14 13:00:09,953 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:00:09,953 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.5, 48.583332) and diameter 98.39271609700403
+2020-02-14 13:00:09,982 - Training Data - INFO - +++ Argmax center -> lon: -34.5, Center lat: 49.16666793823242
+2020-02-14 13:00:11,783 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:00:11,784 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.083332, 48.666668) and diameter 42.50445745303926
+2020-02-14 13:00:11,799 - Training Data - INFO - +++ Argmin center -> lon: -39.0, Center lat: 48.75
+2020-02-14 13:00:13,509 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:00:13,511 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.083332, 51.75) and diameter 54.0622100172132
+2020-02-14 13:00:13,527 - Training Data - INFO - +++ Argmin center -> lon: -33.58333206176758, Center lat: 51.5
+2020-02-14 13:00:15,679 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:00:15,681 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-22.333334, 55.416668) and diameter 19.323596608616704
+2020-02-14 13:00:15,683 - Training Data - INFO - +++ Argmin center -> lon: -22.33333396911621, Center lat: 55.33333206176758
+2020-02-14 13:00:18,480 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:00:18,481 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.833332, 45.416668) and diameter 44.76136295283265
+2020-02-14 13:00:18,486 - Training Data - INFO - +++ Argmax center -> lon: -40.75, Center lat: 45.41666793823242
+2020-02-14 13:00:29,423 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 13:00:29,424 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.583332, 47.083332) and diameter 49.58558487678284
+2020-02-14 13:00:29,427 - Training Data - INFO - +++ Argmin center -> lon: -36.66666793823242, Center lat: 47.33333206176758
+2020-02-14 13:00:31,150 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 13:00:31,151 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 49.166668) and diameter 65.57457115560241
+2020-02-14 13:00:31,156 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 49.25
+2020-02-14 13:00:34,654 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-14 13:00:34,656 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-35.083332, 50.5) and diameter 47.17729167707858
+2020-02-14 13:00:34,658 - Training Data - INFO - +++ Argmax center -> lon: -35.16666793823242, Center lat: 50.5
+2020-02-14 13:00:38,390 - Training Data - INFO - +++++ Saving image 8 as an eddy
+2020-02-14 13:00:40,503 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:00:42,302 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:00:43,853 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:00:45,422 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:00:46,797 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:00:48,173 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:00:48,175 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:00:48,593 - Training Data - INFO - Creating images for dataset 19-06-2018
+2020-02-14 13:00:50,399 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 13:00:50,399 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.583332, 45.0) and diameter 54.17329724762546
+2020-02-14 13:00:50,402 - Training Data - INFO - +++ Argmax center -> lon: -39.58333206176758, Center lat: 45.0
+2020-02-14 13:00:53,712 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:00:53,713 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-17.25, 59.75) and diameter 26.784451069129766
+2020-02-14 13:00:53,716 - Training Data - INFO - +++ Argmin center -> lon: -17.33333396911621, Center lat: 59.75
+2020-02-14 13:00:55,093 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:00:55,094 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.166668, 47.0) and diameter 62.35403538053059
+2020-02-14 13:00:55,098 - Training Data - INFO - +++ Argmin center -> lon: -40.58333206176758, Center lat: 47.0
+2020-02-14 13:00:58,104 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:00:58,105 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-42.0, 46.083332) and diameter 51.548986163109575
+2020-02-14 13:00:58,108 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 46.25
+2020-02-14 13:01:00,820 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:01:00,821 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.25, 50.666668) and diameter 41.65670844334648
+2020-02-14 13:01:00,827 - Training Data - INFO - +++ Argmin center -> lon: -33.5, Center lat: 50.75
+2020-02-14 13:01:04,158 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:01:04,160 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.25, 48.416668) and diameter 35.14803426553963
+2020-02-14 13:01:04,163 - Training Data - INFO - +++ Argmax center -> lon: -41.25, Center lat: 48.25
+2020-02-14 13:01:07,556 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 13:01:07,557 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.75, 49.416668) and diameter 26.697932713808814
+2020-02-14 13:01:07,560 - Training Data - INFO - +++ Argmin center -> lon: -31.83333396911621, Center lat: 49.41666793823242
+2020-02-14 13:01:09,181 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 13:01:12,481 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:01:13,934 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:01:15,853 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:01:17,472 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:01:17,474 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:01:17,890 - Training Data - INFO - Creating images for dataset 01-05-2018
+2020-02-14 13:01:19,322 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 13:01:19,322 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.916668, 50.666668) and diameter 46.41297157659119
+2020-02-14 13:01:19,324 - Training Data - INFO - +++ Argmin center -> lon: -38.91666793823242, Center lat: 50.66666793823242
+2020-02-14 13:01:25,280 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:01:25,281 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-22.5, 53.083332) and diameter 22.936989821194075
+2020-02-14 13:01:25,283 - Training Data - INFO - +++ Argmax center -> lon: -22.5, Center lat: 53.16666793823242
+2020-02-14 13:01:26,711 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:01:26,713 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.333332, 49.5) and diameter 34.73823484643977
+2020-02-14 13:01:26,715 - Training Data - INFO - +++ Argmin center -> lon: -41.58333206176758, Center lat: 49.66666793823242
+2020-02-14 13:01:29,029 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:01:29,030 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.916668, 48.583332) and diameter 45.85724024985972
+2020-02-14 13:01:29,038 - Training Data - INFO - +++ Argmin center -> lon: -38.91666793823242, Center lat: 48.58333206176758
+2020-02-14 13:01:30,860 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:01:30,862 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.916668, 45.333332) and diameter 60.14301028462957
+2020-02-14 13:01:30,870 - Training Data - INFO - +++ Argmax center -> lon: -40.91666793823242, Center lat: 45.33333206176758
+2020-02-14 13:01:32,758 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:01:35,414 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:01:38,167 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:01:53,245 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:01:53,246 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:01:53,665 - Training Data - INFO - Creating images for dataset 14-01-2018
+2020-02-14 13:01:55,342 - Training Data - INFO - + Creating rectangles for 9 eddies
+2020-02-14 13:01:55,343 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.416668, 48.25) and diameter 68.84368557972384
+2020-02-14 13:01:55,347 - Training Data - INFO - +++ Argmin center -> lon: -38.41666793823242, Center lat: 48.25
+2020-02-14 13:04:40,556 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:04:40,558 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.666668, 51.583332) and diameter 78.08229625391226
+2020-02-14 13:04:40,567 - Training Data - INFO - +++ Argmax center -> lon: -35.58333206176758, Center lat: 51.08333206176758
+2020-02-14 13:04:44,586 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:04:44,587 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 49.083332) and diameter 67.84987905242492
+2020-02-14 13:04:44,594 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.66666793823242
+2020-02-14 13:04:49,203 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:04:49,205 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.916668, 47.833332) and diameter 88.31889423941705
+2020-02-14 13:04:49,210 - Training Data - INFO - +++ Argmin center -> lon: -35.83333206176758, Center lat: 47.91666793823242
+2020-02-14 13:04:50,742 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:04:50,742 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.0, 52.0) and diameter 21.726821337059675
+2020-02-14 13:04:50,747 - Training Data - INFO - +++ Argmin center -> lon: -40.08333206176758, Center lat: 52.08333206176758
+2020-02-14 13:04:54,258 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 13:04:54,259 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.0, 51.666668) and diameter 39.48868178898691
+2020-02-14 13:04:54,265 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 51.91666793823242
+2020-02-14 13:04:59,074 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 13:04:59,076 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.916668, 47.333332) and diameter 64.43397024193143
+2020-02-14 13:04:59,078 - Training Data - INFO - +++ Argmax center -> lon: -40.0, Center lat: 47.41666793823242
+2020-02-14 13:05:00,506 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 13:05:00,508 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.75, 50.666668) and diameter 59.45095941362947
+2020-02-14 13:05:00,511 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 50.75
+2020-02-14 13:05:02,612 - Training Data - INFO - +++++ Discarding image 7
+2020-02-14 13:05:02,613 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.416668, 51.5) and diameter 45.20564096650305
+2020-02-14 13:05:02,617 - Training Data - INFO - +++ Argmin center -> lon: -38.41666793823242, Center lat: 51.58333206176758
+2020-02-14 13:05:07,201 - Training Data - INFO - +++++ Discarding image 8
+2020-02-14 13:05:13,236 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:05:19,547 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:05:22,609 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:05:30,944 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:05:30,946 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:05:31,418 - Training Data - INFO - Creating images for dataset 08-05-2018
+2020-02-14 13:05:32,764 - Training Data - INFO - + Creating rectangles for 3 eddies
+2020-02-14 13:05:32,765 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.416668, 45.5) and diameter 65.0416251801926
+2020-02-14 13:05:32,779 - Training Data - INFO - +++ Argmax center -> lon: -41.33333206176758, Center lat: 45.5
+2020-02-14 13:05:40,068 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:05:40,070 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.5, 50.333332) and diameter 44.99716555462425
+2020-02-14 13:05:40,072 - Training Data - INFO - +++ Argmin center -> lon: -38.58333206176758, Center lat: 50.41666793823242
+2020-02-14 13:05:42,043 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:05:42,044 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.25, 46.25) and diameter 30.16036830169202
+2020-02-14 13:05:42,047 - Training Data - INFO - +++ Argmin center -> lon: -39.25, Center lat: 46.08333206176758
+2020-02-14 13:05:46,259 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:05:49,136 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:05:49,138 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:05:49,564 - Training Data - INFO - Creating images for dataset 20-06-2018
+2020-02-14 13:05:51,100 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 13:05:51,101 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.166668, 47.166668) and diameter 71.78566259242238
+2020-02-14 13:05:51,103 - Training Data - INFO - +++ Argmin center -> lon: -40.58333206176758, Center lat: 47.08333206176758
+2020-02-14 13:05:55,053 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:05:55,054 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.166668, 48.5) and diameter 74.86828618918015
+2020-02-14 13:05:55,063 - Training Data - INFO - +++ Argmax center -> lon: -41.25, Center lat: 48.33333206176758
+2020-02-14 13:06:00,210 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:06:00,211 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.166668, 50.75) and diameter 53.992881402168365
+2020-02-14 13:06:00,215 - Training Data - INFO - +++ Argmin center -> lon: -33.5, Center lat: 50.83333206176758
+2020-02-14 13:06:05,746 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:06:05,747 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.333334, 52.083332) and diameter 54.477089285766546
+2020-02-14 13:06:05,754 - Training Data - INFO - +++ Argmin center -> lon: -27.25, Center lat: 52.0
+2020-02-14 13:06:07,379 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:06:10,332 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:10,333 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:06:10,768 - Training Data - INFO - Creating images for dataset 28-04-2018
+2020-02-14 13:06:12,314 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 13:06:12,315 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.583332, 50.666668) and diameter 57.1739742986147
+2020-02-14 13:06:12,317 - Training Data - INFO - +++ Argmin center -> lon: -38.91666793823242, Center lat: 50.66666793823242
+2020-02-14 13:06:14,435 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:06:14,436 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.75, 45.5) and diameter 53.995188904955505
+2020-02-14 13:06:14,449 - Training Data - INFO - +++ Argmax center -> lon: -40.75, Center lat: 45.5
+2020-02-14 13:06:16,756 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:06:16,757 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.583332, 48.416668) and diameter 30.769782160395298
+2020-02-14 13:06:16,761 - Training Data - INFO - +++ Argmax center -> lon: -37.58333206176758, Center lat: 48.41666793823242
+2020-02-14 13:06:18,364 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:06:18,366 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.0, 51.916668) and diameter 66.90886269414676
+2020-02-14 13:06:18,388 - Training Data - INFO - +++ Argmin center -> lon: -32.25, Center lat: 51.91666793823242
+2020-02-14 13:06:20,442 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:06:20,443 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-22.666666, 55.416668) and diameter 47.342449448574065
+2020-02-14 13:06:20,447 - Training Data - INFO - +++ Argmin center -> lon: -22.58333396911621, Center lat: 55.33333206176758
+2020-02-14 13:06:21,770 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:06:21,771 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.25, 47.916668) and diameter 53.53349480291851
+2020-02-14 13:06:21,774 - Training Data - INFO - +++ Argmin center -> lon: -38.33333206176758, Center lat: 48.0
+2020-02-14 13:06:23,090 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 13:06:23,092 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.0, 48.583332) and diameter 48.868562328352176
+2020-02-14 13:06:23,100 - Training Data - INFO - +++ Argmin center -> lon: -39.0, Center lat: 48.66666793823242
+2020-02-14 13:06:25,514 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 13:06:27,404 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:28,722 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:30,220 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:32,131 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:32,132 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:06:32,564 - Training Data - INFO - Creating images for dataset 18-03-2018
+2020-02-14 13:06:34,126 - Training Data - INFO - + Creating rectangles for 4 eddies
+2020-02-14 13:06:34,127 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.333332, 49.0) and diameter 54.88051366737836
+2020-02-14 13:06:34,131 - Training Data - INFO - +++ Argmin center -> lon: -39.16666793823242, Center lat: 49.08333206176758
+2020-02-14 13:06:36,692 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:06:36,693 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-36.25, 57.333332) and diameter 20.33629778729173
+2020-02-14 13:06:36,696 - Training Data - INFO - +++ Argmax center -> lon: -36.41666793823242, Center lat: 57.33333206176758
+2020-02-14 13:06:40,554 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:06:40,555 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.75, 47.833332) and diameter 110.02595211929601
+2020-02-14 13:06:40,559 - Training Data - INFO - +++ Argmin center -> lon: -41.5, Center lat: 47.75
+2020-02-14 13:06:42,040 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:06:42,041 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.666668, 47.083332) and diameter 66.21857746091885
+2020-02-14 13:06:42,045 - Training Data - INFO - +++ Argmax center -> lon: -39.08333206176758, Center lat: 46.66666793823242
+2020-02-14 13:06:44,163 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:06:48,346 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:50,689 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:57,108 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:58,600 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:06:58,601 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:06:59,096 - Training Data - INFO - Creating images for dataset 25-03-2018
+2020-02-14 13:07:00,738 - Training Data - INFO - + Creating rectangles for 8 eddies
+2020-02-14 13:07:00,738 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.666668, 45.25) and diameter 44.782999479117656
+2020-02-14 13:07:00,741 - Training Data - INFO - +++ Argmax center -> lon: -39.83333206176758, Center lat: 45.25
+2020-02-14 13:07:10,281 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:07:10,282 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.916668, 46.5) and diameter 51.26928636336974
+2020-02-14 13:07:10,285 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 46.66666793823242
+2020-02-14 13:07:12,384 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:07:12,385 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.916668, 49.833332) and diameter 20.588939217479304
+2020-02-14 13:07:12,387 - Training Data - INFO - +++ Argmin center -> lon: -38.0, Center lat: 49.75
+2020-02-14 13:07:16,872 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:07:16,874 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.75, 50.916668) and diameter 52.484133135872675
+2020-02-14 13:07:16,876 - Training Data - INFO - +++ Argmin center -> lon: -34.33333206176758, Center lat: 51.08333206176758
+2020-02-14 13:07:20,154 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:07:20,155 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.5, 50.416668) and diameter 77.04105211559103
+2020-02-14 13:07:20,159 - Training Data - INFO - +++ Argmin center -> lon: -31.58333396911621, Center lat: 50.5
+2020-02-14 13:07:22,329 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:07:22,331 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.833332, 47.666668) and diameter 22.72146716271427
+2020-02-14 13:07:22,333 - Training Data - INFO - +++ Argmin center -> lon: -38.75, Center lat: 47.75
+2020-02-14 13:07:25,530 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 13:07:25,531 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-29.5, 51.833332) and diameter 36.81015722742897
+2020-02-14 13:07:25,555 - Training Data - INFO - +++ Argmin center -> lon: -39.5, Center lat: 52.0
+2020-02-14 13:07:27,386 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 13:07:27,388 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.0, 51.416668) and diameter 41.308462380753454
+2020-02-14 13:07:27,393 - Training Data - INFO - +++ Argmin center -> lon: -37.08333206176758, Center lat: 51.5
+2020-02-14 13:07:29,465 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-14 13:07:33,665 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:07:35,626 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:07:40,537 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:07:40,538 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:07:40,975 - Training Data - INFO - Creating images for dataset 18-05-2018
+2020-02-14 13:07:42,460 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 13:07:42,460 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.5, 50.416668) and diameter 20.463717302376416
+2020-02-14 13:07:42,462 - Training Data - INFO - +++ Argmin center -> lon: -37.58333206176758, Center lat: 50.41666793823242
+2020-02-14 13:07:44,996 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:07:44,997 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-16.916666, 53.25) and diameter 37.9580442935793
+2020-02-14 13:07:45,000 - Training Data - INFO - +++ Argmax center -> lon: -16.91666603088379, Center lat: 53.25
+2020-02-14 13:07:46,256 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:07:46,258 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.416668, 45.916668) and diameter 46.176021051462286
+2020-02-14 13:07:46,261 - Training Data - INFO - +++ Argmax center -> lon: -40.41666793823242, Center lat: 45.91666793823242
+2020-02-14 13:07:47,911 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:07:47,913 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.583332, 50.25) and diameter 74.51969511830399
+2020-02-14 13:07:47,918 - Training Data - INFO - +++ Argmax center -> lon: -38.58333206176758, Center lat: 50.16666793823242
+2020-02-14 13:07:49,249 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:07:49,250 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.166668, 51.916668) and diameter 37.635339709154856
+2020-02-14 13:07:49,259 - Training Data - INFO - +++ Argmin center -> lon: -37.08333206176758, Center lat: 52.0
+2020-02-14 13:07:51,267 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 13:07:51,268 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-21.916666, 58.333332) and diameter 28.39869600618685
+2020-02-14 13:07:51,272 - Training Data - INFO - +++ Argmax center -> lon: -21.83333396911621, Center lat: 58.33333206176758
+2020-02-14 13:07:53,106 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 13:08:00,839 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:08:06,868 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:08:08,466 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:08:13,015 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:08:13,017 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:08:13,517 - Training Data - INFO - Creating images for dataset 15-03-2018
+2020-02-14 13:08:14,995 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 13:08:14,996 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.5, 47.416668) and diameter 44.67231623022313
+2020-02-14 13:08:14,997 - Training Data - INFO - +++ Argmin center -> lon: -40.75, Center lat: 47.58333206176758
+2020-02-14 13:08:17,250 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:08:17,252 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.833332, 51.916668) and diameter 23.24087927762415
+2020-02-14 13:08:17,255 - Training Data - INFO - +++ Argmin center -> lon: -37.83333206176758, Center lat: 52.0
+2020-02-14 13:08:18,875 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:08:18,876 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.333332, 47.25) and diameter 22.819368847072187
+2020-02-14 13:08:18,879 - Training Data - INFO - +++ Argmin center -> lon: -38.25, Center lat: 47.33333206176758
+2020-02-14 13:08:20,522 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:08:20,524 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.083332, 48.083332) and diameter 35.3083851349008
+2020-02-14 13:08:20,526 - Training Data - INFO - +++ Argmin center -> lon: -38.91666793823242, Center lat: 48.25
+2020-02-14 13:08:23,392 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:08:23,394 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.75, 47.0) and diameter 50.327698348706676
+2020-02-14 13:08:23,396 - Training Data - INFO - +++ Argmax center -> lon: -39.08333206176758, Center lat: 47.16666793823242
+2020-02-14 13:08:25,271 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:08:25,272 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.333332, 46.75) and diameter 25.99322008019599
+2020-02-14 13:08:25,275 - Training Data - INFO - +++ Argmax center -> lon: -39.25, Center lat: 46.91666793823242
+2020-02-14 13:08:28,803 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 13:08:36,875 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:08:36,877 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:08:37,318 - Training Data - INFO - Creating images for dataset 16-04-2018
+2020-02-14 13:08:38,798 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 13:08:38,798 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.25, 47.666668) and diameter 46.27552030903696
+2020-02-14 13:08:38,800 - Training Data - INFO - +++ Argmax center -> lon: -38.16666793823242, Center lat: 47.66666793823242
+2020-02-14 13:08:52,344 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:08:52,345 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.833332, 48.166668) and diameter 40.09280118270658
+2020-02-14 13:08:52,348 - Training Data - INFO - +++ Argmin center -> lon: -39.83333206176758, Center lat: 48.25
+2020-02-14 13:09:05,758 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:09:05,760 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-28.333334, 52.166668) and diameter 44.14200633630531
+2020-02-14 13:09:05,763 - Training Data - INFO - +++ Argmin center -> lon: -29.25, Center lat: 52.33333206176758
+2020-02-14 13:09:09,306 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:09:09,308 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.833332, 49.25) and diameter 47.120658112690116
+2020-02-14 13:09:09,310 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 49.16666793823242
+2020-02-14 13:09:13,995 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:09:13,996 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.083332, 47.666668) and diameter 52.95577561876382
+2020-02-14 13:09:13,998 - Training Data - INFO - +++ Argmin center -> lon: -39.41666793823242, Center lat: 47.66666793823242
+2020-02-14 13:09:15,969 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:09:15,970 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.0, 49.5) and diameter 20.66537927243199
+2020-02-14 13:09:15,972 - Training Data - INFO - +++ Argmin center -> lon: -40.08333206176758, Center lat: 49.5
+2020-02-14 13:09:18,081 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 13:09:21,911 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:09:23,776 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:09:26,520 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:09:26,521 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:09:26,966 - Training Data - INFO - Creating images for dataset 08-02-2018
+2020-02-14 13:09:28,699 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 13:09:28,699 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.25, 49.5) and diameter 56.5308333242485
+2020-02-14 13:09:28,702 - Training Data - INFO - +++ Argmin center -> lon: -37.5, Center lat: 49.75
+2020-02-14 13:09:31,209 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:09:31,210 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 48.416668) and diameter 63.252217083293516
+2020-02-14 13:09:31,215 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.33333206176758
+2020-02-14 13:09:34,594 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:09:34,595 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.0, 47.416668) and diameter 169.13150137270932
+2020-02-14 13:09:34,606 - Training Data - INFO - +++ Argmax center -> lon: -40.83333206176758, Center lat: 47.33333206176758
+2020-02-14 13:09:36,103 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:09:36,104 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.666668, 51.333332) and diameter 24.811232012575346
+2020-02-14 13:09:36,107 - Training Data - INFO - +++ Argmax center -> lon: -40.91666793823242, Center lat: 51.33333206176758
+2020-02-14 13:09:41,896 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:09:41,897 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-32.833332, 51.833332) and diameter 73.99308699848483
+2020-02-14 13:09:41,950 - Training Data - INFO - +++ Argmax center -> lon: -17.58333396911621, Center lat: 51.58333206176758
+2020-02-14 13:09:43,776 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 13:09:47,319 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:09:49,295 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:09:49,296 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:09:49,748 - Training Data - INFO - Creating images for dataset 23-04-2018
+2020-02-14 13:09:51,241 - Training Data - INFO - + Creating rectangles for 8 eddies
+2020-02-14 13:09:51,242 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.583332, 45.25) and diameter 37.26923685145073
+2020-02-14 13:09:51,245 - Training Data - INFO - +++ Argmax center -> lon: -40.58333206176758, Center lat: 45.5
+2020-02-14 13:09:59,193 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:09:59,194 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.75, 47.25) and diameter 43.949785281283425
+2020-02-14 13:09:59,197 - Training Data - INFO - +++ Argmin center -> lon: -36.75, Center lat: 47.41666793823242
+2020-02-14 13:10:01,145 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:10:01,146 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.75, 59.666668) and diameter 54.176944839184955
+2020-02-14 13:10:01,151 - Training Data - INFO - +++ Argmax center -> lon: -33.5, Center lat: 59.58333206176758
+2020-02-14 13:10:02,537 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:10:02,538 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-22.25, 55.333332) and diameter 46.0556985414317
+2020-02-14 13:10:02,543 - Training Data - INFO - +++ Argmin center -> lon: -22.33333396911621, Center lat: 55.25
+2020-02-14 13:10:04,018 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:10:04,019 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 49.083332) and diameter 56.148238029546
+2020-02-14 13:10:04,023 - Training Data - INFO - +++ Argmin center -> lon: -41.75, Center lat: 49.25
+2020-02-14 13:10:08,951 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:10:08,953 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.083332, 48.75) and diameter 48.046573924610186
+2020-02-14 13:10:08,965 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 49.0
+2020-02-14 13:10:10,992 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 13:10:10,993 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.166668, 50.25) and diameter 33.46244715043998
+2020-02-14 13:10:10,996 - Training Data - INFO - +++ Argmin center -> lon: -33.33333206176758, Center lat: 50.41666793823242
+2020-02-14 13:10:14,512 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 13:10:14,514 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.583332, 48.166668) and diameter 22.61447696452149
+2020-02-14 13:10:14,516 - Training Data - INFO - +++ Argmax center -> lon: -40.58333206176758, Center lat: 48.25
+2020-02-14 13:10:18,121 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-14 13:13:03,597 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:13:07,974 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:13:12,048 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:13:15,904 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:15:48,406 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:15:56,317 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:15:56,318 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:15:56,769 - Training Data - INFO - Creating images for dataset 19-01-2018
+2020-02-14 13:15:58,312 - Training Data - INFO - + Creating rectangles for 8 eddies
+2020-02-14 13:15:58,313 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.333332, 47.25) and diameter 44.766909691726134
+2020-02-14 13:15:58,315 - Training Data - INFO - +++ Argmax center -> lon: -40.33333206176758, Center lat: 47.25
+2020-02-14 13:16:03,084 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:16:03,085 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.416668, 50.666668) and diameter 33.34483454074019
+2020-02-14 13:16:03,087 - Training Data - INFO - +++ Argmax center -> lon: -40.25, Center lat: 50.5
+2020-02-14 13:16:06,292 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:16:06,294 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-33.833332, 51.333332) and diameter 54.22000281898913
+2020-02-14 13:16:06,298 - Training Data - INFO - +++ Argmax center -> lon: -34.58333206176758, Center lat: 51.41666793823242
+2020-02-14 13:16:11,725 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:16:11,726 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.166668, 48.083332) and diameter 50.62372124380012
+2020-02-14 13:16:11,730 - Training Data - INFO - +++ Argmin center -> lon: -38.41666793823242, Center lat: 48.08333206176758
+2020-02-14 13:16:13,341 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:16:13,343 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 50.5) and diameter 67.69063084706374
+2020-02-14 13:16:13,345 - Training Data - INFO - +++ Argmin center -> lon: -41.83333206176758, Center lat: 50.66666793823242
+2020-02-14 13:16:15,597 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:16:15,598 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.0, 51.583332) and diameter 28.58703164168564
+2020-02-14 13:16:15,601 - Training Data - INFO - +++ Argmin center -> lon: -38.08333206176758, Center lat: 51.75
+2020-02-14 13:16:18,947 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 13:16:18,948 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.833332, 47.833332) and diameter 82.65480575963535
+2020-02-14 13:16:18,952 - Training Data - INFO - +++ Argmin center -> lon: -35.83333206176758, Center lat: 47.91666793823242
+2020-02-14 13:16:20,292 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-14 13:16:20,292 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.916668, 52.083332) and diameter 33.822568814423974
+2020-02-14 13:16:20,298 - Training Data - INFO - +++ Argmin center -> lon: -40.75, Center lat: 52.25
+2020-02-14 13:16:22,780 - Training Data - INFO - +++++ Discarding image 7
+2020-02-14 13:16:32,765 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:16:35,067 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:16:37,186 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:16:40,643 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:16:40,645 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:16:41,109 - Training Data - INFO - Creating images for dataset 07-02-2018
+2020-02-14 13:16:42,610 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 13:16:42,610 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.0, 47.083332) and diameter 47.26249860874008
+2020-02-14 13:16:42,612 - Training Data - INFO - +++ Argmax center -> lon: -40.83333206176758, Center lat: 47.33333206176758
+2020-02-14 13:16:45,257 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:16:45,259 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-34.916668, 51.0) and diameter 77.03899654769825
+2020-02-14 13:16:45,265 - Training Data - INFO - +++ Argmax center -> lon: -34.83333206176758, Center lat: 50.83333206176758
+2020-02-14 13:16:46,814 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:16:46,816 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.666668, 48.25) and diameter 66.08277866581766
+2020-02-14 13:16:46,821 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 48.33333206176758
+2020-02-14 13:16:49,894 - Training Data - INFO - +++++ Discarding image 2
+2020-02-14 13:16:49,896 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.25, 47.5) and diameter 21.065882146278764
+2020-02-14 13:16:49,898 - Training Data - INFO - +++ Argmin center -> lon: -39.25, Center lat: 47.58333206176758
+2020-02-14 13:16:51,893 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:16:51,894 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.5, 49.5) and diameter 75.75955392223511
+2020-02-14 13:16:51,900 - Training Data - INFO - +++ Argmin center -> lon: -37.58333206176758, Center lat: 49.75
+2020-02-14 13:16:53,570 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:16:53,571 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.5, 52.083332) and diameter 28.420099073224215
+2020-02-14 13:16:53,574 - Training Data - INFO - +++ Argmin center -> lon: -41.08333206176758, Center lat: 52.25
+2020-02-14 13:17:01,486 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 13:17:03,501 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:17:05,421 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:17:09,092 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:17:09,093 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:17:09,553 - Training Data - INFO - Creating images for dataset 05-02-2018
+2020-02-14 13:17:11,029 - Training Data - INFO - + Creating rectangles for 5 eddies
+2020-02-14 13:17:11,029 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.666668, 47.166668) and diameter 40.45859923798677
+2020-02-14 13:17:11,031 - Training Data - INFO - +++ Argmax center -> lon: -40.75, Center lat: 47.25
+2020-02-14 13:17:12,448 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:17:12,450 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.75, 48.666668) and diameter 37.08872909378332
+2020-02-14 13:17:12,470 - Training Data - INFO - +++ Argmax center -> lon: -38.75, Center lat: 48.66666793823242
+2020-02-14 13:17:14,659 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:17:14,661 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.083332, 49.583332) and diameter 77.53922912039772
+2020-02-14 13:17:14,667 - Training Data - INFO - +++ Argmin center -> lon: -38.0, Center lat: 49.83333206176758
+2020-02-14 13:17:16,201 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:17:16,202 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-32.833332, 51.833332) and diameter 56.4239727216492
+2020-02-14 13:17:16,240 - Training Data - INFO - +++ Argmax center -> lon: -17.66666603088379, Center lat: 51.58333206176758
+2020-02-14 13:17:18,282 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:17:18,283 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-42.0, 46.416668) and diameter 28.809003331124437
+2020-02-14 13:17:18,285 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 46.5
+2020-02-14 13:17:20,186 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 13:17:22,723 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:17:30,323 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:17:30,325 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:17:30,789 - Training Data - INFO - Creating images for dataset 26-05-2018
+2020-02-14 13:17:32,337 - Training Data - INFO - + Creating rectangles for 3 eddies
+2020-02-14 13:17:32,337 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.916668, 49.916668) and diameter 38.51429754793835
+2020-02-14 13:17:32,339 - Training Data - INFO - +++ Argmin center -> lon: -33.66666793823242, Center lat: 49.91666793823242
+2020-02-14 13:17:35,266 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:17:35,267 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.25, 46.75) and diameter 86.81418125794406
+2020-02-14 13:17:35,272 - Training Data - INFO - +++ Argmax center -> lon: -39.33333206176758, Center lat: 46.58333206176758
+2020-02-14 13:17:36,588 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:17:36,589 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.75, 47.083332) and diameter 75.73326595334609
+2020-02-14 13:17:36,593 - Training Data - INFO - +++ Argmin center -> lon: -41.66666793823242, Center lat: 47.0
+2020-02-14 13:17:38,091 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:17:50,499 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:17:56,116 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:17:56,117 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:17:56,579 - Training Data - INFO - Creating images for dataset 05-03-2018
+2020-02-14 13:17:58,013 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 13:17:58,013 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.416668, 49.916668) and diameter 41.12741032012654
+2020-02-14 13:17:58,015 - Training Data - INFO - +++ Argmin center -> lon: -39.41666793823242, Center lat: 50.0
+2020-02-14 13:17:59,780 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:17:59,781 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.583332, 48.583332) and diameter 64.78265676340138
+2020-02-14 13:17:59,792 - Training Data - INFO - +++ Argmax center -> lon: -40.58333206176758, Center lat: 48.66666793823242
+2020-02-14 13:18:08,397 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:18:08,398 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-35.916668, 51.583332) and diameter 24.748368736349697
+2020-02-14 13:18:08,402 - Training Data - INFO - +++ Argmax center -> lon: -36.0, Center lat: 51.58333206176758
+2020-02-14 13:18:09,940 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:18:09,941 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.416668, 48.0) and diameter 39.251004149484736
+2020-02-14 13:18:09,945 - Training Data - INFO - +++ Argmin center -> lon: -37.41666793823242, Center lat: 47.91666793823242
+2020-02-14 13:18:11,452 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:18:11,454 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.916668, 47.25) and diameter 36.561161624093096
+2020-02-14 13:18:11,455 - Training Data - INFO - +++ Argmax center -> lon: -38.0, Center lat: 47.25
+2020-02-14 13:18:17,354 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:18:17,356 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 46.333332) and diameter 71.0703129613368
+2020-02-14 13:18:17,360 - Training Data - INFO - +++ Argmin center -> lon: -41.41666793823242, Center lat: 46.41666793823242
+2020-02-14 13:18:19,283 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 13:18:19,285 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.75, 51.5) and diameter 21.85317072497043
+2020-02-14 13:18:19,287 - Training Data - INFO - +++ Argmax center -> lon: -39.83333206176758, Center lat: 51.41666793823242
+2020-02-14 13:18:22,914 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 13:18:25,266 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:18:31,971 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:18:34,817 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:18:41,188 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:18:44,074 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:18:46,162 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:18:46,163 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:18:46,629 - Training Data - INFO - Creating images for dataset 30-04-2018
+2020-02-14 13:18:48,122 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 13:18:48,122 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.833332, 45.416668) and diameter 59.45044023449797
+2020-02-14 13:18:48,129 - Training Data - INFO - +++ Argmax center -> lon: -40.83333206176758, Center lat: 45.41666793823242
+2020-02-14 13:18:53,449 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:18:53,450 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.916668, 50.666668) and diameter 52.74937876293156
+2020-02-14 13:18:53,455 - Training Data - INFO - +++ Argmin center -> lon: -38.91666793823242, Center lat: 50.66666793823242
+2020-02-14 13:18:54,842 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:18:54,844 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.166668, 51.166668) and diameter 38.86808320437933
+2020-02-14 13:18:54,847 - Training Data - INFO - +++ Argmax center -> lon: -39.16666793823242, Center lat: 51.16666793823242
+2020-02-14 13:18:56,378 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:18:56,380 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 49.416668) and diameter 44.63612436546851
+2020-02-14 13:18:56,382 - Training Data - INFO - +++ Argmin center -> lon: -41.83333206176758, Center lat: 49.66666793823242
+2020-02-14 13:18:58,914 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:18:58,916 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.833334, 52.0) and diameter 58.71194402031924
+2020-02-14 13:18:58,924 - Training Data - INFO - +++ Argmin center -> lon: -32.16666793823242, Center lat: 51.91666793823242
+2020-02-14 13:19:02,034 - Training Data - INFO - +++++ Discarding image 4
+2020-02-14 13:19:02,034 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.0, 48.583332) and diameter 46.672792373343206
+2020-02-14 13:19:02,043 - Training Data - INFO - +++ Argmin center -> lon: -38.91666793823242, Center lat: 48.58333206176758
+2020-02-14 13:19:03,851 - Training Data - INFO - +++++ Discarding image 5
+2020-02-14 13:19:11,314 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:19:13,722 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:19:16,859 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:19:16,860 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:19:17,328 - Training Data - INFO - Creating images for dataset 15-05-2018
+2020-02-14 13:19:19,066 - Training Data - INFO - + Creating rectangles for 8 eddies
+2020-02-14 13:19:19,066 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.916668, 48.75) and diameter 22.48479047829288
+2020-02-14 13:19:19,071 - Training Data - INFO - +++ Argmax center -> lon: -38.08333206176758, Center lat: 48.66666793823242
+2020-02-14 13:19:21,616 - Training Data - INFO - +++++ Discarding image 0
+2020-02-14 13:19:21,617 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-33.416668, 47.416668) and diameter 24.34653226242208
+2020-02-14 13:19:21,620 - Training Data - INFO - +++ Argmin center -> lon: -33.41666793823242, Center lat: 47.5
+2020-02-14 13:19:23,256 - Training Data - INFO - +++++ Discarding image 1
+2020-02-14 13:19:23,257 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.333332, 52.166668) and diameter 37.54177016757447
+2020-02-14 13:19:23,263 - Training Data - INFO - +++ Argmin center -> lon: -37.33333206176758, Center lat: 52.25
+2020-02-14 13:19:24,761 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:19:24,762 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.0, 50.25) and diameter 65.9810075213874
+2020-02-14 13:19:24,765 - Training Data - INFO - +++ Argmax center -> lon: -39.16666793823242, Center lat: 50.08333206176758
+2020-02-14 13:19:26,698 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-14 13:19:26,699 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.666668, 50.25) and diameter 35.516887580772355
+2020-02-14 13:19:26,702 - Training Data - INFO - +++ Argmin center -> lon: -35.66666793823242, Center lat: 50.25
+2020-02-14 13:19:27,979 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:19:27,980 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.833332, 45.666668) and diameter 63.0828311787456
+2020-02-14 13:19:27,990 - Training Data - INFO - +++ Argmax center -> lon: -40.66666793823242, Center lat: 45.66666793823242
+2020-02-14 13:19:33,802 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 13:19:33,803 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.166668, 46.666668) and diameter 45.82604996659526
+2020-02-14 13:19:33,806 - Training Data - INFO - +++ Argmin center -> lon: -40.5, Center lat: 46.91666793823242
+2020-02-14 13:19:36,387 - Training Data - INFO - +++++ Discarding image 6
+2020-02-14 13:19:36,388 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-21.75, 58.416668) and diameter 83.0460173504257
+2020-02-14 13:19:36,398 - Training Data - INFO - +++ Argmax center -> lon: -22.0, Center lat: 58.41666793823242
+2020-02-14 13:19:39,634 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-14 13:19:43,147 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:19:45,698 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:19:50,354 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:19:52,403 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:19:55,282 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:19:55,283 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:19:55,757 - Training Data - INFO - Creating images for dataset 04-05-2018
+2020-02-14 13:19:57,251 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 13:19:57,251 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.833332, 50.5) and diameter 70.9282513871779
+2020-02-14 13:19:57,254 - Training Data - INFO - +++ Argmax center -> lon: -40.5, Center lat: 50.33333206176758
+2020-02-14 13:20:03,718 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:20:03,719 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.916668, 50.5) and diameter 46.439509498171255
+2020-02-14 13:20:03,721 - Training Data - INFO - +++ Argmin center -> lon: -38.83333206176758, Center lat: 50.58333206176758
+2020-02-14 13:20:04,969 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-14 13:20:04,969 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-23.0, 55.25) and diameter 26.212505397956303
+2020-02-14 13:20:04,972 - Training Data - INFO - +++ Argmin center -> lon: -23.0, Center lat: 55.25
+2020-02-14 13:20:06,314 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-14 13:20:06,315 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.75, 48.5) and diameter 42.57332418744217
+2020-02-14 13:20:06,319 - Training Data - INFO - +++ Argmin center -> lon: -38.75, Center lat: 48.58333206176758
+2020-02-14 13:20:10,400 - Training Data - INFO - +++++ Discarding image 3
+2020-02-14 13:20:10,400 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.0, 51.583332) and diameter 47.33029048333668
+2020-02-14 13:20:10,405 - Training Data - INFO - +++ Argmin center -> lon: -40.0, Center lat: 51.66666793823242
+2020-02-14 13:20:14,937 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-14 13:20:14,938 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.166668, 45.25) and diameter 71.86937169031157
+2020-02-14 13:20:14,942 - Training Data - INFO - +++ Argmax center -> lon: -41.16666793823242, Center lat: 45.33333206176758
+2020-02-14 13:20:17,482 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-14 13:20:19,961 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:20:24,838 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:20:30,255 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:20:32,250 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:20:36,902 - Training Data - INFO - +++++ Saving noneddy
+2020-02-14 13:20:36,902 - Training Data - INFO - Compressing and storing training data so far
+2020-02-14 13:20:37,436 - Training Data - INFO - Creating images for dataset 10-03-2018
+2020-02-14 13:20:38,997 - Training Data - INFO - + Creating rectangles for 6 eddies
+2020-02-14 13:20:52,489 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.333332, 46.583332) and diameter 48.26768683147906
+2020-02-14 13:20:52,498 - Training Data - INFO - +++ Argmin center -> lon: -41.41666793823242, Center lat: 46.66666793823242
+2020-02-14 13:21:01,222 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-14 13:21:05,431 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.416668, 51.75) and diameter 35.87177624806816
+2020-02-14 13:21:05,444 - Training Data - INFO - +++ Argmin center -> lon: -42.0, Center lat: 51.83333206176758
