@@ -27,68 +27,28 @@ argp.add_argument("-rs", "--size", default=1.5, help="rectangular patche size mu
 argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/training_data/data/200_days_2018', help="training data save dir")
 
 
-'''
-# Log all output
-logDir = f"{os.path.dirname(os.path.realpath(__file__))}/log"
-if not os.path.exists(logDir):
-    os.makedirs(logDir)
-
-#
-
-logger = logging.getLogger()
-fh = logging.FileHandler(f"{logDir}/script log_{datetime.datetime.now().strftime('%d%m%Y_%H%M')}.log")
-fh.setLevel(logging.INFO) # or any level you want
-logging.addHandler(fh)
-'''
-
 logPath = f"{os.path.dirname(os.path.realpath(__file__))}/log"
 logName = f"{datetime.datetime.now().strftime('%d%m%Y_%H%M')}.log"
 
 if not os.path.exists(logPath):
     os.makedirs(logPath)
 
-'''
-logging.basicConfig(filename=logname,
-                            filemode='a',
-                            format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                            datefmt='%H:%M:%S',
-                            level=logging.DEBUG)
-
-logging.info("Running Urban Planning")
-
-self.logger = logging.getLogger('urbanGUI')
-'''
-
-'''
-
-logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
-rootLogger = logging.getLogger()
-
-fileHandler = logging.FileHandler("{0}/{1}".format(logPath, logName), mode='w+')
-fileHandler.setFormatter(logFormatter)
-rootLogger.addHandler(fileHandler)
-
-consoleHandler = logging.StreamHandler()
-consoleHandler.setFormatter(logFormatter)
-rootLogger.addHandler(consoleHandler)
-'''
-
-logging.basicConfig(filename="{0}/{1}".format(logPath, logName),
-                            filemode='w+',
-                            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                            datefmt='%H:%M:%S',
-                            level=logging.INFO)
-
-logger = logging.getLogger(__name__)
+# create logger 
+logger = logging.getLogger("Training Data")
 logger.setLevel(logging.INFO)
-
-handler = logging.StreamHandler(sys.stdout)
-handler.setLevel(logging.INFO)
+# create file handler 
+fh = logging.FileHandler("{0}/{1}".format(logPath, logName))
+fh.setLevel(logging.INFO)
+# create console handler
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+# create formatter and add it to the handlers
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-
-
+fh.setFormatter(formatter)
+ch.setFormatter(formatter)
+# add the handlers to the logger
+logger.addHandler(fh)
+logger.addHandler(ch)
 
 def lon2km(lon, lat):
     """ Convert from longitudinal displacement to km """
@@ -157,8 +117,11 @@ def plot_grids(data, lon, lat, title="__"):
     axs[0,2].contourf(lon, lat, data[2].T, 10, cmap='rainbow')
     axs[1,0].contourf(lon, lat, data[3].T, 10, cmap='rainbow')
     axs[1,1].contourf(lon, lat, data[4].T, 10, cmap='CMRmap')
-    axs[1,2].contourf(lon, lat, data[5].T, 10)
-
+    n=-1
+    color_array = np.sqrt(((data[2]-n)/2)**2 + ((data[3]-n)/2)**2)
+    axs[1,2].quiver(lon, lat, data[2].T, data[3].T, color_array, scale=7) # Plot vector field
+    #axs[1,2].contourf(lon, lat, data[5].T, 10) # Or plot the OW values
+    
     fig.suptitle(title, fontsize=16)
 
     guiEvent, guiValues = show_figure(fig)
@@ -214,7 +177,7 @@ def main():
 
     args, leftovers = argp.parse_known_args()
 
-    logging.info("--- loading netcdf")
+    logger.info("loading netcdf")
 
     # load data
     (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(args.fpath)
@@ -242,7 +205,7 @@ def main():
     for day in random.sample(range(0, len(t)), len(t)): 
 
         dateStr = "{:%d-%m-%Y}".format(datetime.date(1950, 1, 1) + datetime.timedelta(hours=float(t[day])) )
-        logging.info(f"--- Creating images for dataset {dateStr}")
+        logger.info(f"Creating images for dataset {dateStr}")
 
         # create a text trap
         text_trap = io.StringIO()
@@ -290,7 +253,7 @@ def main():
         # ======= Create rectangular patches around eddies ========
         # =========================================================
 
-        logging.info(f"---++ Creating rectangles for {nEddies} eddies")
+        logger.info(f"+ Creating rectangles for {nEddies} eddies")
 
         savedImgCounter = 0 # saved image counter for file ID
         for eddyId, ctrIdx in enumerate(eddyCtrIdx): # nEddies
@@ -304,13 +267,13 @@ def main():
             if (eddie_census[1][eddyId] > 0.0): cyclone = 1 # 1 is a cyclone, 0 is nothing and -1 is anti-cyclone (negative rotation)
             else: cyclone = -1
 
-            logging.info(f"---++++ Creating rectangles for {check_cyclone(cyclone)} with center {ctrCoord} and diameter {diameter_km}")
+            logger.info(f"+++ Creating rectangles for {check_cyclone(cyclone)} with center {ctrCoord} and diameter {diameter_km}")
             
             # Find rectangle metrics
             height = args.size * abs(diameter_km / 110.54) # 1 deg = 110.54 km, 1.2 to be sure the image covers the eddy
             width = args.size * abs(diameter_km / (111.320 * cos(lat[ctrIdx[1]]))) # 1 deg = 111.320*cos(latitude) km, using center latitude as ref
             
-            #---- TODO: I DO THIS TWICE NOW! CREATE FUNCTION? -----
+            #-TODO: I DO THIS TWICE NOW! CREATE FUNCTION? -----
 
             lon_bnds = ctrCoord[0]-width/2.0, ctrCoord[0]+width/2.0
             lat_bnds = ctrCoord[1]-height/2.0, ctrCoord[1]+height/2.0
@@ -339,13 +302,13 @@ def main():
             if cyclone==1:
                 idx = np.unravel_index(eddy_data[1].argmax(), eddy_data[1].shape)
                 ctrCoord = lon[lonIdxs[idx[0]]], lat[latIdxs[idx[1]]]
-                logging.info(f"---++++ Argmax center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
+                logger.info(f"+++ Argmax center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
             else:
                 idx = np.unravel_index(eddy_data[1].argmin(), eddy_data[1].shape)
                 ctrCoord = lon[lonIdxs[idx[0]]], lat[latIdxs[idx[1]]]
-                logging.info(f"---++++ Argmin center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
+                logger.info(f"+++ Argmin center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
 
-             #---- TODO: I DO IT AGAIN TO FIND WATER LEVEL CENTER -----
+             #-TODO: I DO IT AGAIN TO FIND WATER LEVEL CENTER -----
 
             lon_bnds = ctrCoord[0]-width/2.0, ctrCoord[0]+width/2.0
             lat_bnds = ctrCoord[1]-height/2.0, ctrCoord[1]+height/2.0
@@ -389,17 +352,17 @@ def main():
                 vvel_train.append([eddy_data[3], cyclone]) 
                 phase_train.append([eddy_data[4], cyclone]) 
 
-                logging.info(f"---++++++ Saving image {eddyId} as an eddy")   
+                logger.info(f"+++++ Saving image {eddyId} as an eddy")   
 
             else: 
-                logging.info(f"---++++++ Discarding image {eddyId}")
+                logger.info(f"+++++ Discarding image {eddyId}")
             
         # =========================================================
         # ================ Select non-eddy images =================
         # =========================================================
 
         if savedImgCounter <= 0:
-            logging.info(f"---++++++ No eddies found")
+            logger.info(f"+++++ No eddies found")
             continue   
 
         # Subgrid (sg) longitude and latitude length
@@ -443,7 +406,7 @@ def main():
                 uvel_train.append([data_noeddy[0,grid_id,:,:], 0]) 
                 vvel_train.append([data_noeddy[0,grid_id,:,:], 0]) 
                 phase_train.append([data_noeddy[0,grid_id,:,:], 0])
-                logging.info(f"---++++++ Saving noneddy")       
+                logger.info(f"+++++ Saving noneddy")       
             if added >= savedImgCounter:
                 break
 
@@ -478,7 +441,7 @@ def main():
             phase_out[i][0] = cv2.resize(phase_out[i][0], dsize=(grid_size[0], grid_size[1]), interpolation=cv2.INTER_CUBIC) # Resize to a standard size
         '''
 
-        logging.info(f"--- Compressing and storing training data so far")
+        logger.info(f"Compressing and storing training data so far")
 
 
         # =========================================================
@@ -535,7 +498,7 @@ def main():
     # ========= Store as compressed numpy array (npz) =========
     # =========================================================
 
-    print(f"--- Compressing training data")
+    print(f"Compressing training data")
 
     # Save data as compressed numpy array
     savez_compressed(f'{args.savedir}/sst_train.npz', sst_train)
@@ -544,7 +507,7 @@ def main():
     savez_compressed(f'{args.savedir}/vvel_train.npz', vvel_train)
     savez_compressed(f'{args.savedir}/phase_train.npz', phase_train)
 
-    print(f"--- Training data complete")
+    print(f"Training data complete")
     '''
 
 if __name__ == '__main__':

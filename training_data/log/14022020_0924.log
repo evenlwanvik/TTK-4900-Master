@@ -1,0 +1,5 @@
+2020-02-14 09:24:27,269 - Training Data - INFO - loading netcdf
+2020-02-14 09:24:27,741 - Training Data - INFO - Creating images for dataset 06-05-2018
+2020-02-14 09:24:29,180 - Training Data - INFO - + Creating rectangles for 7 eddies
+2020-02-14 09:24:29,181 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.666666, 52.25) and diameter 75.80319069655012
+2020-02-14 09:24:29,188 - Training Data - INFO - +++ Argmin center -> lon: -31.83333396911621, Center lat: 52.16666793823242
