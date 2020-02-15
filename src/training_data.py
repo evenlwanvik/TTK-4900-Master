@@ -2,12 +2,12 @@ from training_data.eddies import load_netcdf4,eddy_detection,dataframe_eddies,pl
 from matplotlib.patches import Rectangle
 from numpy import savez_compressed
 import matplotlib.pyplot as plt
-from training_data.gui import show_figure
 from tools.bfs import bfs
 from datetime import date
 from math import cos, pi
 from operator import eq
 import tools.dim as dim
+from tools import gui
 import xarray as xr
 import numpy as np
 import itertools
@@ -104,7 +104,7 @@ def plot_grids(data, lon, lat, title="__"):
     
     fig.suptitle(title, fontsize=16)
 
-    guiEvent, guiValues = show_figure(fig)
+    guiEvent, guiValues = gui.show_figure(fig)
     plt.close(fig)
 
     return guiEvent
