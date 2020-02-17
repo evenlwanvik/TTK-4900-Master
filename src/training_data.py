@@ -1,5 +1,6 @@
-from training_data.eddies import load_netcdf4,eddy_detection,dataframe_eddies,plot_eddies,julianh2gregorian
+from training_data.eddies import eddy_detection,dataframe_eddies,plot_eddies,julianh2gregorian
 from matplotlib.patches import Rectangle
+from tools.load_nc import load_netcdf4
 from numpy import savez_compressed
 import matplotlib.pyplot as plt
 from tools.bfs import bfs
