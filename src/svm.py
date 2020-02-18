@@ -3,6 +3,7 @@ from tools.sliding_window import localize_and_classify
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import MinMaxScaler
 from tools.load_nc import load_netcdf4
 #from skimage.feature import hog
 import matplotlib.pyplot as plt
@@ -12,7 +13,7 @@ import numpy as np
 import pickle
 import xarray as xr
 
-meastype = 'sst'
+meastype = 'phase'
 
 data_path = f'C:/Master/TTK-4900-Master/data/training_data/200_days_2018/{meastype}_train.npz'
 
@@ -85,27 +86,40 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
     phase_model = pickle.load(open(f'models/svm_phase_01.sav', 'rb'))
 
     shape = ssl.shape
-    stepSize = 10
+    stepSize, winW, winH = 10, 30, 18
+    probLim = 0.85
 
+    scaler = MinMaxScaler(feature_range=(0,1))
 
     # for every dataset and its model
-    for dataIdx, data in enumerate([(ssl, ssl_model), (sst, sst_model), (phase, phase_model),]):
+    for dataIdx, (data, clf) in enumerate([(ssl, ssl_model), (sst, sst_model), (phase, phase_model),]):
+
+        data = scaler.fit_transform(data)
+
         # loop over the sliding window
         for (x, y, (lonIdxs, latIdxs)) in sliding_window(data, stepSize=stepSize, windowSize=(winW, winH)):
 
             if lonIdxs[-1] > shape[0] or latIdxs[-1] > shape[1]:
                 continue
 
+            window = np.array([[data[i,j] for j in latIdxs] for i in lonIdxs])
             lo, la = lon[lonIdxs], lat[latIdxs]
 
             probabilities = clf.predict_proba( [np.array(window.flatten())] )
 
             if probabilities[0,1] > probabilities[0,0] and probabilities[0,1] > probLim:
-                print(f'data nr {dataIdx} | probas: {probabilities} | x: {x}, y: {y}')
-                print(probabilities)
-                print(dataIdx)
+                print(f'data nr {dataIdx+1} | probas: {probabilities} | lon: [{lo[0]}, {lo[-1]}, lat: [{la[0]}, {la[-1]}]')
+                
+                fig, ax = plt.subplots(figsize=(14, 10), dpi= 80, facecolor='w', edgecolor='w')
+                
+                if dataIdx == 2:
+                    plt.contourf(lo, la, window.T, cmap='CMRmap', levels=10)
+                else:
+                    plt.contourf(lo, la, window.T, cmap='rainbow', levels=20)
+                plt.imshow(lo, la, window.T, interpolation='nearest')
+                plt.show()           
 
 
 if __name__ == '__main__':
-    #test_model()
-    train_model()
+    test_model()
+    #train_model()

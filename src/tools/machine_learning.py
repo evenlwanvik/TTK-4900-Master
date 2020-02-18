@@ -24,7 +24,7 @@ def preprocess_data(data_path):
     nLat = gridSize[1]*2
     nTeddies = len(X)
 
-    print("Resizing {nTeddies} eddies to ({nLon}, {nLat}) for training")
+    print(f"Resizing {nTeddies} eddies to ({nLon}, {nLat}) for training")
 
     scaler = MinMaxScaler(feature_range=(0,1))
 
@@ -50,7 +50,7 @@ def sliding_window(arr, stepSize, windowSize):
         stepSize    (int): number of pixels to skip per new window
         windowSize  (int): width and height of window in pixels
     returns:
-        generator of windows
+        generator of indexes of windows
     ''' 
     dims = arr.shape
 
