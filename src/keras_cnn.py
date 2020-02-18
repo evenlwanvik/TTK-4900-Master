@@ -47,6 +47,7 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
     (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(nc_fpath)
     ssl = np.array(ssl_full[0].T, dtype='float32') # NC uses (lat,lon), we want (lon/lat) and it needs to be float32
 
+
     # load model
     model = load_model(model_fpath)
     # summarize model.
