@@ -3,6 +3,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 import cv2
 from tools import dim
+import matplotlib.pyplot as plt
 
 def getAccuracy(pred_val, true_val):
     correct = 0
@@ -13,19 +14,24 @@ def getAccuracy(pred_val, true_val):
     return correct/N  
 
 
-def preprocess_data(data_path):
+def preprocess_data(data_path, split=True, gridSize=None):
+    
     with np.load(data_path, allow_pickle=True) as data:
+
+        data = data_augmentation(data['arr_0'])
+
         X = data['arr_0'][:,0]
         Y = data['arr_0'][:,1]
         
     # The standard grid size we will use
-    gridSize = dim.find_avg_dim(X)
-    nLon = gridSize[0]*2
-    nLat = gridSize[1]*2
+    if gridSize==None:
+        gridSize = dim.find_avg_dim(X)
+    nLon = gridSize[0]
+    nLat = gridSize[1]
+    
     nTeddies = len(X)
 
-    print(f"Resizing {nTeddies} eddies to ({nLon}, {nLat}) for training")
-
+    print("Resizing {} eddies to ({}, {}) for training".format(nTeddies,nLon,nLat))
     scaler = MinMaxScaler(feature_range=(0,1))
 
     # Save the resizing till the actual training begins, keep the size differences
@@ -39,7 +45,25 @@ def preprocess_data(data_path):
 
     Y = Y.astype('int') # Apparently it is of type object, make it int
     # return (X_train, X_test, y_train, y_test)
-    return train_test_split(X, Y, test_size=0.33)
+    if split:
+        return train_test_split(X, Y, test_size=0.33)
+    else:
+        return X, Y
+
+
+def data_augmentation(arr):
+
+    #arr = arr + arr.T
+    print(arr[:,0].shape)
+    exit()
+
+    fig, ax = plt.subplots(1, 2, figsize=(14, 8))
+    ax[0].contourf(arr[:,0], cmap='rainbow', levels=20)
+    ax[1].contourf(arr[:,0].T, cmap='rainbow', levels=20)
+    plt.show()
+    exit()
+
+    keras.preprocessing.image.ImageDataGenerator(rotation_range=180, horizontal_flip=True)
 
 
 def sliding_window(arr, stepSize, windowSize):

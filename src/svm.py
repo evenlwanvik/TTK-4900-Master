@@ -1,24 +1,27 @@
 from tools.machine_learning import getAccuracy, preprocess_data, sliding_window
-from tools.sliding_window import localize_and_classify
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import MinMaxScaler
 from tools.load_nc import load_netcdf4
-#from skimage.feature import hog
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 from tools import gui, dim
 import numpy as np
 import pickle
 import xarray as xr
+import cv2
+
+
+from matplotlib.colors import BoundaryNorm
+from matplotlib.ticker import MaxNLocator
+
 
 meastype = 'phase'
-
 data_path = f'C:/Master/TTK-4900-Master/data/training_data/200_days_2018/{meastype}_train.npz'
-
 model_fpath = f'models/svm_{meastype}_01.sav'
 
+winW, winH = int(15*2), int(9*2)
 
 def train_model(data_path=data_path, model_fpath=model_fpath):
     
@@ -74,50 +77,79 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
 
     (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(nc_fpath)
 
-    ssl = np.array(ssl_full[0].T, dtype='float32') 
-    sst = np.array(sst_full[0].T, dtype='float32') 
-    uvel = np.array(uvel_full[0,0].T, dtype='float32') 
-    vvel = np.array(vvel_full[0,0].T, dtype='float32') 
+    day = 50
+
+    ssl = np.array(ssl_full[day].T, dtype='float32') 
+    uvel = np.array(uvel_full[day,0].T, dtype='float32') 
+    vvel = np.array(vvel_full[day,0].T, dtype='float32') 
     with np.errstate(all='ignore'): # Disable zero div warning
         phase = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel, uvel) ) + 180
     
-    ssl_model = pickle.load(open(f'models/svm_ssl_01.sav', 'rb'))
-    sst_model = pickle.load(open(f'models/svm_sst_01.sav', 'rb'))
-    phase_model = pickle.load(open(f'models/svm_phase_01.sav', 'rb'))
+    # Recreate the exact same model purely from the file
+    ssl_clf = pickle.load(open('models/svm_ssl_01.sav', 'rb'))
+    phase_clf = pickle.load(open('models/svm_phase_01.sav', 'rb'))
 
     shape = ssl.shape
-    stepSize, winW, winH = 10, 30, 18
-    probLim = 0.85
-
+    ssl_probLim = 0.89
+    phase_probLim = 0.35
+    stepSize = 2
     scaler = MinMaxScaler(feature_range=(0,1))
 
-    # for every dataset and its model
-    for dataIdx, (data, clf) in enumerate([(ssl, ssl_model), (sst, sst_model), (phase, phase_model),]):
+    # normalize (scale) the data
+    ssl_scaled = scaler.fit_transform(ssl)
+    phase_scaled = scaler.fit_transform(phase)
 
-        data = scaler.fit_transform(data)
+    # loop over the sliding window of indeces
+    for (x, y, (lonIdxs, latIdxs)) in sliding_window(ssl, stepSize=stepSize, windowSize=(winW, winH)):
+        #print('{},{}'.format(x,y))
 
-        # loop over the sliding window
-        for (x, y, (lonIdxs, latIdxs)) in sliding_window(data, stepSize=stepSize, windowSize=(winW, winH)):
+        #import pdb; pdb.set_trace()
 
-            if lonIdxs[-1] > shape[0] or latIdxs[-1] > shape[1]:
-                continue
+        if lonIdxs[-1] >= shape[0] or latIdxs[-1] >= shape[1]:
+            continue
 
-            window = np.array([[data[i,j] for j in latIdxs] for i in lonIdxs])
-            lo, la = lon[lonIdxs], lat[latIdxs]
+        # Window indexed data
+        ssl_wind = np.array([[ssl[i,j] for j in latIdxs] for i in lonIdxs])
+        ssl_scaled_wind = np.array([[ssl_scaled[i,j] for j in latIdxs] for i in lonIdxs])
+        phase_wind = np.array([[phase[i,j] for j in latIdxs] for i in lonIdxs])
+        phase_scaled_wind = np.array([[phase_scaled[i,j] for j in latIdxs] for i in lonIdxs])
 
-            probabilities = clf.predict_proba( [np.array(window.flatten())] )
+        lo, la = lon[lonIdxs], lat[latIdxs]
 
-            if probabilities[0,1] > probabilities[0,0] and probabilities[0,1] > probLim:
-                print(f'data nr {dataIdx+1} | probas: {probabilities} | lon: [{lo[0]}, {lo[-1]}, lat: [{la[0]}, {la[-1]}]')
-                
-                fig, ax = plt.subplots(figsize=(14, 10), dpi= 80, facecolor='w', edgecolor='w')
-                
-                if dataIdx == 2:
-                    plt.contourf(lo, la, window.T, cmap='CMRmap', levels=10)
-                else:
-                    plt.contourf(lo, la, window.T, cmap='rainbow', levels=20)
-                plt.imshow(lo, la, window.T, interpolation='nearest')
-                plt.show()           
+        # Predict and receive probability
+        ssl_prob   = ssl_clf.predict_proba([ssl_scaled_wind.flatten()])
+        phase_prob = phase_clf.predict_proba([phase_scaled_wind.flatten()])
+
+        if ssl_prob[0,1] > ssl_prob[0,0] and ssl_prob[0,1] > ssl_probLim:
+            
+            #print("ssl prob: {} > problim".format(ssl_prob[0,0]))
+            #if phase_prob[0,0] > phase_probLim:
+            print('Predicted class {} | ssl prob: {} | phase prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(ssl_clf.predict([phase_scaled_wind.flatten()]),ssl_prob[0],phase_prob[0],lo[0],lo[-1],la[0],la[-1]))
+
+            fig, ax = plt.subplots(1, 2, figsize=(14, 8))
+
+            ax[0].contourf(lo, la, ssl_wind.T, cmap='rainbow', levels=20)
+
+            plot_phase(phase_wind, lo, la, ax[1])
+
+            plt.show() 
+
+        #if phase_prob[0,0] > phase_probLim:
+            #print("phase prob: {} > problim".format(ssl_prob[0,0]))
+
+
+def plot_phase(phase, lon, lat, ax):
+    ''' Interpolate phase to make it easier to visualize the eddy center '''
+    lonNew = np.linspace(lon[0], lon[-1], lon.size*5)
+    latNew = np.linspace(lat[0], lat[-1], lat.size*5)
+
+    phase_interp = cv2.resize(phase, dsize=(latNew.size, lonNew.size), interpolation=cv2.INTER_CUBIC)
+
+    levels = MaxNLocator(nbins=10).tick_values(phase.min(), phase.max())
+    cmap = plt.get_cmap('CMRmap')
+    norm = BoundaryNorm(levels, ncolors=cmap.N, clip=True)
+
+    ax.pcolormesh(lonNew, latNew, phase_interp.T, cmap=cmap, norm=norm)
 
 
 if __name__ == '__main__':
