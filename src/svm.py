@@ -12,23 +12,55 @@ import pickle
 import xarray as xr
 import cv2
 
-
+from skimage.feature import hog
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
 
 
-meastype = 'phase'
+meastype = 'ssl'
 data_path = f'C:/Master/TTK-4900-Master/data/training_data/200_days_2018/{meastype}_train.npz'
 model_fpath = f'models/svm_{meastype}_01.sav'
 
-winW, winH = int(15*2), int(9*2)
+winW, winH = int(15), int(9)
 
 def train_model(data_path=data_path, model_fpath=model_fpath):
     
     # Get the training data
-    X_train, X_test, y_train, y_test = preprocess_data(data_path)
+    #X_train, X_test, y_train, y_test = preprocess_data(data_path)
 
-    y_train, y_test = abs(y_train), abs(y_test) # Single-class
+    #y_train, y_test = abs(y_train), abs(y_test) # Single-class
+
+
+
+    ''' Test HoG! '''
+    with np.load('C:/Master/TTK-4900-Master/data/training_data/200_days_2018/ssl_train.npz', allow_pickle=True) as data:
+        ssl = data['arr_0'][:,0]
+    with np.load('C:/Master/TTK-4900-Master/data/training_data/200_days_2018/uvel_train.npz', allow_pickle=True) as data:
+        uvel = data['arr_0'][:,0]
+    with np.load('C:/Master/TTK-4900-Master/data/training_data/200_days_2018/vvel_train.npz', allow_pickle=True) as data:
+        vvel = data['arr_0'][:,0]
+
+    #### TEST HOOOOOOOOOOOOOOG
+
+    # Accuracy før HoG: 86%
+    hog_images = []
+    hog_features = []
+    for image in X_train:
+        fd,hog_image = hog(image, orientations=8, pixels_per_cell=(2,2),cells_per_block=(1, 1),block_norm= 'L2',visualize=True)
+        hog_images.append(hog_image)
+        hog_features.append(fd)
+    for i in range(100):
+        fig, ax = plt.subplots(1, 3, figsize=(14, 6))
+        print(y_train[i])
+        ax[0].contourf(X_train[i], 20)
+        n=-1
+        color_array = np.sqrt(((uvel_wind-n)/2)**2 + ((vvel_wind-n)/2)**2)
+        ax[1].quiver(lon, lat, uvel_wind.T, vvel_wind.T, color_array, scale=7) 
+        ax[2].imshow(hog_images[i])
+        plt.show()
+    exit()
+    ''' Test HoG! '''
+
 
     shape = X_train.shape
     X_train = X_train.reshape(shape[0],shape[1]*shape[2])
@@ -153,5 +185,5 @@ def plot_phase(phase, lon, lat, ax):
 
 
 if __name__ == '__main__':
-    test_model()
-    #train_model()
+    #test_model()
+    train_model()

@@ -4,6 +4,8 @@ from sklearn.model_selection import train_test_split
 import cv2
 from tools import dim
 import matplotlib.pyplot as plt
+from collections import Counter
+
 
 def getAccuracy(pred_val, true_val):
     correct = 0
@@ -15,14 +17,10 @@ def getAccuracy(pred_val, true_val):
 
 
 def preprocess_data(data_path, split=True, gridSize=None):
-    
     with np.load(data_path, allow_pickle=True) as data:
-
-        data = data_augmentation(data['arr_0'])
-
         X = data['arr_0'][:,0]
         Y = data['arr_0'][:,1]
-        
+
     # The standard grid size we will use
     if gridSize==None:
         gridSize = dim.find_avg_dim(X)
@@ -49,6 +47,34 @@ def preprocess_data(data_path, split=True, gridSize=None):
         return train_test_split(X, Y, test_size=0.33)
     else:
         return X, Y
+
+
+def find_dimensions(data_path):
+
+    with np.load(data_path, allow_pickle=True) as data:
+        arr = data['arr_0'][:,0]
+    shape = arr.shape
+
+    lonDims = [x.shape[0] for x in arr]
+    latDims = [x.shape[1] for x in arr]
+    
+    lonLabels, lonVals = zip(*Counter(lonDims).items())
+    latLabels, latVals = zip(*Counter(latDims).items())
+    
+    lonIdxs = range(lonLabels[-1])
+    latIdxs = range(latLabels[-1])
+
+    latVals = [latVals[latLabels.index(i)] if i in latLabels else 0 for i in latIdxs]
+    lonVals = [lonVals[lonLabels.index(i)] if i in lonLabels else 0 for i in lonIdxs]
+
+    width = 0.8
+    plt.bar(lonIdxs, lonVals, width, alpha=0.5)
+    plt.bar(latIdxs, latVals, width, alpha=0.5)
+    plt.legend(['Longitude', 'Latitude'])
+    plt.xlabel('Sizes')
+    plt.ylabel('Sample count')
+    plt.title('Distribution of training data sizes')
+    plt.show('Length of sample sizes')
 
 
 def data_augmentation(arr):
