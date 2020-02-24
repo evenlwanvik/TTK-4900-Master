@@ -1,5 +1,0 @@
-2020-02-14 09:26:23,580 - Training Data - INFO - loading netcdf
-2020-02-14 09:26:24,049 - Training Data - INFO - Creating images for dataset 17-01-2018
-2020-02-14 09:26:25,481 - Training Data - INFO - + Creating rectangles for 6 eddies
-2020-02-14 09:26:25,481 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.333332, 47.416668) and diameter 37.55351978558715
-2020-02-14 09:26:25,484 - Training Data - INFO - +++ Argmax center -> lon: -40.33333206176758, Center lat: 47.41666793823242

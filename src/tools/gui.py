@@ -14,8 +14,13 @@ def show_figure(fig):
     # define the window layout
     layout = [[sg.Text('Add to training data?', font='Any 18')],
             [sg.Canvas(size=(figure_w, figure_h), key='canvas')],
-            [   sg.Yes(pad=((figure_w / 2-50, 0), 3), size=(4, 2)), 
-                sg.No(size=(4, 2))]]
+            [   sg.Yes(pad=((400, 0), 3), size=(4, 2)), 
+                sg.No(size=(4, 2)),
+                sg.Button('Center', size=(6, 2)),
+                sg.Button('incLon', size=(6, 2)),
+                sg.Button('incLat', size=(6, 2)),
+                sg.Button('decLon', size=(6, 2)),
+                sg.Button('decLat', size=(6, 2))]]
 
     # create the form and show it without the plot
     window = sg.Window('Training data selecter',

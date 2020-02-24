@@ -22,16 +22,18 @@ import os
 import io
 import sys
 
+from matplotlib.colors import BoundaryNorm
+from matplotlib.ticker import MaxNLocator
 from keras.models import load_model
 from sklearn.preprocessing import MinMaxScaler
 
 argp = argparse.ArgumentParser()
-argp.add_argument("-fp", "--fpath", default='C:/Master/data/cmems_data/global_10km/phys_noland_001_02.nc', help="rectangular patch size multiplier")
-argp.add_argument("-rs", "--size", default=1.5, help="rectangular patche size multiplier")
-argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/data/training_data/100_next_days_2018', help="training data save dir")
+argp.add_argument("-fp", "--fpath", default='C:/Master/data/cmems_data/global_10km/phys_noland_2016_001.nc', help="rectangular patch size multiplier")
+argp.add_argument("-rs", "--size", default=1.3, help="rectangular patche size multiplier")
+argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/data/training_data/200_days_2016', help="training data save dir")
 
 
-logPath = f"{os.path.dirname(os.path.realpath(__file__))}/log"
+logPath = f"{os.path.dirname(os.path.realpath(__file__))}/training_data/log"
 logName = f"{datetime.datetime.now().strftime('%d%m%Y_%H%M')}.log"
 
 if not os.path.exists(logPath):
@@ -85,21 +87,30 @@ def create_subgrids(arr, nrows, ncols, inner=1):
     'inner' tells the dimension of the array elements, i.e. 2 if tuple, 1 if single element
     """
     h, w = dim.shape(arr)[0:2]
+    arr = np.array(arr)
     assert h % nrows == 0, "{} rows is not evenly divisble by {}".format(h, nrows)
     assert w % ncols == 0, "{} cols is not evenly divisble by {}".format(w, ncols)
-    return (arr.redim.shape(h//nrows, nrows, -1, ncols, inner)# last 2 is because array consists of 2d idx
+    return (arr.reshape(h//nrows, nrows, -1, ncols, inner)# last 2 is because array consists of 2d idx
                .swapaxes(1,2)
-               .redim.shape(-1, nrows, ncols, inner)) 
+               .reshape(-1, nrows, ncols, inner)) 
 
 
-def plot_grids(data, lon, lat, title="__"):
+def plot_grids(data, lon, lat, larger_grid=None, title="__"):
     #"quickscript" to plot and investigate images
-    fig, axs = plt.subplots(1, 3, figsize=(16, 6), sharex=True, sharey=True)
-    axs[0,0].contourf(lon, lat, data[0].T, 10, cmap='rainbow')
-    axs[0,1].contourf(lon, lat, data[1].T, 10, cmap='CMRmap')
+    fig, axs = plt.subplots(2, 2, figsize=(12, 8))
+
+    # levels for the phase angle to make it not interpolate 
+    levels = MaxNLocator(nbins=10).tick_values(data[4].min(), data[4].max())
+    cmap = plt.get_cmap('CMRmap')
+    norm = BoundaryNorm(levels, ncolors=cmap.N, clip=True)
+    axs[0,0].pcolormesh(lon, lat, data[4].T, cmap=cmap, norm=norm)
+
+    axs[0,1].contourf(lon, lat, data[1].T, 20, cmap='rainbow')
     n=-1
     color_array = np.sqrt(((data[2]-n)/2)**2 + ((data[3]-n)/2)**2)
-    axs[0,2].quiver(lon, lat, data[2].T, data[3].T, color_array, scale=7) # Plot vector field
+    axs[1,0].quiver(lon, lat, data[2].T, data[3].T, color_array, scale=5) # Plot vector field
+    if larger_grid is not None:
+        axs[1,1].contourf(larger_grid[0], larger_grid[1], larger_grid[2].T, 20, cmap='rainbow') # show a larger parcel to analyze the surroundings
     #axs[1,2].contourf(lon, lat, data[5].T, 10) # Or plot the OW values
     
     fig.suptitle(title, fontsize=16)
@@ -147,7 +158,7 @@ def eddy_metrics(eddies_ma, centerIdxs, lon, lat):
 
 
 def check_cyclone(flag):
-    # positive 1 denotes positive rotation, which is a cyclone in the norther hemisphere
+    # positive 1 denotes positive rotation (counter-clockwise), which is a cyclone in the norther hemisphere
     if   flag==1:  return "cyclone"
     elif flag==-1: return "anticyclone"
     else:          return "nothing"
@@ -186,21 +197,24 @@ def semi_automatic_training():
     (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(args.fpath)
 
     # Confidence level, usually 90%
-    R2_criterion = 0.95
+    R2_criterion = 0.90
 
     # OW value at which to begin the evaluation of R2, default was -1, want to use -8 to be absolutely sure
-    OW_start = -8.0
+    OW_start = -6.0
 
     # Number of local minima to evaluate using R2 method.
     # Set low (like 20) to see a few R2 eddies quickly.
     # Set high (like 1e5) to find all eddies in domain.
-    max_evaluation_points = 10000 
+    max_evaluation_points = 100000 
 
     # Minimum number of cells required to be identified as an eddie.
-    min_eddie_cells = 4 # set to 3 to be coherent with the use of the R2 method, 3 points seems like a reasonable minimun for a correlation 
+    min_eddie_cells = 3 # set to 3 to be coherent with the use of the R2 method, 3 points seems like a reasonable minimun for a correlation 
 
     # z-level to plot.  Usually set to 0 for the surface.
     k_plot = 0
+
+    dlon = abs(lon[0]-lon[1])
+    dlat = abs(lat[0]-lat[1])
 
     # Create eddy images for each day in datase
     #for day, time in enumerate(t):
@@ -275,70 +289,101 @@ def semi_automatic_training():
             # Find rectangle metrics
             height = args.size * abs(diameter_km / 110.54) # 1 deg = 110.54 km, 1.2 to be sure the image covers the eddy
             width = args.size * abs(diameter_km / (111.320 * cos(lat[ctrIdx[1]]))) # 1 deg = 111.320*cos(latitude) km, using center latitude as ref
-            
-            #-TODO: I DO THIS TWICE NOW! CREATE FUNCTION? -----
 
             lon_bnds = ctrCoord[0]-width/2.0, ctrCoord[0]+width/2.0
             lat_bnds = ctrCoord[1]-height/2.0, ctrCoord[1]+height/2.0
             
             # Indeces of current eddy image
-            lonIdxs = np.where((lon > lon_bnds[0]) & (lon < lon_bnds[1]))[0]
-            latIdxs = np.where((lat > lat_bnds[0]) & (lat < lat_bnds[1]))[0]
+            lonIdxs = np.where((lon >= lon_bnds[0]) & (lon <= lon_bnds[1]))[0]
+            latIdxs = np.where((lat >= lat_bnds[0]) & (lat <= lat_bnds[1]))[0]
 
             eddy_data = np.array([np.zeros((lonIdxs.size,latIdxs.size)) for _ in range(6)])
-            
-            for i, lo in enumerate(lonIdxs):
-                for j, la in enumerate(latIdxs):
-                    for k, eddy in enumerate(datasets):
-                        eddy_data[k,i,j] = eddy[lo,la]
-
-            lo = lon[lonIdxs]
-            la = lat[latIdxs]
-            title = dateStr + "_" + check_cyclone(cyclone)
   
             # Plot and flag to save eddy
             #add = plot_grids(eddy_data, lo, la, title)
 
-            #----------------------------------------------------------
+            #-------- Move closer to center of eddy ------------
 
-            # Find the center from water level
-            if cyclone==1:
-                idx = np.unravel_index(eddy_data[1].argmax(), eddy_data[1].shape)
-                ctrCoord = lon[lonIdxs[idx[0]]], lat[latIdxs[idx[1]]]
-                logger.info(f"+++ Argmax center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
-            else:
-                idx = np.unravel_index(eddy_data[1].argmin(), eddy_data[1].shape)
-                ctrCoord = lon[lonIdxs[idx[0]]], lat[latIdxs[idx[1]]]
-                logger.info(f"+++ Argmin center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
+            title = dateStr + "_" + check_cyclone(cyclone)
 
-             #-TODO: I DO IT AGAIN TO FIND WATER LEVEL CENTER -----
+            choices = ('Center', 'incLon', 'incLat', 'decLon', 'decLat')
+            response = 'Center'
+            #response = 'Yes' # Skip this section for debugging non-eddy section
+            while response in choices:
 
-            lon_bnds = ctrCoord[0]-width/2.0, ctrCoord[0]+width/2.0
-            lat_bnds = ctrCoord[1]-height/2.0, ctrCoord[1]+height/2.0
-            
-            # Indeces of current eddy image
-            lonIdxs = np.where((lon > lon_bnds[0]) & (lon < lon_bnds[1]))[0]
-            latIdxs = np.where((lat > lat_bnds[0]) & (lat < lat_bnds[1]))[0]
+                lo = lon[lonIdxs]
+                la = lat[latIdxs]
 
-            eddy_data = np.array([np.zeros((lonIdxs.size,latIdxs.size)) for _ in range(6)])
-            
-            for i, lo in enumerate(lonIdxs):
-                for j, la in enumerate(latIdxs):
-                    for k, eddy in enumerate(datasets):
-                        eddy_data[k,i,j] = eddy[lo,la]
+                for i, loIdx in enumerate(lonIdxs):
+                    for j, laIdx in enumerate(latIdxs):
+                        for k, measurement in enumerate(datasets): # for every measurement type in datasets
+                            eddy_data[k,i,j] = measurement[loIdx,laIdx]
+
+                # Store a larger grid to make it easier to see if we have an eddy and if we should center image 
+                if (lonIdxs[0]-5 < 0 or lonIdxs[-1]+5 >= nLon) or (latIdxs[0]-3 < 0 or latIdxs[-1]+3 >= nLat):
+                    larger_grid = None
+                else:
+                    larger_grid = [ np.zeros(lonIdxs.size+10), np.zeros(latIdxs.size+6), 
+                                    np.zeros((lonIdxs.size+10,latIdxs.size+6)), ]
+                    for i, loIdx in enumerate(range(lonIdxs[0]-5, lonIdxs[-1]+6)):
+                        for j, laIdx in enumerate(range(latIdxs[0]-3, latIdxs[-1]+4)):
+                            larger_grid[0][i] = lon[loIdx]
+                            larger_grid[1][j] = lat[laIdx]
+                            larger_grid[2][i,j] = ssl[loIdx,laIdx]
+
+                response = plot_grids(eddy_data, lo, la, larger_grid, title)
+                if response not in choices: # TODO: feel like this is a silly way of doing this
+                    break
+                if response == 'Center':
+                    # Find the center from water level
+                    logger.info(f"+++ Centering eddy towards a minima/maxima depending on eddy type")
+                    if cyclone==1:
+                        idx = np.unravel_index(eddy_data[1].argmax(), eddy_data[1].shape)
+                        ctrCoord = lon[lonIdxs[idx[0]]], lat[latIdxs[idx[1]]]
+                        logger.info(f"+++ Argmax center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
+                    else:
+                        idx = np.unravel_index(eddy_data[1].argmin(), eddy_data[1].shape)
+                        ctrCoord = lon[lonIdxs[idx[0]]], lat[latIdxs[idx[1]]]
+                        logger.info(f"+++ Argmin center -> lon: {ctrCoord[0]}, Center lat: {ctrCoord[1]}")
+
+                    # New width and height in case we've moved in lon/lat direction
+                    width, height = abs(lo[0]-lo[-1])+dlon, abs(la[0]-la[-1])+dlat
+
+                    lon_bnds = ctrCoord[0]-width/2.0, ctrCoord[0]+width/2.0
+                    lat_bnds = ctrCoord[1]-height/2.0, ctrCoord[1]+height/2.0
+
+                    # Indeces of current eddy image
+                    lonIdxs = np.where((lon >= lon_bnds[0]) & (lon <= lon_bnds[1]))[0]
+                    latIdxs = np.where((lat >= lat_bnds[0]) & (lat <= lat_bnds[1]))[0]
+
+                elif response == 'incLon':
+                    if (lonIdxs[0] <= 0 or lonIdxs[-1] >= nLon): 
+                        logger.info(f"+++ Longitude can't be increased further")
+                    else:
+                        lonIdxs = np.arange(lonIdxs[0]-1, lonIdxs[-1]+2)
+                        logger.info(f"+++ Increasing lontitude by 1 cell in both directions to ({lonIdxs[0]}:{lonIdxs[-1]})")
+                elif response == 'incLat':
+                    if (latIdxs[0] <= 0 or latIdxs[-1] >= nLat): 
+                        logger.info(f"+++ Latitude can't be increased further")
+                    else:
+                        latIdxs = np.arange(latIdxs[0]-1, latIdxs[-1]+2)
+                        logger.info(f"+++ Increasing latitude by 1 cell in both directions to ({latIdxs[0]}:{latIdxs[-1]})")
+                elif response == 'decLon':
+                    lonIdxs = np.arange(lonIdxs[0]+1, lonIdxs[-1])
+                    logger.info(f"+++ Decreasing lontitude by 1 cell in both directions to ({lonIdxs[0]}:{lonIdxs[-1]})")
+                elif response == 'decLat':
+                    latIdxs = np.arange(latIdxs[0]+1, latIdxs[-1])
+                    logger.info(f"+++ Decreasing latitude by 1 cell in both directions to ({latIdxs[0]}:{latIdxs[-1]})")
+                eddy_data = np.array([np.zeros((lonIdxs.size,latIdxs.size)) for _ in range(6)])      
 
             #----------------------------------------------------------
             
             lo = lon[lonIdxs]
             la = lat[latIdxs]
-            title = dateStr + "_" + check_cyclone(cyclone)
-  
-            # Plot and flag to save eddy
-            add = plot_grids(eddy_data, lo, la, title)
 
             #guiEvent, guiValues = show_figure(fig)
             #add = 'Yes' # Bypass GUI selection
-            if add=='Yes':
+            if response=='Yes':
                 savedImgCounter = savedImgCounter + 1
                 # Create images?
                 '''
@@ -369,7 +414,8 @@ def semi_automatic_training():
             continue   
 
         # Subgrid (sg) longitude and latitude length
-        sgLon, sgLat = dim.find_avg_dim(sst_train) 
+        sgLon, sgLat = dim.find_avg_dim(sst_train, start_axis=0) 
+        logger.info(f"+++++ Using average dimensions ({sgLon}, {sgLat}) for non-eddy")
 
         loRange, laRange = range(0, nLon, sgLon), range(0, nLat, sgLat)
     
@@ -400,8 +446,8 @@ def semi_automatic_training():
                         data_noeddy[k,grid_id,i,j] = datasets[k][idx]
             #print(idx_grid)
             lo, la = lon[idx_grid[:,0,0]], lat[idx_grid[0,:,1]]
-            title = dateStr + "_noeddy"
-            add = plot_grids(data_noeddy[:,grid_id,:,:], lo, la, title)
+            title = dateStr + "_noneddy"
+            add = plot_grids(data_noeddy[:,grid_id,:,:], lo, la, None, title)
             if add=='Yes':
                 added = added + 1
                 sst_train.append([data_noeddy[0,grid_id,:,:], 0]) # [data, label]
@@ -432,14 +478,14 @@ def semi_automatic_training():
         # ========== Save data as compressed numpy array ==========
         # =========================================================
 
-        save_npz_array( (sst_train, ssl_train, uvel_train, vvel_train, phase_train) )
+        #save_npz_array( (sst_train, ssl_train, uvel_train, vvel_train, phase_train) )
 
 def adjustment_data():
     ''' Method to run the ML model to provide correctional non-eddy images for the model '''
 
     (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(args.fpath)
 
-    ssl_probLim = 0.97
+    ssl_probLim = 0.96
     phase_probLim = 0.35
     stepSize = 8
     scaler = MinMaxScaler(feature_range=(0,1))

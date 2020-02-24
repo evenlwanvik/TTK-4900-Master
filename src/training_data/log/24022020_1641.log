@@ -1,0 +1,43 @@
+2020-02-24 16:41:39,234 - Training Data - INFO - loading netcdf
+2020-02-24 16:41:39,706 - Training Data - INFO - Creating images for dataset 13-03-2016
+2020-02-24 16:41:41,670 - Training Data - INFO - + Creating rectangles for 19 eddies
+2020-02-24 16:41:41,670 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.583332, 46.916668) and diameter 45.7499835404623
+2020-02-24 16:41:41,672 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-24 16:41:41,679 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.833332, 51.5) and diameter 29.760321164167635
+2020-02-24 16:41:41,680 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-24 16:41:41,681 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.583332, 46.416668) and diameter 68.34041203394493
+2020-02-24 16:41:41,691 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-24 16:41:41,693 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.0, 47.916668) and diameter 46.14158215198893
+2020-02-24 16:41:41,702 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-24 16:41:41,704 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.25, 50.833332) and diameter 46.271736257362974
+2020-02-24 16:41:41,705 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-24 16:41:41,713 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.75, 59.75) and diameter 37.9043124107448
+2020-02-24 16:41:41,717 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-24 16:41:41,718 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.5, 50.416668) and diameter 40.87788381744028
+2020-02-24 16:41:41,725 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-24 16:41:41,728 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-36.916668, 50.166668) and diameter 112.29068719499442
+2020-02-24 16:41:41,735 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-24 16:41:41,739 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-22.5, 58.25) and diameter 36.44665186127574
+2020-02-24 16:41:41,740 - Training Data - INFO - +++++ Saving image 8 as an eddy
+2020-02-24 16:41:41,748 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.0, 50.166668) and diameter 60.81861008568036
+2020-02-24 16:41:41,752 - Training Data - INFO - +++++ Saving image 9 as an eddy
+2020-02-24 16:41:41,753 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-16.583334, 49.083332) and diameter 69.5544112957494
+2020-02-24 16:41:41,759 - Training Data - INFO - +++++ Saving image 10 as an eddy
+2020-02-24 16:41:41,762 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-25.75, 56.25) and diameter 39.84887363487309
+2020-02-24 16:41:41,764 - Training Data - INFO - +++++ Saving image 11 as an eddy
+2020-02-24 16:41:41,774 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.916668, 49.166668) and diameter 36.94768918506843
+2020-02-24 16:41:41,776 - Training Data - INFO - +++++ Saving image 12 as an eddy
+2020-02-24 16:41:41,783 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.333332, 51.0) and diameter 34.23878436847282
+2020-02-24 16:41:41,787 - Training Data - INFO - +++++ Saving image 13 as an eddy
+2020-02-24 16:41:41,798 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.416668, 46.083332) and diameter 71.71490694986285
+2020-02-24 16:41:41,801 - Training Data - INFO - +++++ Saving image 14 as an eddy
+2020-02-24 16:41:41,812 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.25, 49.0) and diameter 56.24698376615958
+2020-02-24 16:41:41,816 - Training Data - INFO - +++++ Saving image 15 as an eddy
+2020-02-24 16:41:41,827 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.666668, 46.333332) and diameter 35.8325934440252
+2020-02-24 16:41:41,831 - Training Data - INFO - +++++ Saving image 16 as an eddy
+2020-02-24 16:41:41,842 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.083332, 48.0) and diameter 38.33342965673442
+2020-02-24 16:41:41,844 - Training Data - INFO - +++++ Saving image 17 as an eddy
+2020-02-24 16:41:41,855 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.75, 48.25) and diameter 54.69221824156611
+2020-02-24 16:41:41,857 - Training Data - INFO - +++++ Saving image 18 as an eddy
+2020-02-24 16:41:41,857 - Training Data - INFO - +++++ Using average dimensions (12, 7) for non-eddy
+2020-02-24 16:42:18,818 - Training Data - INFO - +++++ Saving noneddy

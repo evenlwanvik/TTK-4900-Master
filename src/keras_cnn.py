@@ -165,7 +165,7 @@ def plot_history(history):
     plt.show()
 
 
-def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.nc', model_fpath=model_fpath, meastype=meastype):
+def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001_02.nc', model_fpath=model_fpath, meastype=meastype):
 
     print("\n\n")
 
@@ -184,9 +184,9 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
     phase_clf = keras.models.load_model('models/cnn_{}class_phase_01.h5'.format(cnntype))
 
     shape = ssl.shape
-    ssl_probLim = 0.98
+    ssl_probLim = 0.95
     phase_probLim = 0.35
-    stepSize = 2
+    stepSize = 5
     scaler = MinMaxScaler(feature_range=(0,1))
 
     print("\n\nperforming sliding window on satellite data \n\n")

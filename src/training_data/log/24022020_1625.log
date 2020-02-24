@@ -1,0 +1,39 @@
+2020-02-24 16:25:37,726 - Training Data - INFO - loading netcdf
+2020-02-24 16:25:38,184 - Training Data - INFO - Creating images for dataset 15-05-2016
+2020-02-24 16:25:40,095 - Training Data - INFO - + Creating rectangles for 16 eddies
+2020-02-24 16:25:40,095 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.583332, 47.5) and diameter 24.336913793429254
+2020-02-24 16:25:40,105 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-24 16:25:40,106 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.916668, 46.833332) and diameter 84.74334890879678
+2020-02-24 16:25:40,107 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-24 16:25:40,116 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.666668, 48.75) and diameter 44.21592388854971
+2020-02-24 16:25:40,118 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-24 16:25:40,119 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.666666, 51.5) and diameter 48.83981183108003
+2020-02-24 16:25:40,126 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-24 16:25:40,127 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-20.083334, 54.5) and diameter 42.98950170607219
+2020-02-24 16:25:40,128 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-24 16:25:40,137 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.25, 50.75) and diameter 32.26358693876374
+2020-02-24 16:25:40,138 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-24 16:25:40,145 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.75, 52.5) and diameter 49.03376793496493
+2020-02-24 16:25:40,146 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-24 16:25:40,154 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.833332, 45.166668) and diameter 77.9160948516973
+2020-02-24 16:25:40,155 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-24 16:25:40,156 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.083332, 50.0) and diameter 45.90132227154657
+2020-02-24 16:25:40,158 - Training Data - INFO - +++++ Saving image 8 as an eddy
+2020-02-24 16:25:40,158 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.166668, 50.25) and diameter 55.542461810666346
+2020-02-24 16:25:40,167 - Training Data - INFO - +++++ Saving image 9 as an eddy
+2020-02-24 16:25:40,168 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.916668, 45.416668) and diameter 46.456346388068035
+2020-02-24 16:25:40,175 - Training Data - INFO - +++++ Saving image 10 as an eddy
+2020-02-24 16:25:40,177 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-28.5, 49.75) and diameter 58.33851052265017
+2020-02-24 16:25:40,178 - Training Data - INFO - +++++ Saving image 11 as an eddy
+2020-02-24 16:25:40,187 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.166668, 52.083332) and diameter 28.44439905865539
+2020-02-24 16:25:40,188 - Training Data - INFO - +++++ Saving image 12 as an eddy
+2020-02-24 16:25:40,189 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-37.166668, 51.416668) and diameter 47.50542947620899
+2020-02-24 16:25:40,196 - Training Data - INFO - +++++ Saving image 13 as an eddy
+2020-02-24 16:25:40,197 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 49.333332) and diameter 37.77090177918726
+2020-02-24 16:25:40,199 - Training Data - INFO - +++++ Saving image 14 as an eddy
+2020-02-24 16:25:40,200 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.333332, 51.666668) and diameter 55.93152130314199
+2020-02-24 16:25:40,207 - Training Data - INFO - +++++ Saving image 15 as an eddy
+2020-02-24 16:25:40,211 - Training Data - INFO - +++++ Using average dimensions (19, 6) for non-eddy
+2020-02-24 16:26:22,777 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 16:26:29,028 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 16:26:31,570 - Training Data - INFO - +++++ Saving noneddy

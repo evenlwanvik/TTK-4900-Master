@@ -52,10 +52,8 @@ variables = "--variable deptho"
 # =================== Date and lon/lat ====================
 # =========================================================
 
-dt = datetime.timedelta(days=2)
-#print(dt)
-#exit()
-duration = datetime.timedelta(days=100)
+dt = datetime.timedelta(days=10)
+duration = datetime.timedelta(days=200)
 # Global reanalysis (model):
 
 # Physics
@@ -71,7 +69,7 @@ longitude = [-60, 60]
 latitude = [45, 60]
 longitude = [-42, -15]
 
-startT = datetime.datetime(2018,1,1,0,0,0) + datetime.timedelta(days=200)
+startT = datetime.datetime(2016,1,1,0,0,0) + datetime.timedelta(days=0)
 
 N = 1
 time = startT

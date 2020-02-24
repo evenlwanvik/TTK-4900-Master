@@ -16,8 +16,11 @@ def find_max_dim(a):
     return max( [dim(i) for i in a]) 
 
 
-def find_avg_dim(a):
+def find_avg_dim(a, start_axis=None):
     """" Find the average frame size for both col and row, [0] since we want the training data, and not the label """
     # Obs! This used to be dim(i[0]) from training_data for the train and label axis!
-    x = np.array([dim(i) for i in a])
+    if start_axis is None:
+        x = np.array([dim(i) for i in a])
+    else:
+        x = np.array([dim(i[start_axis]) for i in a])
     return x.mean(axis=0, dtype=int)

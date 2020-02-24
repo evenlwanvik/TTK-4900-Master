@@ -1,0 +1,20 @@
+2020-02-24 16:12:29,110 - Training Data - INFO - loading netcdf
+2020-02-24 16:12:29,582 - Training Data - INFO - Creating images for dataset 11-07-2016
+2020-02-24 16:12:32,271 - Training Data - INFO - + Creating rectangles for 8 eddies
+2020-02-24 16:12:32,272 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-36.0, 51.5) and diameter 81.16183301950655
+2020-02-24 16:12:32,272 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-24 16:12:32,281 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.666668, 47.166668) and diameter 115.96303929949808
+2020-02-24 16:12:32,290 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-24 16:12:32,291 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.916668, 51.25) and diameter 111.5274227159455
+2020-02-24 16:12:32,299 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-24 16:12:32,301 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-24.083334, 52.333332) and diameter 53.5788612889597
+2020-02-24 16:12:32,301 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-24 16:12:32,309 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-25.416666, 51.75) and diameter 46.53978196987204
+2020-02-24 16:12:32,311 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-24 16:12:32,312 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.166668, 48.666668) and diameter 40.72811351756176
+2020-02-24 16:12:32,319 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-24 16:12:32,320 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.25, 50.75) and diameter 63.51437182234586
+2020-02-24 16:12:32,321 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-24 16:12:32,329 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.166668, 48.333332) and diameter 85.37920540184358
+2020-02-24 16:12:32,331 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-24 16:12:32,339 - Training Data - INFO - +++++ Using average dimensions (42, 10) for non-eddy

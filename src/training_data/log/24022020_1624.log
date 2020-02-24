@@ -1,0 +1,36 @@
+2020-02-24 16:24:09,251 - Training Data - INFO - loading netcdf
+2020-02-24 16:24:09,710 - Training Data - INFO - Creating images for dataset 16-02-2016
+2020-02-24 16:24:11,622 - Training Data - INFO - + Creating rectangles for 16 eddies
+2020-02-24 16:24:11,623 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.583332, 46.083332) and diameter 101.01562423531932
+2020-02-24 16:24:11,624 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-24 16:24:11,632 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.666668, 49.833332) and diameter 104.91797574087987
+2020-02-24 16:24:11,634 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-24 16:24:11,634 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.25, 47.833332) and diameter 24.27390694367708
+2020-02-24 16:24:11,641 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-24 16:24:11,642 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.916668, 59.0) and diameter 43.817530944990665
+2020-02-24 16:24:11,645 - Training Data - INFO - +++++ Saving image 3 as an eddy
+2020-02-24 16:24:11,651 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.5, 46.5) and diameter 19.41301002085228
+2020-02-24 16:24:11,652 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-24 16:24:11,652 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.833332, 49.083332) and diameter 60.609182887503565
+2020-02-24 16:24:11,654 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-24 16:24:11,655 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-27.916666, 57.333332) and diameter 40.81701239948729
+2020-02-24 16:24:11,663 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-24 16:24:11,665 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-38.5, 49.916668) and diameter 27.82459548374407
+2020-02-24 16:24:11,672 - Training Data - INFO - +++++ Saving image 7 as an eddy
+2020-02-24 16:24:11,673 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-31.666666, 50.916668) and diameter 56.34139280715225
+2020-02-24 16:24:11,675 - Training Data - INFO - +++++ Saving image 8 as an eddy
+2020-02-24 16:24:11,683 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.416668, 49.416668) and diameter 27.99883589660436
+2020-02-24 16:24:11,684 - Training Data - INFO - +++++ Saving image 9 as an eddy
+2020-02-24 16:24:11,685 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.5, 47.0) and diameter 59.84144618534631
+2020-02-24 16:24:11,692 - Training Data - INFO - +++++ Saving image 10 as an eddy
+2020-02-24 16:24:11,693 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.083332, 47.166668) and diameter 64.53377440659153
+2020-02-24 16:24:11,695 - Training Data - INFO - +++++ Saving image 11 as an eddy
+2020-02-24 16:24:11,701 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.5, 45.5) and diameter 46.40384378565849
+2020-02-24 16:24:11,702 - Training Data - INFO - +++++ Saving image 12 as an eddy
+2020-02-24 16:24:11,703 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.0, 46.0) and diameter 40.88038433146331
+2020-02-24 16:24:11,704 - Training Data - INFO - +++++ Saving image 13 as an eddy
+2020-02-24 16:24:11,712 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-31.916666, 51.833332) and diameter 39.423605224780886
+2020-02-24 16:24:11,714 - Training Data - INFO - +++++ Saving image 14 as an eddy
+2020-02-24 16:24:11,721 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.583332, 49.916668) and diameter 32.52483036641115
+2020-02-24 16:24:11,721 - Training Data - INFO - +++++ Saving image 15 as an eddy
+2020-02-24 16:24:11,731 - Training Data - INFO - +++++ Using average dimensions (34, 6) for non-eddy
