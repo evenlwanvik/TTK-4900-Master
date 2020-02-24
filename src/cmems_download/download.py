@@ -7,7 +7,7 @@ pyPath = 'python'
 
 
 # Open locally stored credentials
-conf = yaml.load(open('../config/credentials.yml'))
+conf = yaml.load(open('../../config/credentials.yml'))
 username = conf['CMEMS-download']['credentials']['username']
 password = conf['CMEMS-download']['credentials']['password']
 
@@ -52,12 +52,14 @@ variables = "--variable deptho"
 # =================== Date and lon/lat ====================
 # =========================================================
 
-dt = datetime.timedelta(days=10)
-duration = datetime.timedelta(days=200)
+dt = datetime.timedelta(days=2)
+#print(dt)
+#exit()
+duration = datetime.timedelta(days=100)
 # Global reanalysis (model):
 
 # Physics
-filePrefix = "phys_noland_"
+filePrefix = "phys_noland_002"
 # Bathmetry or statics
 #filePrefix = "bathmetry_"
 # Global reprocessed observations:
@@ -69,7 +71,7 @@ longitude = [-60, 60]
 latitude = [45, 60]
 longitude = [-42, -15]
 
-startT = datetime.datetime(2018,1,1,0,0,0)
+startT = datetime.datetime(2018,1,1,0,0,0) + datetime.timedelta(days=200)
 
 N = 1
 time = startT
@@ -78,7 +80,7 @@ for i in range(0,N):
 
     n = str(i+1)
     filename = filePrefix+n.zfill(3)+".nc"
-    if filePrefix in ("phys_", "phys_noland_"):
+    if filePrefix in ("phys_", "phys_noland_", "phys_noland_002"):
         command = pyPath+" -m motuclient --motu http://nrt.cmems-du.eu/motu-web/Motu " \
             +"--service-id "+serviceId+" --product-id "+productId+" " \
             +"--longitude-min "+str(longitude[0])+" --longitude-max "+str(longitude[1])+" --latitude-min "+str(latitude[0])+" " \

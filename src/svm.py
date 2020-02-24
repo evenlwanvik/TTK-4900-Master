@@ -17,7 +17,7 @@ from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
 
 
-meastype = 'ssl'
+meastype = 'phase'
 data_path = f'C:/Master/TTK-4900-Master/data/training_data/200_days_2018/{meastype}_train.npz'
 model_fpath = f'models/svm_{meastype}_01.sav'
 
@@ -26,54 +26,22 @@ winW, winH = int(15), int(9)
 def train_model(data_path=data_path, model_fpath=model_fpath):
     
     # Get the training data
-    #X_train, X_test, y_train, y_test = preprocess_data(data_path)
+    X_train, X_test, y_train, y_test = preprocess_data(data_path, split=True, gridSize=(winW,winH))
 
     #y_train, y_test = abs(y_train), abs(y_test) # Single-class
-
-
-
-    ''' Test HoG! '''
-    with np.load('C:/Master/TTK-4900-Master/data/training_data/200_days_2018/ssl_train.npz', allow_pickle=True) as data:
-        ssl = data['arr_0'][:,0]
-    with np.load('C:/Master/TTK-4900-Master/data/training_data/200_days_2018/uvel_train.npz', allow_pickle=True) as data:
-        uvel = data['arr_0'][:,0]
-    with np.load('C:/Master/TTK-4900-Master/data/training_data/200_days_2018/vvel_train.npz', allow_pickle=True) as data:
-        vvel = data['arr_0'][:,0]
-
-    #### TEST HOOOOOOOOOOOOOOG
-
-    # Accuracy før HoG: 86%
-    hog_images = []
-    hog_features = []
-    for image in X_train:
-        fd,hog_image = hog(image, orientations=8, pixels_per_cell=(2,2),cells_per_block=(1, 1),block_norm= 'L2',visualize=True)
-        hog_images.append(hog_image)
-        hog_features.append(fd)
-    for i in range(100):
-        fig, ax = plt.subplots(1, 3, figsize=(14, 6))
-        print(y_train[i])
-        ax[0].contourf(X_train[i], 20)
-        n=-1
-        color_array = np.sqrt(((uvel_wind-n)/2)**2 + ((vvel_wind-n)/2)**2)
-        ax[1].quiver(lon, lat, uvel_wind.T, vvel_wind.T, color_array, scale=7) 
-        ax[2].imshow(hog_images[i])
-        plt.show()
-    exit()
-    ''' Test HoG! '''
-
 
     shape = X_train.shape
     X_train = X_train.reshape(shape[0],shape[1]*shape[2])
     shape = X_test.shape
     X_test = X_test.reshape(shape[0],shape[1]*shape[2])
     
-    #pipeline = OneVsRestClassifier(SVC(kernel='rbf', verbose=1, probability=True))
-    pipeline = SVC(kernel='rbf', verbose=1, probability=True) # Single-class
+    pipeline = OneVsRestClassifier(SVC(kernel='rbf', verbose=1, probability=True))
+    #pipeline = SVC(kernel='rbf', verbose=1, probability=True) # Single-class
 
     parameters = {
-            'gamma': [0.005, 0.01, 0.05, 0.1],
-            'C': [0.5, 1, 10],
-            'kernel': ['rbf'],
+            'estimator__gamma': [0.005, 0.01, 0.05, 0.1, 1],
+            'estimator__C': [0.5, 1, 10],
+            'estimator__kernel': ['rbf'],
             #'degree': [1, 2, 3, 4, 5],
     }   
 
@@ -122,7 +90,7 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
     phase_clf = pickle.load(open('models/svm_phase_01.sav', 'rb'))
 
     shape = ssl.shape
-    ssl_probLim = 0.89
+    ssl_probLim = 0.95
     phase_probLim = 0.35
     stepSize = 2
     scaler = MinMaxScaler(feature_range=(0,1))
@@ -145,6 +113,8 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
         ssl_scaled_wind = np.array([[ssl_scaled[i,j] for j in latIdxs] for i in lonIdxs])
         phase_wind = np.array([[phase[i,j] for j in latIdxs] for i in lonIdxs])
         phase_scaled_wind = np.array([[phase_scaled[i,j] for j in latIdxs] for i in lonIdxs])
+        uvel_wind = np.array([[uvel[i,j] for j in latIdxs] for i in lonIdxs])
+        vvel_wind = np.array([[vvel[i,j] for j in latIdxs] for i in lonIdxs])
 
         lo, la = lon[lonIdxs], lat[latIdxs]
 
@@ -152,26 +122,26 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
         ssl_prob   = ssl_clf.predict_proba([ssl_scaled_wind.flatten()])
         phase_prob = phase_clf.predict_proba([phase_scaled_wind.flatten()])
 
+        print(ssl_prob)
         if ssl_prob[0,1] > ssl_prob[0,0] and ssl_prob[0,1] > ssl_probLim:
-            
-            #print("ssl prob: {} > problim".format(ssl_prob[0,0]))
-            #if phase_prob[0,0] > phase_probLim:
-            print('Predicted class {} | ssl prob: {} | phase prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(ssl_clf.predict([phase_scaled_wind.flatten()]),ssl_prob[0],phase_prob[0],lo[0],lo[-1],la[0],la[-1]))
+            fig, ax = plt.subplots(1, 3, figsize=(16, 6))
+            print('cyclone | ssl prob: {} | phase prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(ssl_prob[0,1]*100,phase_prob[0,1]*100,lo[0],lo[-1],la[0],la[-1]))
+            plot_window(ssl_wind, phase_wind, uvel_wind, vvel_wind, lo, la, ax)
 
-            fig, ax = plt.subplots(1, 2, figsize=(14, 8))
-
-            ax[0].contourf(lo, la, ssl_wind.T, cmap='rainbow', levels=20)
-
-            plot_phase(phase_wind, lo, la, ax[1])
-
-            plt.show() 
-
-        #if phase_prob[0,0] > phase_probLim:
-            #print("phase prob: {} > problim".format(ssl_prob[0,0]))
+        if ssl_prob[0,2] > ssl_probLim:
+            fig, ax = plt.subplots(1, 3, figsize=(16, 6))
+            print(phase_prob)
+            print('anti-cyclone | ssl prob: {} | phase prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(ssl_prob[0,2]*100,phase_prob[0,2]*100,lo[0],lo[-1],la[0],la[-1]))
+            plot_window(ssl_wind, phase_wind, uvel_wind, vvel_wind, lo, la, ax)
 
 
-def plot_phase(phase, lon, lat, ax):
-    ''' Interpolate phase to make it easier to visualize the eddy center '''
+def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
+    ax[0].contourf(lon, lat, ssl.T, cmap='rainbow', levels=30)
+
+    n=-uvel
+    color_array = np.sqrt(((uvel-n)/2)**2 + ((vvel-n)/2)**2)
+    ax[2].quiver(lon, lat, uvel.T, vvel.T, color_array, scale=7) 
+
     lonNew = np.linspace(lon[0], lon[-1], lon.size*5)
     latNew = np.linspace(lat[0], lat[-1], lat.size*5)
 
@@ -181,9 +151,14 @@ def plot_phase(phase, lon, lat, ax):
     cmap = plt.get_cmap('CMRmap')
     norm = BoundaryNorm(levels, ncolors=cmap.N, clip=True)
 
-    ax.pcolormesh(lonNew, latNew, phase_interp.T, cmap=cmap, norm=norm)
+    ax[1].pcolormesh(lonNew, latNew, phase_interp.T, cmap=cmap, norm=norm)
 
+    plt.show() 
+
+
+def resize_array(a, dSize=None, fx=1, fy=1):
+    return cv2.resize(np.array(a, dtype='float32'), dsize=dSize, fx=fx, fy=fy, interpolation=cv2.INTER_CUBIC)
 
 if __name__ == '__main__':
-    #test_model()
-    train_model()
+    test_model()
+    #train_model()
