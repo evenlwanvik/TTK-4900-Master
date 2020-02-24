@@ -1,5 +1,5 @@
 from training_data.eddies import eddy_detection,dataframe_eddies,plot_eddies,julianh2gregorian
-from tools.machine_learning import sliding_window
+#from tools.machine_learning import sliding_window
 from matplotlib.patches import Rectangle
 from tools.load_nc import load_netcdf4
 from numpy import savez_compressed
@@ -24,14 +24,16 @@ import sys
 
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
-from keras.models import load_model
-from sklearn.preprocessing import MinMaxScaler
+#from keras.models import load_model
+#from sklearn.preprocessing import MinMaxScaler
 
 argp = argparse.ArgumentParser()
-argp.add_argument("-fp", "--fpath", default='C:/Master/data/cmems_data/global_10km/phys_noland_2016_001.nc', help="rectangular patch size multiplier")
+#argp.add_argument("-fp", "--fpath", default='C:/Master/data/cmems_data/global_10km/phys_noland_2016_001.nc', help="CMEMS grid data file path")
+argp.add_argument("-fp", "--fpath", default='D:/Master/data/cmems_data/global_10km/phys_noland_2016_001.nc', help="CMEMS grid data file path")
 argp.add_argument("-rs", "--size", default=1.3, help="rectangular patche size multiplier")
-argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/data/training_data/200_days_2016', help="training data save dir")
-
+#argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/data/training_data/200_days_2016', help="training data save dir")
+argp.add_argument("-sd", "--savedir", default='D:/Master/TTK-4900-Master/data/training_data/200_days_2016', help="training data save dir")
+args = argp.parse_args()
 
 logPath = f"{os.path.dirname(os.path.realpath(__file__))}/training_data/log"
 logName = f"{datetime.datetime.now().strftime('%d%m%Y_%H%M')}.log"
@@ -97,6 +99,12 @@ def create_subgrids(arr, nrows, ncols, inner=1):
 
 def plot_grids(data, lon, lat, larger_grid=None, title="__"):
     #"quickscript" to plot and investigate images
+
+    shape = data[1].shape
+    # needs to be larger than 2x2
+    if shape[0] < 2 or shape[1] < 2: 
+        return 'No'
+
     fig, axs = plt.subplots(2, 2, figsize=(12, 8))
 
     # levels for the phase angle to make it not interpolate 
@@ -164,32 +172,30 @@ def check_cyclone(flag):
     else:          return "nothing"
 
 
-def save_npz_array(data):
+def save_npz_array(ds):
     # If folder doesn't exist, create folder and just save the data for the first day
     if not os.path.exists(args.savedir):
         os.makedirs(args.savedir)
-        savez_compressed( f'{args.savedir}/sst_train.npz', data[0])
-        savez_compressed( f'{args.savedir}/ssl_train.npz', data[1])
-        savez_compressed( f'{args.savedir}/uvel_train.npz', data[2])
-        savez_compressed( f'{args.savedir}/vvel_train.npz', data[3])
-        savez_compressed( f'{args.savedir}/phase_train.npz', data[4])
+        savez_compressed( f'{args.savedir}/sst_train.npz', ds[0])
+        savez_compressed( f'{args.savedir}/ssl_train.npz', ds[1])
+        savez_compressed( f'{args.savedir}/uvel_train.npz', ds[2])
+        savez_compressed( f'{args.savedir}/vvel_train.npz', ds[3])
+        savez_compressed( f'{args.savedir}/phase_train.npz', ds[4])
     # If not, we open and append to the existing data
     else:
         with np.load(f'{args.savedir}/sst_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed( f'{args.savedir}/sst_train.npz', np.append(data['arr_0'], data[0], axis=0))
+            savez_compressed( f'{args.savedir}/sst_train.npz', np.append(data['arr_0'], ds[0], axis=0))
         with np.load(f'{args.savedir}/ssl_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed( f'{args.savedir}/ssl_train.npz', np.append(data['arr_0'], data[1], axis=0))
+            savez_compressed( f'{args.savedir}/ssl_train.npz', np.append(data['arr_0'], ds[1], axis=0))
         with np.load(f'{args.savedir}/uvel_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed(f'{args.savedir}/uvel_train.npz', np.append(data['arr_0'], data[2], axis=0))
+            savez_compressed(f'{args.savedir}/uvel_train.npz', np.append(data['arr_0'], ds[2], axis=0))
         with np.load(f'{args.savedir}/vvel_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed(f'{args.savedir}/vvel_train.npz', np.append(data['arr_0'], data[3], axis=0))
+            savez_compressed(f'{args.savedir}/vvel_train.npz', np.append(data['arr_0'], ds[3], axis=0))
         with np.load(f'{args.savedir}/phase_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed(f'{args.savedir}/phase_train.npz', np.append(data['arr_0'], data[4], axis=0))
+            savez_compressed(f'{args.savedir}/phase_train.npz', np.append(data['arr_0'], ds[4], axis=0))
 
 
 def semi_automatic_training():
-
-    args, leftovers = argp.parse_known_args()
 
     logger.info("loading netcdf")
 
@@ -357,13 +363,13 @@ def semi_automatic_training():
                     latIdxs = np.where((lat >= lat_bnds[0]) & (lat <= lat_bnds[1]))[0]
 
                 elif response == 'incLon':
-                    if (lonIdxs[0] <= 0 or lonIdxs[-1] >= nLon): 
+                    if (lonIdxs[0] <= 0 or lonIdxs[-1] >= nLon-1): 
                         logger.info(f"+++ Longitude can't be increased further")
                     else:
                         lonIdxs = np.arange(lonIdxs[0]-1, lonIdxs[-1]+2)
                         logger.info(f"+++ Increasing lontitude by 1 cell in both directions to ({lonIdxs[0]}:{lonIdxs[-1]})")
                 elif response == 'incLat':
-                    if (latIdxs[0] <= 0 or latIdxs[-1] >= nLat): 
+                    if (latIdxs[0] <= 0 or latIdxs[-1] >= nLat-1): 
                         logger.info(f"+++ Latitude can't be increased further")
                     else:
                         latIdxs = np.arange(latIdxs[0]-1, latIdxs[-1]+2)
@@ -478,7 +484,7 @@ def semi_automatic_training():
         # ========== Save data as compressed numpy array ==========
         # =========================================================
 
-        #save_npz_array( (sst_train, ssl_train, uvel_train, vvel_train, phase_train) )
+        save_npz_array( (sst_train, ssl_train, uvel_train, vvel_train, phase_train) )
 
 def adjustment_data():
     ''' Method to run the ML model to provide correctional non-eddy images for the model '''

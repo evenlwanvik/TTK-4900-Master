@@ -13,6 +13,7 @@ password = conf['CMEMS-download']['credentials']['password']
 
 # Choose directory
 storePath = "C:/Master/data/cmems_data/global_10km/"
+#storePath = "C:/Master/data/cmems_data/global_10km/"
 if not os.path.exists(storePath):
     os.makedirs(storePath)
 
@@ -52,12 +53,12 @@ variables = "--variable deptho"
 # =================== Date and lon/lat ====================
 # =========================================================
 
-dt = datetime.timedelta(days=10)
-duration = datetime.timedelta(days=200)
+dt = datetime.timedelta(days=2)
+duration = datetime.timedelta(days=1)
 # Global reanalysis (model):
 
 # Physics
-filePrefix = "phys_noland_002"
+filePrefix = "phys_noland_2016_"
 # Bathmetry or statics
 #filePrefix = "bathmetry_"
 # Global reprocessed observations:
@@ -71,14 +72,14 @@ longitude = [-42, -15]
 
 startT = datetime.datetime(2016,1,1,0,0,0) + datetime.timedelta(days=0)
 
-N = 1
+N = 10 # First 20 days with dt=2
 time = startT
 for i in range(0,N):
     tEnd = time + duration
 
     n = str(i+1)
     filename = filePrefix+n.zfill(3)+".nc"
-    if filePrefix in ("phys_", "phys_noland_", "phys_noland_002"):
+    if filePrefix in ("phys_", "phys_noland_2018_", "phys_noland_2016_"):
         command = pyPath+" -m motuclient --motu http://nrt.cmems-du.eu/motu-web/Motu " \
             +"--service-id "+serviceId+" --product-id "+productId+" " \
             +"--longitude-min "+str(longitude[0])+" --longitude-max "+str(longitude[1])+" --latitude-min "+str(latitude[0])+" " \

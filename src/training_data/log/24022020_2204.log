@@ -1,0 +1,4 @@
+2020-02-24 22:04:37,543 - Training Data - INFO - loading netcdf
+2020-02-24 22:04:38,140 - Training Data - INFO - Creating images for dataset 09-02-2016
+2020-02-24 22:04:41,135 - Training Data - INFO - + Creating rectangles for 11 eddies
+2020-02-24 22:04:41,136 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.166668, 48.5) and diameter 65.87998777569688

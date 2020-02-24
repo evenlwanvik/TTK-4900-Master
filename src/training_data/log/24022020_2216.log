@@ -1,0 +1,22 @@
+2020-02-24 22:16:28,662 - Training Data - INFO - loading netcdf
+2020-02-24 22:16:29,313 - Training Data - INFO - Creating images for dataset 19-01-2016
+2020-02-24 22:16:32,536 - Training Data - INFO - + Creating rectangles for 10 eddies
+2020-02-24 22:16:32,538 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.833332, 50.083332) and diameter 91.27560336843257
+2020-02-24 22:16:52,085 - Training Data - INFO - +++++ Discarding image 0
+2020-02-24 22:16:52,086 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.75, 46.25) and diameter 31.378396474846472
+2020-02-24 22:16:57,773 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-24 22:16:57,776 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.833332, 47.166668) and diameter 139.98287692765328
+2020-02-24 22:16:59,847 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 22:16:59,848 - Training Data - INFO - +++ Argmin center -> lon: -41.5, Center lat: 47.08333206176758
+2020-02-24 22:17:03,728 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 22:17:03,728 - Training Data - INFO - +++ Argmin center -> lon: -41.5, Center lat: 47.08333206176758
+2020-02-24 22:17:12,076 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-24 22:17:12,076 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-32.916668, 52.166668) and diameter 37.57016150480766
+2020-02-24 22:17:16,006 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 22:17:16,007 - Training Data - INFO - +++ Argmin center -> lon: -33.33333206176758, Center lat: 52.25
+2020-02-24 22:17:20,916 - Training Data - INFO - +++++ Discarding image 3
+2020-02-24 22:17:20,917 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-31.333334, 59.916668) and diameter 39.263548405685356
+2020-02-24 22:17:23,316 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 22:17:23,317 - Training Data - INFO - +++ Argmin center -> lon: -31.5, Center lat: 59.91666793823242
+2020-02-24 22:17:27,355 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (123:129)
+2020-02-24 22:17:29,205 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (176:181)

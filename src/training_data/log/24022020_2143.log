@@ -1,0 +1,157 @@
+2020-02-24 21:43:02,861 - Training Data - INFO - loading netcdf
+2020-02-24 21:43:32,641 - Training Data - INFO - loading netcdf
+2020-02-24 21:43:33,232 - Training Data - INFO - Creating images for dataset 16-06-2016
+2020-02-24 21:43:36,714 - Training Data - INFO - + Creating rectangles for 16 eddies
+2020-02-24 21:43:36,715 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-32.083332, 51.0) and diameter 94.1853219874637
+2020-02-24 21:44:23,270 - Training Data - INFO - +++++ Saving image 0 as an eddy
+2020-02-24 21:44:23,272 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.75, 46.5) and diameter 64.25848038857598
+2020-02-24 21:44:26,169 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:44:26,170 - Training Data - INFO - +++ Argmin center -> lon: -41.08333206176758, Center lat: 46.83333206176758
+2020-02-24 21:44:38,906 - Training Data - INFO - +++++ Saving image 1 as an eddy
+2020-02-24 21:44:38,907 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-34.416668, 51.666668) and diameter 41.28271879714335
+2020-02-24 21:44:49,581 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (75:107)
+2020-02-24 21:44:51,657 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (76:106)
+2020-02-24 21:44:54,243 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (77:105)
+2020-02-24 21:44:55,610 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (78:104)
+2020-02-24 21:45:08,656 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (79:103)
+2020-02-24 21:45:11,303 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (80:102)
+2020-02-24 21:45:53,634 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (81:101)
+2020-02-24 21:45:55,635 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (82:100)
+2020-02-24 21:45:58,163 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:45:58,163 - Training Data - INFO - +++ Argmin center -> lon: -34.5, Center lat: 51.58333206176758
+2020-02-24 21:46:03,027 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (76:82)
+2020-02-24 21:46:08,700 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (82:98)
+2020-02-24 21:46:10,677 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (83:97)
+2020-02-24 21:46:14,474 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (84:96)
+2020-02-24 21:46:16,033 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (85:95)
+2020-02-24 21:46:20,077 - Training Data - INFO - +++++ Saving image 2 as an eddy
+2020-02-24 21:46:20,078 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-35.666668, 50.333332) and diameter 75.00622689870339
+2020-02-24 21:46:24,621 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:46:24,622 - Training Data - INFO - +++ Argmin center -> lon: -35.75, Center lat: 50.25
+2020-02-24 21:46:38,000 - Training Data - INFO - +++++ Discarding image 3
+2020-02-24 21:46:38,001 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-41.083332, 50.166668) and diameter 96.00653623205325
+2020-02-24 21:46:42,251 - Training Data - INFO - +++++ Saving image 4 as an eddy
+2020-02-24 21:46:42,252 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-21.5, 58.916668) and diameter 50.43801532522215
+2020-02-24 21:46:47,773 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (163:171)
+2020-02-24 21:46:49,759 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (162:172)
+2020-02-24 21:46:55,728 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (241:251)
+2020-02-24 21:46:58,435 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (240:252)
+2020-02-24 21:47:01,967 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (241:251)
+2020-02-24 21:47:05,924 - Training Data - INFO - +++ Decreasing latitude by 1 cell in both directions to (163:171)
+2020-02-24 21:47:08,233 - Training Data - INFO - +++ Decreasing latitude by 1 cell in both directions to (164:170)
+2020-02-24 21:47:11,707 - Training Data - INFO - +++++ Saving image 5 as an eddy
+2020-02-24 21:47:11,708 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.25, 46.583332) and diameter 48.26660569471162
+2020-02-24 21:47:18,937 - Training Data - INFO - +++++ Saving image 6 as an eddy
+2020-02-24 21:47:18,938 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-41.833332, 52.583332) and diameter 29.459163016219573
+2020-02-24 21:47:22,595 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:47:22,595 - Training Data - INFO - +++ Argmin center -> lon: -41.58333206176758, Center lat: 52.41666793823242
+2020-02-24 21:47:24,785 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:47:24,786 - Training Data - INFO - +++ Argmin center -> lon: -41.58333206176758, Center lat: 52.33333206176758
+2020-02-24 21:47:27,828 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (85:91)
+2020-02-24 21:47:32,082 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:47:32,082 - Training Data - INFO - +++ Argmin center -> lon: -41.58333206176758, Center lat: 52.33333206176758
+2020-02-24 21:47:38,427 - Training Data - INFO - +++++ Discarding image 7
+2020-02-24 21:47:38,429 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-38.75, 51.5) and diameter 66.43698733745747
+2020-02-24 21:47:42,378 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:47:42,379 - Training Data - INFO - +++ Argmax center -> lon: -38.75, Center lat: 51.58333206176758
+2020-02-24 21:47:45,955 - Training Data - INFO - +++ Decreasing latitude by 1 cell in both directions to (76:82)
+2020-02-24 21:47:46,884 - Training Data - INFO - +++ Decreasing latitude by 1 cell in both directions to (77:81)
+2020-02-24 21:47:52,023 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (26:52)
+2020-02-24 21:47:53,030 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (27:51)
+2020-02-24 21:47:54,064 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (28:50)
+2020-02-24 21:47:55,366 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (29:49)
+2020-02-24 21:47:57,893 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (30:48)
+2020-02-24 21:48:00,253 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (31:47)
+2020-02-24 21:48:05,220 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (76:82)
+2020-02-24 21:48:10,150 - Training Data - INFO - +++++ Saving image 8 as an eddy
+2020-02-24 21:48:10,151 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.0, 49.25) and diameter 92.27378823937546
+2020-02-24 21:48:14,196 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:48:14,197 - Training Data - INFO - +++ Argmax center -> lon: -38.83333206176758, Center lat: 49.25
+2020-02-24 21:48:18,642 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (27:49)
+2020-02-24 21:48:20,030 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (28:48)
+2020-02-24 21:48:21,929 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (29:47)
+2020-02-24 21:48:23,090 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (30:46)
+2020-02-24 21:48:24,308 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (31:45)
+2020-02-24 21:48:31,236 - Training Data - INFO - +++ Decreasing latitude by 1 cell in both directions to (46:56)
+2020-02-24 21:48:35,220 - Training Data - INFO - +++++ Saving image 9 as an eddy
+2020-02-24 21:48:35,221 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-40.583332, 48.25) and diameter 80.1543544024435
+2020-02-24 21:48:38,107 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:48:38,107 - Training Data - INFO - +++ Argmax center -> lon: -40.58333206176758, Center lat: 48.16666793823242
+2020-02-24 21:48:42,549 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (5:29)
+2020-02-24 21:48:43,551 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (6:28)
+2020-02-24 21:48:44,445 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (7:27)
+2020-02-24 21:48:45,249 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (8:26)
+2020-02-24 21:48:51,351 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (9:25)
+2020-02-24 21:48:55,136 - Training Data - INFO - +++++ Saving image 10 as an eddy
+2020-02-24 21:48:55,136 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-40.5, 51.5) and diameter 45.24834733212331
+2020-02-24 21:48:58,036 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:48:58,037 - Training Data - INFO - +++ Argmin center -> lon: -41.08333206176758, Center lat: 51.5
+2020-02-24 21:49:15,603 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (1:21)
+2020-02-24 21:49:18,067 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (74:82)
+2020-02-24 21:49:20,333 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (73:83)
+2020-02-24 21:49:24,702 - Training Data - INFO - +++ Decreasing latitude by 1 cell in both directions to (74:82)
+2020-02-24 21:49:25,602 - Training Data - INFO - +++ Decreasing latitude by 1 cell in both directions to (75:81)
+2020-02-24 21:49:29,531 - Training Data - INFO - +++++ Saving image 11 as an eddy
+2020-02-24 21:49:29,532 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-39.833332, 49.583332) and diameter 52.54301487394288
+2020-02-24 21:49:31,993 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:49:31,993 - Training Data - INFO - +++ Argmin center -> lon: -39.5, Center lat: 49.75
+2020-02-24 21:49:34,431 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:49:34,432 - Training Data - INFO - +++ Argmin center -> lon: -39.16666793823242, Center lat: 50.0
+2020-02-24 21:49:36,187 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:49:36,188 - Training Data - INFO - +++ Argmin center -> lon: -39.0, Center lat: 50.16666793823242
+2020-02-24 21:49:39,374 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (31:41)
+2020-02-24 21:49:40,242 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (58:66)
+2020-02-24 21:49:41,227 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (30:42)
+2020-02-24 21:49:41,990 - Training Data - INFO - +++ Increasing latitude by 1 cell in both directions to (57:67)
+2020-02-24 21:49:48,066 - Training Data - INFO - +++++ Saving image 12 as an eddy
+2020-02-24 21:49:48,067 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-37.75, 49.25) and diameter 43.98731487229047
+2020-02-24 21:49:50,421 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:49:50,421 - Training Data - INFO - +++ Argmax center -> lon: -37.58333206176758, Center lat: 49.25
+2020-02-24 21:49:53,615 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:49:53,615 - Training Data - INFO - +++ Argmax center -> lon: -37.58333206176758, Center lat: 49.25
+2020-02-24 21:49:57,018 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (47:59)
+2020-02-24 21:49:57,882 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (46:60)
+2020-02-24 21:49:58,637 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (45:61)
+2020-02-24 21:49:59,395 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (44:62)
+2020-02-24 21:50:01,358 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (43:63)
+2020-02-24 21:50:02,250 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (42:64)
+2020-02-24 21:50:03,029 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (41:65)
+2020-02-24 21:50:04,374 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (40:66)
+2020-02-24 21:50:05,152 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (39:67)
+2020-02-24 21:50:05,884 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (38:68)
+2020-02-24 21:50:07,550 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (37:69)
+2020-02-24 21:50:31,179 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (36:70)
+2020-02-24 21:50:33,568 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:50:33,568 - Training Data - INFO - +++ Argmax center -> lon: -36.25, Center lat: 49.0
+2020-02-24 21:50:42,984 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (53:85)
+2020-02-24 21:50:44,301 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (54:84)
+2020-02-24 21:50:45,668 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (55:83)
+2020-02-24 21:50:46,952 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (56:82)
+2020-02-24 21:50:48,878 - Training Data - INFO - +++ Decreasing lontitude by 1 cell in both directions to (57:81)
+2020-02-24 21:51:00,840 - Training Data - INFO - +++++ Saving image 13 as an eddy
+2020-02-24 21:51:00,841 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.166668, 50.916668) and diameter 43.90646557974583
+2020-02-24 21:51:11,186 - Training Data - INFO - +++ Increasing lontitude by 1 cell in both directions to (66:74)
+2020-02-24 21:51:19,559 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:51:19,559 - Training Data - INFO - +++ Argmin center -> lon: -36.25, Center lat: 50.91666793823242
+2020-02-24 21:51:25,092 - Training Data - INFO - +++++ Discarding image 14
+2020-02-24 21:51:25,092 - Training Data - INFO - +++ Creating rectangles for anticyclone with center (-36.166668, 46.0) and diameter 54.48822348425542
+2020-02-24 21:51:27,762 - Training Data - INFO - +++ Centering eddy towards a minima/maxima depending on eddy type
+2020-02-24 21:51:27,762 - Training Data - INFO - +++ Argmin center -> lon: -35.91666793823242, Center lat: 46.08333206176758
+2020-02-24 21:51:45,716 - Training Data - INFO - +++++ Discarding image 15
+2020-02-24 21:51:45,717 - Training Data - INFO - +++++ Using average dimensions (14, 9) for non-eddy
+2020-02-24 21:51:52,806 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:52:08,035 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:52:13,023 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:52:16,402 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:52:22,066 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:52:25,985 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:52:29,718 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:52:38,529 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:52:58,038 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:53:06,291 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:53:10,847 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:53:13,783 - Training Data - INFO - +++++ Saving noneddy
+2020-02-24 21:53:13,783 - Training Data - INFO - Compressing and storing training data so far
+2020-02-24 21:53:13,785 - Training Data - INFO - Creating images for dataset 06-04-2016
+2020-02-24 21:53:16,725 - Training Data - INFO - + Creating rectangles for 9 eddies
+2020-02-24 21:53:16,726 - Training Data - INFO - +++ Creating rectangles for cyclone with center (-39.583332, 46.916668) and diameter 124.67832688573175
