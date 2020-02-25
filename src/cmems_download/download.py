@@ -12,8 +12,8 @@ username = conf['CMEMS-download']['credentials']['username']
 password = conf['CMEMS-download']['credentials']['password']
 
 # Choose directory
-storePath = "C:/Master/data/cmems_data/global_10km/2016/"
-#storePath = "C:/Master/data/cmems_data/global_10km/"
+#storePath = "C:/Master/data/cmems_data/global_10km/2016/"
+storePath = "D:/Master/data/cmems_data/global_10km/2016/"
 if not os.path.exists(storePath):
     os.makedirs(storePath)
 
@@ -70,7 +70,7 @@ longitude = [-60, 60]
 latitude = [45, 60]
 longitude = [-42, -15]
 
-startT = datetime.datetime(2016,1,1,0,0,0) + datetime.timedelta(days=40)
+startT = datetime.datetime(2016,6,1,0,0,0) + datetime.timedelta(days=40)
 
 N = 65 # First 20 days with dt=2
 time = startT

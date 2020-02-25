@@ -1,5 +1,5 @@
 from training_data.eddies import eddy_detection,dataframe_eddies,plot_eddies,julianh2gregorian
-from tools.machine_learning import sliding_window
+#from tools.machine_learning import sliding_window
 from matplotlib.patches import Rectangle
 from tools.load_nc import load_netcdf4
 from numpy import savez_compressed
@@ -25,16 +25,16 @@ import sys
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
 #rom keras.models import load_model
-from sklearn.preprocessing import MinMaxScaler
+#from sklearn.preprocessing import MinMaxScaler
 
 import pdb
 
 argp = argparse.ArgumentParser()
-argp.add_argument("-fd", "--fDir", default='C:/Master/data/cmems_data/global_10km/2016/', help="CMEMS grid data directory path")
-#argp.add_argument("-fd", "--fDir", default='D:/Master/data/cmems_data/global_10km/2016/', help="CMEMS grid data directory path")
+#argp.add_argument("-fd", "--fDir", default='C:/Master/data/cmems_data/global_10km/2016/', help="CMEMS grid data directory path")
+argp.add_argument("-fd", "--fDir", default='D:/Master/data/cmems_data/global_10km/2016/', help="CMEMS grid data directory path")
 argp.add_argument("-rs", "--size", default=1.3, help="rectangular patche size multiplier")
-argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/data/training_data/2016/', help="training data save dir")
-#argp.add_argument("-sd", "--savedir", default='D:/Master/TTK-4900-Master/data/training_data/2016/', help="training data save dir")
+#argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/data/training_data/2016/', help="training data save dir")
+argp.add_argument("-sd", "--savedir", default='D:/Master/TTK-4900-Master/data/training_data/2016/', help="training data save dir")
 args = argp.parse_args()
 
 logPath = f"{os.path.dirname(os.path.realpath(__file__))}/training_data/log"
@@ -201,6 +201,7 @@ def semi_automatic_training():
 
     # Loop through every netcdf file in directory, usually they are spaced by 5 days
     for fName in os.listdir(args.fDir):
+        
         if not fName.endswith(".nc"):
             continue
             
@@ -495,7 +496,7 @@ def semi_automatic_training():
             save_npz_array( (sst_train, ssl_train, uvel_train, vvel_train, phase_train) )
 
 
-
+'''
 
 
 def training_data_altair():
@@ -547,7 +548,7 @@ def training_data_altair():
                             #'y': y.ravel(),
                            # 'z': z.ravel()})
 
-
+'''
 
 
 
@@ -646,5 +647,5 @@ def adjustment_data():
 
 
 if __name__ == '__main__':
-    training_data_altair()
-    #semi_automatic_training()
+    #training_data_altair()
+    semi_automatic_training()

@@ -22,7 +22,7 @@ meastype = 'phase'
 #cnntype = 'bin'
 cnntype = 'mult'
 
-data_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/{}_train.npz'.format(meastype)
+data_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/{}_train.npz'.format(meastype)
 #data_path = 'C:/Master/TTK-4900-Master/data/training_data/200_days_2018/{}_train.npz'.format(meastype)
 model_fpath = 'models/2016/cnn_{}class_{}.h5'.format(cnntype,meastype)
 #model_fpath = 'models/cnn_{}class_{}_01.h5'.format(cnntype,meastype)
@@ -53,7 +53,7 @@ def train_model(data_path=data_path, model_fpath=model_fpath):
     model = mnist(input_shape, nClasses)
     #model = create_mutli_label_network(len(X_train), input_shape)
     #model = create_network(len(X_train), input_shape)
-    history = model.fit(X_train, y_train_mult, validation_split=0.33, epochs=25)
+    history = model.fit(X_train, y_train_mult, validation_split=0.33, epochs=30)
     
     model.save(model_fpath)
 
@@ -249,11 +249,6 @@ def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
     color_array = np.sqrt(((uvel-n)/2)**2 + ((vvel-n)/2)**2)
     ax[2].quiver(lon, lat, uvel.T, vvel.T, color_array, scale=7) 
 
-    #lonNew = np.linspace(lon[0], lon[-1], lon.size*5)
-    #latNew = np.linspace(lat[0], lat[-1], lat.size*5)
-
-    #phase_interp = cv2.resize(phase, dsize=(latNew.size, lonNew.size), interpolation=cv2.INTER_CUBIC)
-
     levels = MaxNLocator(nbins=10).tick_values(phase.min(), phase.max())
     cmap = plt.get_cmap('CMRmap')
     norm = BoundaryNorm(levels, ncolors=cmap.N, clip=True)
@@ -267,6 +262,6 @@ def resize_array(a, dSize=None, fx=1, fy=1):
     
 
 if __name__ == '__main__':
-    test_model()
-    #train_model()
+    #test_model()
+    train_model()
 

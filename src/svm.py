@@ -17,11 +17,12 @@ from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
 
 
-meastype = 'phase'
-data_path = f'C:/Master/TTK-4900-Master/data/training_data/200_days_2018/{meastype}_train.npz'
-model_fpath = f'models/svm_{meastype}_01.sav'
+meastype = 'ssl'
+data_path = f'D:/Master/TTK-4900-Master/data/training_data/2016/{meastype}_train.npz'
+#data_path = f'C:/Master/TTK-4900-Master/data/training_data/200_days_2018/{meastype}_train.npz'
+model_fpath = f'models/2016/svm_{meastype}_01.sav'
 
-winW, winH = int(15), int(9)
+winW, winH = int(12), int(8)
 
 def train_model(data_path=data_path, model_fpath=model_fpath):
     
@@ -73,11 +74,11 @@ def train_model(data_path=data_path, model_fpath=model_fpath):
     print(classification_report(y_true, y_pred))
 
 
-def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.nc', model_fpath=model_fpath, meastype=meastype):
+def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_2016_001.nc', model_fpath=model_fpath, meastype=meastype):
 
     (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(nc_fpath)
 
-    day = 50
+    day = 0
 
     ssl = np.array(ssl_full[day].T, dtype='float32') 
     uvel = np.array(uvel_full[day,0].T, dtype='float32') 
@@ -86,13 +87,13 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
         phase = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel, uvel) ) + 180
     
     # Recreate the exact same model purely from the file
-    ssl_clf = pickle.load(open('models/svm_ssl_01.sav', 'rb'))
-    phase_clf = pickle.load(open('models/svm_phase_01.sav', 'rb'))
+    ssl_clf = pickle.load(open('models/2016/svm_ssl_01.sav', 'rb'))
+    phase_clf = pickle.load(open('models/2016/svm_phase_01.sav', 'rb'))
 
     shape = ssl.shape
-    ssl_probLim = 0.95
+    ssl_probLim = 0.8
     phase_probLim = 0.35
-    stepSize = 2
+    stepSize = 5
     scaler = MinMaxScaler(feature_range=(0,1))
 
     # normalize (scale) the data
@@ -122,16 +123,15 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/phys_noland_001.n
         ssl_prob   = ssl_clf.predict_proba([ssl_scaled_wind.flatten()])
         phase_prob = phase_clf.predict_proba([phase_scaled_wind.flatten()])
 
-        print(ssl_prob)
-        if ssl_prob[0,1] > ssl_prob[0,0] and ssl_prob[0,1] > ssl_probLim:
+        #print(ssl_prob)
+        if phase_prob[0,2] > ssl_probLim:
             fig, ax = plt.subplots(1, 3, figsize=(16, 6))
-            print('cyclone | ssl prob: {} | phase prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(ssl_prob[0,1]*100,phase_prob[0,1]*100,lo[0],lo[-1],la[0],la[-1]))
+            print('cyclone | ssl prob: {} | phase prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(ssl_prob[0,2]*100,phase_prob[0,2]*100,lo[0],lo[-1],la[0],la[-1]))
             plot_window(ssl_wind, phase_wind, uvel_wind, vvel_wind, lo, la, ax)
-
-        if ssl_prob[0,2] > ssl_probLim:
+        elif phase_prob[0,0] > ssl_probLim:
             fig, ax = plt.subplots(1, 3, figsize=(16, 6))
             print(phase_prob)
-            print('anti-cyclone | ssl prob: {} | phase prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(ssl_prob[0,2]*100,phase_prob[0,2]*100,lo[0],lo[-1],la[0],la[-1]))
+            print('anti-cyclone | ssl prob: {} | phase prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(ssl_prob[0,0]*100,phase_prob[0,0]*100,lo[0],lo[-1],la[0],la[-1]))
             plot_window(ssl_wind, phase_wind, uvel_wind, vvel_wind, lo, la, ax)
 
 
@@ -142,16 +142,11 @@ def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
     color_array = np.sqrt(((uvel-n)/2)**2 + ((vvel-n)/2)**2)
     ax[2].quiver(lon, lat, uvel.T, vvel.T, color_array, scale=7) 
 
-    lonNew = np.linspace(lon[0], lon[-1], lon.size*5)
-    latNew = np.linspace(lat[0], lat[-1], lat.size*5)
-
-    phase_interp = cv2.resize(phase, dsize=(latNew.size, lonNew.size), interpolation=cv2.INTER_CUBIC)
-
     levels = MaxNLocator(nbins=10).tick_values(phase.min(), phase.max())
     cmap = plt.get_cmap('CMRmap')
     norm = BoundaryNorm(levels, ncolors=cmap.N, clip=True)
 
-    ax[1].pcolormesh(lonNew, latNew, phase_interp.T, cmap=cmap, norm=norm)
+    ax[1].pcolormesh(lon, lat, phase.T, cmap=cmap, norm=norm)
 
     plt.show() 
 
