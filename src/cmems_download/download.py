@@ -12,8 +12,8 @@ username = conf['CMEMS-download']['credentials']['username']
 password = conf['CMEMS-download']['credentials']['password']
 
 # Choose directory
-#storePath = "C:/Master/data/cmems_data/global_10km/2016/"
-storePath = "D:/Master/data/cmems_data/global_10km/2016/"
+storePath = "C:/Master/data/cmems_data/global_10km/2016/"
+#storePath = "D:/Master/data/cmems_data/global_10km/2016/"
 if not os.path.exists(storePath):
     os.makedirs(storePath)
 

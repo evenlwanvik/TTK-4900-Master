@@ -1,0 +1,5 @@
+conda:
+
+environment commands
+    conda env export > environment.yml
+    conda create --name myenv
