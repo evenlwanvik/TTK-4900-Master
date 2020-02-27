@@ -1,4 +1,7 @@
+% Root figure for "app"
 f = figure;
+% The rectangles appdata will hold the coordinates of the frame
+setappdata(f, 'rectangles', [[]]);
 
 % All files
 dirPath = 'C:/Master/data/cmems_data/global_10km/2016/'; %gets directory
@@ -27,40 +30,66 @@ z = ncread(fpath,'zos',[1 1 1],[nx ny 1]);
 [~, ch] = contourf(axPrimary,lon,lat,z',30); 
 
 %plotNewRect(~,~,ch1)
+createRectBtn = uicontrol(f,'callback',@(src,eventdata)createRect(f, ch, axPrimary, axSecondary),'Position',[100 5 80 20], 'string', 'CreateRect');
+saveRectBtn = uicontrol(f,'callback',@(src,eventdata)saveRect(f, ch),'Position',[200 5 70 20], 'string', 'SaveRect');
 nextBtn = uicontrol(f,'callback', @(src,eventdata)plotNextDataset(ch), 'Position',[20 5 60 20], 'string', 'Next');
-rectBtn = uicontrol(f,'callback',@(src,eventdata)createRect(f, ch, axPrimary, axSecondary),'Position',[100 5 80 20], 'string', 'CreateRect');
-rectBtn = uicontrol(f,'callback',@(src,eventdata)saveRect(f),'Position',[200 5 70 20], 'string', 'SaveRect');
-
-setappdata(f, 'rectangles', [[]]);
 
 function createRect(f, ch1, axPrimary, axSecondary)
     % f is the figure (app) and ch1 is the handle for primary axis
-    rect = getrect;
+    rect = getrect(axPrimary);
     rect(3) = rect(1) + rect(3);
     rect(4) = rect(2) + rect(4);
-    r = getappdata(f, 'rectangles');
-    r = cat(1, r, rect);
-    disp(r)
-    setappdata(f, 'rectangles', r);
+    fprintf('Creating rectangle: %.2f %.2f %.2f %.2f\n', rect)
     
     % Set the window
-    xIdx = ch1.XData >= r(1) & ch1.XData <= r(3); 
-    yIdx = ch1.YData >= r(2) & ch1.YData <= r(4);
+    xIdx = ch1.XData >= rect(1) & ch1.XData <= rect(3); 
+    yIdx = ch1.YData >= rect(2) & ch1.YData <= rect(4);
+
+    r = getappdata(f, 'rectangles');
+    r = cat(1, r, rect);
+    setappdata(f, 'rectangles', r);    
     
     % Plot section in secondary axis
     [~, ch2] = contourf(axSecondary, ch1.XData(xIdx), ch1.YData(yIdx), ch1.ZData(yIdx,xIdx), 30);
     ch2.LevelList = ch1.LevelList; 
-    caxis(axSecondary, caxis(axPrimary));
-    axis(axPrimary);
-    axis(axSecondary);
+
     % Show the section in the main axis, if you want to.
     rectangle(axPrimary,'Position',[rect(1),rect(2),range([rect(1),rect(3)]),range([rect(2),rect(4)])]);
 end
 
-function saveRect(f)
-
+function saveRect(f, ch1)
+    r = getappdata(f, 'rectangles');
+    [nrows, ncols] = size(r);
+    % Iterate over rows
+    
+    ssl = {};
+    for ii = 1:nrows
+        rect = r(ii,:);
+        fprintf('Saving rectangle: %.2f %.2f %.2f %.2f\n', rect);
+        
+        % Set the window
+        xIdx = ch1.XData >= rect(1) & ch1.XData <= rect(3); 
+        yIdx = ch1.YData >= rect(2) & ch1.YData <= rect(4); 
+        
+        ssl = cat(3, ssl, ch1.ZData(yIdx,xIdx));
+        
+        setName = '/eddy_' + string(i)
+        % Create h5 file for saving eddy data
+        %h5create('C:/Master/TTK-4900-Master/data/training_data/2016/h5/ssl.h5', setName, 1)
+        
+    end
+    
+    
+    % 'WriteMode', append is possible
+    %h5write('C:/Master/TTK-4900-Master/data/training_data/2016/h5/ssl.h5', '/myTestSet', ssl);
+    %save('ssl')
+    %csvwrite('C:/Master/TTK-4900-Master/data/training_data/2016/csv/test.csv', ssl)
+    %save( 'C:/Master/TTK-4900-Master/data/training_data/2016/h5/h5test.mat', 'ssl', '-v7.3' )
+    
 end
 
-function plotNextDataset(~,~)
-    
+function plotNextDataset(ch)
+    data = readtable('C:/Master/TTK-4900-Master/data/training_data/2016/csv/test.csv');
+    %data = h5read('C:/Master/TTK-4900-Master/data/training_data/2016/h5/ssl.h5', '/myTestSet')
+    disp(data)
 end

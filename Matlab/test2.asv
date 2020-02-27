@@ -1,4 +1,9 @@
+% Root figure for "app"
 f = figure;
+% Create h5 file for saving eddy data
+h5create('C:/Master/TTK-4900-Master/data/training_data/2016/h5/','/myTestSet', [[]])
+% Set 
+setappdata(f, 'rectangles', [[]]);
 
 % All files
 dirPath = 'C:/Master/data/cmems_data/global_10km/2016/'; %gets directory
@@ -9,7 +14,7 @@ myFiles = dir(fullfile(dirPath,'*.nc')); %gets all wav files in struct
 
 clf()
 
-axPrimary = axes('''Units','Normalize','Box','on'); 
+axPrimary = axes('Units','Normalize','Box','on'); 
 axSecondary = axes('Units','Normalize','Box','on'); 
 scale = 0.3;  % percentage of original size
 axSecondary.Position(3:4) = scale * axSecondary.Position(3:4); 
@@ -27,50 +32,55 @@ z = ncread(fpath,'zos',[1 1 1],[nx ny 1]);
 [~, ch] = contourf(axPrimary,lon,lat,z',30); 
 
 %plotNewRect(~,~,ch1)
+createRectBtn = uicontrol(f,'callback',@(src,eventdata)createRect(f, ch, axPrimary, axSecondary),'Position',[100 5 80 20], 'string', 'CreateRect');
+saveRectBtn = uicontrol(f,'callback',@(src,eventdata)saveRect(f, ch),'Position',[200 5 70 20], 'string', 'SaveRect');
 nextBtn = uicontrol(f,'callback', @(src,eventdata)plotNextDataset(ch), 'Position',[20 5 60 20], 'string', 'Next');
-rectBtn = uicontrol(f,'callback',@(src,eventdata)createRect(f),'Position',[100 5 80 20], 'string', 'CreateRect');
-rectBtn = uicontrol(f,'callback',@(src,eventdata)saveRect(f),'Position',[200 5 70 20], 'string', 'SaveRect');
 
-setappdata(f, 'rectangles', [[]]);
-
-
-function createRect(f)
-    rect = getrect;
+function createRect(f, ch1, axPrimary, axSecondary)
+    % f is the figure (app) and ch1 is the handle for primary axis
+    rect = getrect(axPrimary);
     rect(3) = rect(1) + rect(3);
     rect(4) = rect(2) + rect(4);
-    r = getappdata(f, 'rectangles');
-    r = cat(1, r, rect);
-    disp(r)
-    setappdata(f, 'rectangles', r);
+    fprintf('Creating rectangle: %.2f %.2f %.2f %.2f\n', rect)
     
     % Set the window
-    %xIdx = ch1.XData >= r(1) & ch1.XData <= r(3); 
-    %yIdx = ch1.YData >= r(2) & ch1.YData <= r(4);
+    xIdx = ch1.XData >= rect(1) & ch1.XData <= rect(3); 
+    yIdx = ch1.YData >= rect(2) & ch1.YData <= rect(4);
+
+    r = getappdata(f, 'rectangles');
+    r = cat(1, r, rect);
+    setappdata(f, 'rectangles', r);    
     
-    disp(findobj(f, 'Type', 'axes', 'Tag', 'axSecondary'))
-end
-
-function plotNewRect(ch1)
-    % Choose section to isolate
-    xSection = [-30, -25];  % x-bounds
-    ySection = [50, 52];  % y-bounds
-
-
-
     % Plot section in secondary axis
     [~, ch2] = contourf(axSecondary, ch1.XData(xIdx), ch1.YData(yIdx), ch1.ZData(yIdx,xIdx), 30);
-    ch2.LevelList = ch.LevelList; 
-    %caxis(axSecondary, caxis(axPrimary));
-    axis(axPrimary);
-    axis(axSecondary);
+    ch2.LevelList = ch1.LevelList; 
+
     % Show the section in the main axis, if you want to.
-    rectangle(axPrimary,'Position',[xSection(1),ySection(1),range(xSection),range(ySection)]);
+    rectangle(axPrimary,'Position',[rect(1),rect(2),range([rect(1),rect(3)]),range([rect(2),rect(4)])]);
 end
 
-function saveRect(f)
-
-end
-
-function plotNextDataset(~,~)
+function saveRect(f, ch1)
+    r = getappdata(f, 'rectangles');
+    [nrows, ncols] = size(r);
+    % Iterate over rows
     
+    x = [[]];
+    for ii = 1:nrows
+        rect = r(ii,:);
+        fprintf('Saving rectangle: %.2f %.2f %.2f %.2f\n', rect);
+        
+        % Set the window
+        xIdx = ch1.XData >= rect(1) & ch1.XData <= rect(3); 
+        yIdx = ch1.YData >= rect(2) & ch1.YData <= rect(4); 
+        
+        ssl = cat(1, x, ch1.ZData(yIdx,xIdx));
+        
+    end
+    
+    h5write('C:/Master/TTK-4900-Master/data/training_data/2016/h5/', '/myTestSet', ssl);
+end
+
+function plotNextDataset()
+    data = hdf5read('C:/Master/TTK-4900-Master/data/training_data/2016/h5/', '/myTestSet');
+    disp(data)
 end
