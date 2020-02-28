@@ -155,7 +155,7 @@ uiresume(handles.figure1);
 
 % --- Executes on button press in cycloneBtn.
 function antiCycloneBtn_Callback(hObject, eventdata, handles)
-% hObject    handle to cycloneBtn (see GCBO)
+% hObject    handle to antiCycloneBtn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -170,7 +170,7 @@ uiresume(handles.figure1);
 
 % --- Executes on button press in cycloneBtn.
 function nothing_Callback(hObject, eventdata, handles)
-% hObject    handle to cycloneBtn (see GCBO)
+% hObject    handle to nothingBtn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -185,7 +185,7 @@ uiresume(handles.figure1);
 
 % --- Executes on button press in cycloneBtn.
 function delete_Callback(hObject, eventdata, handles)
-% hObject    handle to cycloneBtn (see GCBO)
+% hObject    handle to deleteBtn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
