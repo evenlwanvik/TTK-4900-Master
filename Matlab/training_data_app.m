@@ -1,7 +1,7 @@
-addpath('C:\Master\TTK-4900-Master\Matlab')
+addpath('D:/Master\TTK-4900-Master\Matlab')
 % Function for custom popup window for choosing label
 import popup.*
-load('C:\Master\TTK-4900-Master\Matlab\config.mat')
+load('D:/Master\TTK-4900-Master\Matlab\config.mat')
 
 % Root figure for "app"
 f = figure; clf()
@@ -19,11 +19,11 @@ setappdata(f, 'datasetID', config('datasetID')); % Id of current netcdf dataset,
 setappdata(f, 'rectPlotObj', []);  % The plotted rectangles 
 
 % Directory to all files
-dirPath = 'C:/Master/data/cmems_data/global_10km/2016/'; %gets directory
+dirPath = 'D:/Master/data/cmems_data/global_10km/2016/'; %gets directory
 setappdata(f, 'dirPath', dirPath);
 setappdata(f, 'ncfiles', dir(fullfile(dirPath,'*.nc'))); %gets all wav files in struct 
 % I will be saving training samples as individual matlab cell arrays
-setappdata(f, 'storePath', 'C:/Master/TTK-4900-Master/data/training_data/2016/mlab/')
+setappdata(f, 'storePath', 'D:/Master/TTK-4900-Master/data/training_data/2016/mlab/')
 
 % Set primary and secondary axes to plot on
 axPrimary(1) = axes('Parent',sslTab,'Units','Normalize','Box','on');
@@ -49,7 +49,6 @@ plotDataset(f, 'Next')
 nextBtn = uicontrol(f,'callback', @(src,eventdata)plotDataset(f, 'Next'), 'Position',[20 5 60 20], 'string', 'Next');
 prevBtn = uicontrol(f,'callback', @(src,eventdata)plotDataset(f, 'Prev'), 'Position',[100 5 60 20], 'string', 'Prev');
 createRectBtn = uicontrol(f,'callback',@(src,eventdata)createRect(f),'Position',[200 5 80 20], 'string', 'CreateRect');
-%saveRectBtn = uicontrol(f,'callback',@(src,eventdata)saveRect(f, ch),'Position',[200 5 70 20], 'string', 'SaveRect');
 deleteLatestRectBtn = uicontrol(f,'callback',@(src,eventdata)deleteLatestRect(f),'Position',[300 5 110 20], 'string', 'DeleteLatestRect');
 
 % --- Create an rectangle and plot in secondary axis
@@ -165,10 +164,9 @@ function plotDataset(f, next_or_prev)
     else % if 'Next'
         id = getappdata(f, 'datasetID') + 1; setappdata(f, 'datasetID', id);
     end
-    disp(id)
-    load('C:\Master\TTK-4900-Master\Matlab\config.mat');
+    load('D:/Master\TTK-4900-Master\Matlab\config.mat');
     config('datasetID') = id;
-    save 'C:\Master\TTK-4900-Master\Matlab\config.mat' config;
+    save 'D:/Master\TTK-4900-Master\Matlab\config.mat' config;
     id = getappdata(f, 'datasetID'); setappdata(f, 'datasetID', id+1);
     % Open netcdf variables
     fName = ncFiles(id).name;
@@ -214,7 +212,6 @@ end
 % --- Generic function for appending latest addition to some variable bound to figure
 function appendLatest(f, name, latest)
 	a = getappdata(f, name);
-    disp(length(latest))
     if (length(a) > 1)
         for ii=1:length(latest)
             a(ii) = cat(1, a(ii), latest(ii));
