@@ -182,7 +182,7 @@ function plotDataset(f, next_or_prev)
     % properly, so for now I have to set velocity variables in the app
     uvel = ncread(fPath,'uo',[1 1 1 1],[nx ny 1 1]);
     setappdata(f, 'uvel', uvel)
-    vvel = ncread(fPath,'vo',[1 1 1 1],[nx ny 1 1]);
+    vvel = ncread(fPath,'vo',[1 1 1 1],[nx ny 1 1]); % t
     setappdata(f, 'vvel', vvel)
     
     for ii=1:3
