@@ -25,5 +25,12 @@ I've created a semi-automated way of extracting annotated data from CMEMS global
 2. Resize (cv2.resize(interpolate)) the image to a standard fram size (or the largest/average frame found for all days).
 3. Save dataset as a compressed numpy array.
   
+## MATLAB GUI
 
- 
+One of the main concerns with the simple interface used for choosing training samples in python was that the algorithm only spits out the areas that has a very high likelihood of containing divergent flow. The Okuobu Weiss and R2 confidence level (how much the variation of dependent variables are explained by the independent variable of certain characteristics of the possible eddies compared to an ideal Gaussian eddy) spits out the same large eddies when found for grids seperated by only a few days. Although I had high hopes for the semi-automatic method, it does not provide a diverse enough pool of samples.
+
+The GUI is a stand-alone application in MATLAB with variables and objects that are linked to the gui window. By one can use buttons to maneuver between datasets, i.e. the full grid, smaller windows (subgrids) of the full grid, and draw rectangles that holds the frame of a potential training data sample. There are four tabs showing different representations of the subgrid, one with both sea surface level (ssl) and ocean current velocity vectors, one that shows the phase angle of the ocean current, one for only the ocean current velocity, and the last one shows the ssl and vectors for the full grid. 
+
+Whenever you have chosen a rectangle, it is displayed in a smaller figure in the upper right corner, which means you can analyze a smaller representation of the plot. Another thing that happens is that a popup window is shown, where you can decide wether the chosen frame has the label cyclone, anti-cyclone or nothing, or you can simply delete it. The rectangles deemed to be a training sample will stick around on the plot, with the color indicating its label; red for cyclone (high pressure area), blue for anti-cyclone (low pressure area), and simply black for the sampels labeled as "nothing".
+
+The netcdf files has to be kept in "TBA". Before the application is run for the first time, the "set_config" has to be run to initiate application's internal counters for netcdf file (dataset) and what window you're on, such that you can simply exit the application, and continue where you dropped of the last time.
