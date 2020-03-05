@@ -12,8 +12,8 @@ username = conf['CMEMS-download']['credentials']['username']
 password = conf['CMEMS-download']['credentials']['password']
 
 # Choose directory
-storePath = "C:/Master/data/cmems_data/global_10km/2016/"
-#storePath = "D:/Master/data/cmems_data/global_10km/2016/"
+storePath = "C:/Master/data/cmems_data/global_10km/2016/full/"
+#storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/"
 if not os.path.exists(storePath):
     os.makedirs(storePath)
 
@@ -53,7 +53,7 @@ variables = "--variable deptho"
 # =================== Date and lon/lat ====================
 # =========================================================
 
-dt = datetime.timedelta(days=5)
+dt = datetime.timedelta(days=30)
 duration = datetime.timedelta(days=1)
 # Global reanalysis (model):
 
@@ -67,12 +67,12 @@ filePrefix = "phys_noland_2016_"
 latitude = [45, 90]
 longitude = [-60, 60]
 # lat/lon far from land for testing OW algorithm
-latitude = [45, 60]
-longitude = [-42, -15]
+#latitude = [45, 60]
+#longitude = [-42, -15]
 
-startT = datetime.datetime(2016,6,1,0,0,0) + datetime.timedelta(days=40)
+startT = datetime.datetime(2016,6,1,0,0,0) + datetime.timedelta(days=0)
 
-N = 65 # First 20 days with dt=2
+N = 12 # First 20 days with dt=2
 time = startT
 for i in range(0,N):
     tEnd = time + duration

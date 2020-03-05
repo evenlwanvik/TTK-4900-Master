@@ -103,14 +103,11 @@ function chooseDataset(f, next_or_prev) % load
     h5Path = getappdata(f, 'storePath'); zipPath = h5Path + "training_data.zip";
     % Check if zipped file containing training data exists
     if isfile(zipPath)
-        % Extract content of file
-    	unzip(zipPath, h5Path);
+    	unzip(zipPath, )
+    else
+         % File does not exist.
     end
-    % If any h5 files exists, zip them
-    if ~isempty(dir(h5Path + "*.h5"))
-        zip(h5Path + "training_data.zip", "*.h5", h5Path)
-        delete(h5Path + "*.h5")
-    end
+    
 end
 
 % --- Plot either next or previous window of full dataset
