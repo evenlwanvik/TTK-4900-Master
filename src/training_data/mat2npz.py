@@ -1,52 +1,35 @@
 import numpy as np
-#import csv
 import os
-#import sys
-
+import zipfile
 import scipy.io
 import h5py
 
-def h5_open():
+
+
+def h5_to_npz():
     dirpath = 'C:/Master/TTK-4900-Master/data/training_data/2016/h5/'
-    filepath = dirpath + 'test.h5'
+    zippath = dirpath + 'training_data.zip'
+    savedir = 'C:/Master/TTK-4900-Master/data/training_data/2016/'
 
-    with h5py.File(filepath, 'r') as f:
-        # List all groups
-        print("Keys: %s" % f.keys())
-        a_group_key = list(f.keys())[0]
+    with zipfile.ZipFile(zippath) as z:
+        for fname in z.namelist():
+            if not os.path.isdir(fname) and fname.endswith('.h5'):
+                # read the file
+                with z.open(fname) as f:
+                    with h5py.File(f) as h5f:
+                        print("Keys: %s" % f.keys())
+                        a_group_key = list(f.keys())[0]
 
-        # Get the data
-        data = list(f[a_group_key])
+                        # Get the data
+                        data = list(f[a_group_key])
 
-def mat2npz():
-    dirpath = 'C:/Master/TTK-4900-Master/data/training_data/2016/mlab/'
-    fPath = dirpath + 'test.mat'
-    mat = scipy.io.loadmat(fPath)
-    print(mat)
-
-
-def csv2npz():
-    dirpath = 'C:/Master/TTK-4900-Master/data/training_data/2016/mlab/'
-    #csv.field_size_limit(sys.maxsize) # apparently the csv contains very huge fields
-
-    for fName in os.listdir(dirpath):
-
-        if not fName.endswith(".csv"):
-            continue
-
-        fPath = dirpath + fName
-        myFile = np.genfromtxt(fPath, delimiter=',')
-        print(myFile)
-        
-        #with open(fPath) as csvfile:
-
-        #    data = list(csv.reader(csvfile))
-
-        #print(data)
-
-        #exit()
-        return 0
+                    if not os.path.exists(savedir):
+                        np.savez_compressed( f'{savedir}/sst_train.npz', data[0])
+                        np.savez_compressed( f'{savedir}/ssl_train.npz', data[1])
+                        np.savez_compressed( f'{savedir}/uvel_train.npz', data[2])
+                        np.savez_compressed( f'{savedir}/vvel_train.npz', data[3])
+                        np.savez_compressed( f'{savedir}/phase_train.npz', data[4])
 
 
 if __name__ == '__main__':
-    h5_open()
+    h5_to_npz()

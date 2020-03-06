@@ -19,7 +19,7 @@ setappdata(f, 'sampleID', 1); % Id of current sample
 setappdata(f, 'datasetID', config('datasetID')); % Id of current netcdf dataset, the config file registers where we left off
 setappdata(f, 'windowID', config('windowID')); % Id of current window of the dataset
 setappdata(f, 'rectPlotObj', []);  % The plotted rectangles 
-setappdata(f, 'windowSize', [180,80]); % lon / lat size
+setappdata(f, 'windowSize', [144,60]); % lon / lat size
 
 % Directory to all files
 dirPath = 'C:/Master/data/cmems_data/global_10km/2016/full/'; %gets directory
@@ -218,9 +218,9 @@ function createRect(f)
     setappdata(f, 'lat_window', lat);
     setappdata(f, 'ssl_window', ssl);
     sst = getappdata(f, 'sst');
-    setappdata(f, 'sst_window', sst(xIdx, yIdx));
-    setappdata(f, 'uvel_window', uvel);
-    setappdata(f, 'vvel_window', vvel);
+    setappdata(f, 'sst_window', sst(xIdx, yIdx)'); % sst, uvel and vvel has not been transposed yet
+    setappdata(f, 'uvel_window', uvel');
+    setappdata(f, 'vvel_window', vvel');
     setappdata(f, 'phase_window', phase);
     
     % Spawn popup upon creation of rectangle
