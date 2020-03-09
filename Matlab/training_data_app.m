@@ -15,7 +15,7 @@ fullTab = uitab('Parent',hTabGroup, 'Title','Full grid (ssl)'); setappdata(f, 'f
 
 % Initialize figure (app) data
 setappdata(f, 'rectangles', []); % Rectangle corner coordinates
-setappdata(f, 'sampleID', 1); % Id of current sample
+setappdata(f, 'sampleID', config('sampleID')); % Id of current sample
 setappdata(f, 'datasetID', config('datasetID')); % Id of current netcdf dataset, the config file registers where we left off
 setappdata(f, 'windowID', config('windowID')); % Id of current window of the dataset
 setappdata(f, 'rectPlotObj', []);  % The plotted rectangles 
@@ -274,6 +274,8 @@ function deleteLatestRect(f)
     dataName = '/sample_' + string(id);
     csvPath = getappdata(f, 'storePath') + dataName + '.h5';
     delete(csvPath);
+    load('C:/Master/TTK-4900-Master/Matlab/config.mat'); config('sampleID') = id;
+    save 'C:/Master/TTK-4900-Master/Matlab/config.mat' config;
 end
 
 % --- Save rectangle as hdf5 training sample
@@ -283,6 +285,9 @@ function saveSample(f, label)
     fName = "/sample_" + string(id) + ".h5";
     savePath = getappdata(f, 'storePath') + fName;
     fprintf('Saving sample nr %i with label = %i and dimension: (%i, %i)\n', id, label, size(getappdata(f, 'ssl'))');
+
+    load('C:/Master/TTK-4900-Master/Matlab/config.mat'); config('sampleID') = id;
+    save 'C:/Master/TTK-4900-Master/Matlab/config.mat' config;
     
     %ssl
     data = getappdata(f, 'ssl_window');

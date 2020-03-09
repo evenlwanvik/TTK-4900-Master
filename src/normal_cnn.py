@@ -18,13 +18,13 @@ import cv2
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
 
-meastype = 'phase'
+meastype = 'ssl'
 #cnntype = 'bin'
 cnntype = 'mult'
 
-data_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/{}_train.npz'.format(meastype)
-#data_path = 'C:/Master/TTK-4900-Master/data/training_data/200_days_2018/{}_train.npz'.format(meastype)
-model_fpath = 'models/2016/cnn_{}class_{}.h5'.format(cnntype,meastype)
+#data_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/{}_train.npz'.format(meastype)
+data_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/{}_train.npz'.format(meastype)
+model_fpath = 'models/2016/new/cnn_{}class_{}.h5'.format(cnntype,meastype)
 #model_fpath = 'models/cnn_{}class_{}_01.h5'.format(cnntype,meastype)
 
 # Average size of training data is (15,9)
@@ -150,8 +150,8 @@ def mnist(input_shape, nClasses):
 def plot_history(history):
     fig, ax = plt.subplots(1, 2, figsize=(12, 8))
     # summarize history for accuracy
-    ax[0].plot(history.history['acc'])
-    ax[0].plot(history.history['val_acc'])
+    ax[0].plot(history.history['accuracy'])
+    ax[0].plot(history.history['val_accuracy'])
     ax[0].set_title('model accuracy')
     ax[0].set_ylabel('accuracy')
     ax[0].set_xlabel('epoch')
