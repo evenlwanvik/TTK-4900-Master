@@ -143,7 +143,7 @@ def mnist(input_shape, nClasses):
     model.add(Dense(128, activation='relu'))
     model.add(Dropout(0.25))
     model.add(Dense(nClasses, activation='softmax'))
-    model.compile(optimizer='adagrad', loss='binary_crossentropy', metrics=['accuracy'])
+    #model.compile(optimizer='adagrad', loss='binary_crossentropy', metrics=['accuracy'])
     return model
 
 
@@ -182,13 +182,13 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/2016/phys_noland_
         phase = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel, uvel) ) + 180
     
     # Recreate the exact same model purely from the file
-    ssl_clf   = keras.models.load_model('models/2016/cnn_{}class_ssl.h5'.format(cnntype))
-    phase_clf = keras.models.load_model('models/2016/cnn_{}class_phase.h5'.format(cnntype))
+    modelpath = 'models/2016/new/cnn_mult_full.h5'
+    clf = keras.models.load_model(modelpath)
+    #ssl_clf   = keras.models.load_model('models/2016/cnn_{}class_ssl.h5'.format(cnntype))
 
     shape = ssl.shape
     ssl_probLim = 0.95
-    phase_probLim = 0.35
-    stepSize = 5
+    stepSize = 4
     scaler = MinMaxScaler(feature_range=(0,1))
 
     print("\n\nperforming sliding window on satellite data \n\n")
@@ -197,6 +197,7 @@ def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/2016/phys_noland_
     ssl_scaled = scaler.fit_transform(ssl)
     phase_scaled = scaler.fit_transform(phase)
 
+    winW, winH = int(12), int(8)
     dSize = (winW, winH)
 
     # loop over the sliding window of indeces

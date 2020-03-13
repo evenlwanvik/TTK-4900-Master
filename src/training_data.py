@@ -1,5 +1,5 @@
 from training_data.eddies import eddy_detection,dataframe_eddies,plot_eddies,julianh2gregorian
-#from tools.machine_learning import sliding_window
+from tools.machine_learning import sliding_window
 from matplotlib.patches import Rectangle
 from tools.load_nc import load_netcdf4
 from numpy import savez_compressed
@@ -24,8 +24,8 @@ import sys
 
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
-#rom keras.models import load_model
-#from sklearn.preprocessing import MinMaxScaler
+from keras.models import load_model
+from sklearn.preprocessing import MinMaxScaler
 
 import pdb
 
@@ -174,27 +174,27 @@ def check_cyclone(flag):
     else:          return "nothing"
 
 
-def save_npz_array(ds):
+def save_npz_array(ds, savedir=args.savedir):
     # If folder doesn't exist, create folder and just save the data for the first day
-    if not os.path.exists(args.savedir):
-        os.makedirs(args.savedir)
-        savez_compressed( f'{args.savedir}/sst_train.npz', ds[0])
-        savez_compressed( f'{args.savedir}/ssl_train.npz', ds[1])
-        savez_compressed( f'{args.savedir}/uvel_train.npz', ds[2])
-        savez_compressed( f'{args.savedir}/vvel_train.npz', ds[3])
-        savez_compressed( f'{args.savedir}/phase_train.npz', ds[4])
+    if not os.path.exists(savedir):
+        os.makedirs(savedir)
+        savez_compressed( f'{savedir}/sst_train.npz', ds[0])
+        savez_compressed( f'{savedir}/ssl_train.npz', ds[1])
+        savez_compressed( f'{savedir}/uvel_train.npz', ds[2])
+        savez_compressed( f'{savedir}/vvel_train.npz', ds[3])
+        savez_compressed( f'{savedir}/phase_train.npz', ds[4])
     # If not, we open and append to the existing data
     else:
-        with np.load(f'{args.savedir}/sst_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed( f'{args.savedir}/sst_train.npz', np.append(data['arr_0'], ds[0], axis=0))
-        with np.load(f'{args.savedir}/ssl_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed( f'{args.savedir}/ssl_train.npz', np.append(data['arr_0'], ds[1], axis=0))
-        with np.load(f'{args.savedir}/uvel_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed(f'{args.savedir}/uvel_train.npz', np.append(data['arr_0'], ds[2], axis=0))
-        with np.load(f'{args.savedir}/vvel_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed(f'{args.savedir}/vvel_train.npz', np.append(data['arr_0'], ds[3], axis=0))
-        with np.load(f'{args.savedir}/phase_train.npz', 'w+', allow_pickle=True) as data:
-            savez_compressed(f'{args.savedir}/phase_train.npz', np.append(data['arr_0'], ds[4], axis=0))
+        with np.load(f'{savedir}/sst_train.npz', 'w+', allow_pickle=True) as data:
+            savez_compressed( f'{savedir}/sst_train.npz', np.append(data['arr_0'], ds[0], axis=0))
+        with np.load(f'{savedir}/ssl_train.npz', 'w+', allow_pickle=True) as data:
+            savez_compressed( f'{savedir}/ssl_train.npz', np.append(data['arr_0'], ds[1], axis=0))
+        with np.load(f'{savedir}/uvel_train.npz', 'w+', allow_pickle=True) as data:
+            savez_compressed(f'{savedir}/uvel_train.npz', np.append(data['arr_0'], ds[2], axis=0))
+        with np.load(f'{savedir}/vvel_train.npz', 'w+', allow_pickle=True) as data:
+            savez_compressed(f'{savedir}/vvel_train.npz', np.append(data['arr_0'], ds[3], axis=0))
+        with np.load(f'{savedir}/phase_train.npz', 'w+', allow_pickle=True) as data:
+            savez_compressed(f'{savedir}/phase_train.npz', np.append(data['arr_0'], ds[4], axis=0))
 
 
 def semi_automatic_training():
@@ -496,73 +496,21 @@ def semi_automatic_training():
             save_npz_array( (sst_train, ssl_train, uvel_train, vvel_train, phase_train) )
 
 
-
-def training_data_altair():
-
-    import altair as alt
-    import numpy as np
-    import pandas as pd
-    #alt.renderers.enable('vegascope')
-    import altair_viewer
-
-    t = lambda data: alt.pipe(data, alt.limit_rows(max_rows=60000), alt.to_values)
-    alt.data_transformers.register('custom', t)
-    alt.data_transformers.enable('custom')
-
-    # Loop through every netcdf file in directory, usually they are spaced by 5 days
-    for fName in os.listdir(args.fDir):
-        if not fName.endswith(".nc"):
-            continue
-            
-        logger.info("loading netcdf")
-
-        # load data
-        ds = xr.open_dataset(args.fDir + fName)
-        df = ds.to_dataframe()
-
-        lon = ds.longitude.values
-        lat = ds.latitude.values
-        ssl = ds.zos[0].to_dataframe()
-        
-        # loop over the sliding window of indeces
-        #for x, y, (lonIdxs, latIdxs) in sliding_window(ssl, stepSize=stepSize, windowSize=dSize):
-
-        #sliding_window()
-        #pdb.set_trace()
-
-        df.reset_index(inplace=True)
-
-        chart = alt.Chart(df).mark_rect().encode(
-                x='longitude:O',
-                y='latitude:O',
-                color='zos:Q').interactive()
-        #altair_viewer.display(chart)
-        altair_viewer.show(chart)
-        exit()
-        
-
-        # Convert this grid to columnar data expected by Altair
-        #source = pd.DataFrame({'x': x.ravel(),
-                            #'y': y.ravel(),
-                           # 'z': z.ravel()})
-
-
-
-
 def adjustment_data():
     ''' Method to run the ML model to provide correctional non-eddy images for the model '''
 
-    (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(args.fpath)
+    ncpath = 'C:/Master/data/cmems_data/global_10km/2018/phys_noland_2018_001.nc'
 
-    ssl_probLim = 0.96
+    (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(ncpath)
+
+    ssl_probLim = 0.95
     phase_probLim = 0.35
     stepSize = 8
-    scaler = MinMaxScaler(feature_range=(0,1))
+    scaler = MinMaxScaler(feature_range=(-1,1))
 
-    ssl_clf   = load_model('models/cnn_multiclass_ssl_01.h5')
-    phase_clf = load_model('models/cnn_multiclass_phase_01.h5')
+    clf = load_model('models/2016/new/cnn_mult_full.h5')
 
-    winW, winH = int(16), int(10)
+    winW, winH = int(14), int(8)
     dSize = (winW, winH)
 
     # Lists that will hold the training data
@@ -577,7 +525,7 @@ def adjustment_data():
     for i, day in enumerate(random.sample(range(0, len(t)), len(t))): 
 
         ssl = np.array(ssl_full[day].T, dtype='float32') 
-        sst = np.array(sst_full[day,0].T, dtype='float32') 
+        sst = np.array(sst_full[day].T, dtype='float32') 
         uvel = np.array(uvel_full[day,0].T, dtype='float32') 
         vvel = np.array(vvel_full[day,0].T, dtype='float32') 
         with np.errstate(all='ignore'): # Disable zero div warning
@@ -585,6 +533,8 @@ def adjustment_data():
 
         shape = ssl.shape
         ssl_scaled = scaler.fit_transform(ssl)
+        uvel_scaled = scaler.fit_transform(uvel)
+        vvel_scaled = scaler.fit_transform(vvel)
         phase_scaled = scaler.fit_transform(phase)
 
         # loop over the sliding window of indeces
@@ -594,55 +544,70 @@ def adjustment_data():
                 continue
             dSize = (winH, winW)
             # Window indexed data and resizing from a smaller window to model size
+            sst_wind = np.array([[sst[i,j] for j in latIdxs] for i in lonIdxs])
             ssl_wind = np.array([[ssl[i,j] for j in latIdxs] for i in lonIdxs])
             ssl_scaled_wind = np.array([[ssl_scaled[i,j] for j in latIdxs] for i in lonIdxs])
             phase_wind = np.array([[phase[i,j] for j in latIdxs] for i in lonIdxs])
             phase_scaled_wind = np.array([[phase_scaled[i,j] for j in latIdxs] for i in lonIdxs])
             uvel_wind = np.array([[uvel[i,j] for j in latIdxs] for i in lonIdxs])
+            uvel_scaled_wind = np.array([[uvel_scaled[i,j] for j in latIdxs] for i in lonIdxs])
             vvel_wind = np.array([[vvel[i,j] for j in latIdxs] for i in lonIdxs])
-            sst_wind = np.array([[sst[i,j] for j in latIdxs] for i in lonIdxs])
+            vvel_scaled_wind = np.array([[vvel_scaled[i,j] for j in latIdxs] for i in lonIdxs])
 
-            # Add channel dimension for CNN
-            ssl_cnn_window   = np.expand_dims(np.expand_dims(ssl_scaled_wind, 2), 0)
-            phase_cnn_window = np.expand_dims(np.expand_dims(ssl_scaled_wind, 2), 0)
+            #channels = [ssl_scaled_wind, uvel_scaled_wind, vvel_scaled_wind, phase_scaled_wind]
+            channels = [uvel_scaled_wind, vvel_scaled_wind]
+            nChannels = len(channels)
+            X_cnn = np.zeros((winW,winH,nChannels))
+            for lo in range(winW): # Row
+                for la in range(winH): # Column
+                    #X_cnn[i,lo,la,0] = X[0][i][lo][la]
+                    for c in range(nChannels): # Channels
+                        X_cnn[lo,la,c] = channels[c][lo][la]
+
+            X_cnn = np.expand_dims(X_cnn, 0)
 
             lo, la = lon[lonIdxs], lat[latIdxs]
 
             # Predict and receive probability
-            ssl_prob   = ssl_clf.predict_proba(ssl_cnn_window)
-            phase_prob = phase_clf.predict_proba(phase_cnn_window)
+            prob = clf.predict(X_cnn)
 
             # By default we say we have a non-eddy (cyclone flag)
             cyclone_f = 0
             # If second column is larger than the boundary, we have a anti-cyclone
-            if ssl_prob[0,1] > ssl_probLim: cyclone_f = -1
+            if prob[0,1] > ssl_probLim: 
+                print('anti-cyclone | prob: {} | lon: [{}, {}] | lat: [{}, {}]'.format(prob[0,1]*100,lo[0],lo[-1],la[0],la[-1]))
+                cyclone_f = -1
             # If third column is larger, we have a cyclone
-            elif ssl_prob[0,2] > ssl_probLim: cyclone_f = 1
+            elif prob[0,2] > ssl_probLim:
+                print('cyclone | prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(prob[0,2]*100,lo[0],lo[-1],la[0],la[-1])) 
+                cyclone_f = 1
 
-            eddy_data = [ssl_wind, phase_wind, uvel_wind, vvel_wind]
+            eddy_data = [sst_wind, ssl_wind, uvel_wind, vvel_wind, phase_wind]
             
             # Plot and flag if the prediction is correct or not
-            yes_no = plot_grids(eddy_data, lo, la, check_cyclone(cyclone_f))
+            yes_no = plot_grids(eddy_data, lo, la, None, check_cyclone(cyclone_f))
             # Add to training data if expert labels it correct
             if yes_no == 'Yes':
-                sst_train.append([sst_wind, cyclone_f]) # [data, label]
+                sst_train.append([sst_wind, cyclone_f]) 
                 ssl_train.append([ssl_wind, cyclone_f]) 
                 uvel_train.append([ssl_wind, cyclone_f]) 
                 vvel_train.append([ssl_wind, cyclone_f]) 
                 phase_train.append([ssl_wind, cyclone_f])
             # If not, change  the label to non-eddy
             elif yes_no == 'No':
-                sst_train.append([sst_wind, 0]) # [data, label]
+                sst_train.append([sst_wind, 0]) 
                 ssl_train.append([ssl_wind, 0]) 
                 uvel_train.append([ssl_wind, 0]) 
                 vvel_train.append([ssl_wind, 0]) 
                 phase_train.append([ssl_wind, 0])
+            
             # Every 10 sample add to the compressed array
             if i%10==0:
                 # ADD TO THE COMPRESSED NUMPY ARRAY
-                save_npz_array( (sst_train, ssl_train, uvel_train, vvel_train, phase_train) )    
-
+                savedir = 'C:/Master/TTK-4900-Master/data/training_data/adjustment_data/'
+                ds = [sst_train, ssl_train, uvel_train, vvel_train, phase_train]
+                save_npz_array(ds, savedir)
 
 if __name__ == '__main__':
-    training_data_altair()
     #semi_automatic_training()
+    adjustment_data()

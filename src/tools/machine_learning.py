@@ -16,10 +16,7 @@ def getAccuracy(pred_val, true_val):
     return correct/N  
 
 
-def preprocess_data(data_path, split=True, gridSize=None):
-    with np.load(data_path, allow_pickle=True) as data:
-        X = data['arr_0'][:,0]
-        Y = data['arr_0'][:,1]
+def preprocess_data(X, Y, split=True, gridSize=None):
 
     # The standard grid size we will use
     if gridSize==None:
@@ -36,7 +33,7 @@ def preprocess_data(data_path, split=True, gridSize=None):
     # TODO: Make the resizing into a tool? *Being used in training_data as well
     for i in range(nTeddies):
         X[i] = np.array(X[i], dtype='float32') # convert to numpy array
-        X[i] = cv2.resize(X[i], dsize=(nLat, nLon), interpolation=cv2.INTER_CUBIC) # Resize to a standard size and flatten
+        X[i] = cv2.resize(X[i], dsize=(nLon, nLat), interpolation=cv2.INTER_CUBIC) # Resize to a standard size and flatten
         X[i] = scaler.fit_transform(X[i]) # normalize to [0,1]
 
     X = np.array(list(X))
