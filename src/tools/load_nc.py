@@ -19,3 +19,10 @@ def load_netcdf4(filename):
     t = ds.variables['time'][:]
     return (ds,t,lon,lat,depth,u,v,sst,ssl)
     ds.close() 
+
+    '''
+    import netCDF4 as nc4 
+    fp = "D:/Master/data/cmems_data/global_10km/2016/full/phys_noland_2016_001.nc"
+    ds = nc4.Dataset(fp, 'r', format='NETCDF4') 
+    test = ds.variables['zos'][:]
+    '''

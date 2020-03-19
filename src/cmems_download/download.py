@@ -12,8 +12,9 @@ username = conf['CMEMS-download']['credentials']['username']
 password = conf['CMEMS-download']['credentials']['password']
 
 # Choose directory
-storePath = "C:/Master/data/cmems_data/global_10km/2016/full/"
+#storePath = "D:/Master/data/cmems_data/global_10km/2016/full/"
 #storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/"
+storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/smaller/"
 if not os.path.exists(storePath):
     os.makedirs(storePath)
 
@@ -64,15 +65,28 @@ filePrefix = "phys_noland_2016_"
 # Global reprocessed observations:
 #filePrefix = "multiobs_"
 
-latitude = [45, 90]
-longitude = [-60, 60]
+#latitude = [45, 90]
+#longitude = [-60, 60]
 # lat/lon far from land for testing OW algorithm
 #latitude = [45, 60]
 #longitude = [-42, -15]
+latitude = [45, 50]
+longitude = [-24, -12]
 
-startT = datetime.datetime(2016,6,1,0,0,0) + datetime.timedelta(days=0)
+# lon: (-36, -24)
+# lat: (45, 50)
 
-N = 12 # First 20 days with dt=2
+startT = datetime.datetime(2016,8,30,0,0,0) + datetime.timedelta(days=0)
+
+'''
+Test the datetime for files
+>>> import datetime as dt
+>>> origin = dt.date(1950, 1, 1)
+>>> origin + dt.timedelta(hours=584364)
+datetime.date(2016, 8, 30)
+'''
+
+N = 1 # First 20 days with dt=2
 time = startT
 for i in range(0,N):
     tEnd = time + duration

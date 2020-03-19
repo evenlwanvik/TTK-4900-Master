@@ -6,6 +6,11 @@ import xarray as xr
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 import cv2
+from PIL import Image
+import time
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # Turn off tensorflow debugging logs
 
 import numpy as np
 from keras import layers
@@ -15,7 +20,6 @@ from keras.preprocessing import image
 from keras.utils import layer_utils
 from keras.utils.data_utils import get_file
 from keras.applications.imagenet_utils import preprocess_input
-import pydot
 from keras.utils.vis_utils import model_to_dot
 from keras.utils import plot_model
 #from resnets_utils import *
@@ -164,7 +168,7 @@ def convert_to_one_hot(y):
     return Y_mult
 
 # The mnist network
-def mnist(input_shape, nClasses):
+def mnist(input_shape, classes):
     model = Sequential()
     model.add(Conv2D(32, kernel_size=(3, 3),activation='relu',kernel_initializer='he_normal',input_shape=input_shape))
     model.add(Conv2D(32, kernel_size=(3, 3),activation='relu',kernel_initializer='he_normal'))
@@ -179,7 +183,7 @@ def mnist(input_shape, nClasses):
     model.add(Flatten())
     model.add(Dense(128, activation='relu'))
     model.add(Dropout(0.25))
-    model.add(Dense(nClasses, activation='softmax'))
+    model.add(Dense(classes, activation='softmax'))
     #model.compile(optimizer='adagrad', loss='binary_crossentropy', metrics=['accuracy'])
     return model
 
@@ -211,7 +215,7 @@ def analyse_h5():
     import scipy.io
     import h5py
 
-    dirpath = 'C:/Master/TTK-4900-Master/data/training_data/2016/h5/'
+    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
     zippath = dirpath + 'training_data.zip'
 
     with zipfile.ZipFile(zippath) as z:
@@ -227,28 +231,68 @@ def analyse_h5():
                 plt.show()
 
 
+def my_model(input_shape, classes):
+    # (no of inputs + no of outputs)^0.5 + (1 to 10)
+    # sqrt(100)
 
-scaler = MinMaxScaler(feature_range=(-1,1))
-nLon, nLat = int(14), int(8)
-probLim = 0.9
+    model = Sequential()
+    model.add(Conv2D(8, kernel_size=(1,1), padding='same', activation='relu', input_shape=input_shape))
+    model.add(BatchNormalization(axis=-1))
+    model.add(Conv2D(12, kernel_size=(2,2), padding='same', activation='relu'))
+    model.add(BatchNormalization(axis=-1))
+    model.add(AveragePooling2D(pool_size=(2,2), padding='same'))
+    model.add(Dropout(0.25))
+    model.add(Conv2D(24, kernel_size=(2,2), padding='same', activation='relu'))
+    model.add(BatchNormalization(axis=-1))
+    model.add(AveragePooling2D(pool_size=(2,2), padding='same'))
+    model.add(Dropout(0.25))
+    model.add(Flatten())
+    model.add(Dense(classes, activation='softmax')) #activation='softmax')?
+    return model
+
+
+##################### TRAIN AND TEST #####################
+
+from sklearn.externals import joblib # To save scaler
+from sklearn.preprocessing import StandardScaler
+
+
+sst_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/sst_train.npz'
+ssl_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/ssl_train.npz'
+uvel_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/uvel_train.npz'
+vvel_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/vvel_train.npz'
+phase_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/phase_train.npz'
+lon_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/lon.npz'
+lat_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/lat.npz'
+model_fpath = 'D:/master/models/2016/cnn_mult_full.h5'
+scaler_fpath = "D:/master/models/2016/cnn_norm_scaler.pkl"
+#2016/new
+#200_days_2018
+
+
+# Create a scaler for each channel
+nChannels = 3
+scaler = [StandardScaler() for _ in range(nChannels)]
+#scaler = MinMaxScaler(feature_range=(-1,1))
+winW, winH = int(11), int(6)
+probLim = 0.97
+
+
+# Fortsett å endre oppløsning for å se om vi kan ha mindre, *4 var best
+# Også prøv forskjellige kombinasjoner av kanaler
+
 
 def train_model():
 
-    sst_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/sst_train.npz'
-    ssl_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/ssl_train.npz'
-    uvel_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/uvel_train.npz'
-    vvel_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/vvel_train.npz'
-    phase_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/phase_train.npz'
-    model_fpath = 'models/2016/new/cnn_mult_full.h5'
-    #2016/new
-    #200_days_2018
+    winW2, winH2 = winW*2, winH*2
 
+    # Open the numpy training data array and append for each channel we want to use
     X = []
     #with np.load(sst_path, allow_pickle=True) as data:
     #    X.append(data['arr_0'][:,0])    
-    #with np.load(ssl_path, allow_pickle=True) as data:
-    #    X.append(data['arr_0'][:,0])
-    #    Y = data['arr_0'][:,1]
+    with np.load(ssl_path, allow_pickle=True) as data:
+        X.append(data['arr_0'][:,0])
+        Y = data['arr_0'][:,1]
     with np.load(uvel_path, allow_pickle=True) as data:
         X.append(data['arr_0'][:,0])
     with np.load(vvel_path, allow_pickle=True) as data:
@@ -257,42 +301,67 @@ def train_model():
     #with np.load(phase_path, allow_pickle=True) as data:
     #    X.append(data['arr_0'][:,0]) 
     #    Y = data['arr_0'][:,1]       
-   
-    nTeddies = len(X[0])
-    nChannels = len(X)
 
+    # Reshape the "image" to standard size
+    nTeddies = len(X[0])
+    
     for c in range(nChannels): # For each channel
         for i in range(nTeddies): # For each Training Eddy
-            X[c][i] = cv2.resize(X[c][i], dsize=(nLon, nLat), interpolation=cv2.INTER_CUBIC).T # Resize to a standard size and flatten
-            #if c == 4:
-            #    X[c][i] = scaler2.fit_transform(X[c][i]) # normalize to [-1,1]
-            #else:
-            X[c][i] = scaler.fit_transform(X[c][i]) # normalize to [0,1]
-            
+            #amin, amax = np.amin(X[c][i]), np.amax(X[c][i])
+            #X[c][i] = X[c][i]/90
+            X[c][i] = cv2.resize(X[c][i], dsize=(winH2, winW2), interpolation=cv2.INTER_CUBIC) 
 
-
-    X_cnn = np.zeros((nTeddies,nLon,nLat,nChannels))
-
+    # Reshape data for CNN (sample, width, height, channel)
+    X_cnn = np.zeros((nTeddies,winW2,winH2,nChannels))
     for i in range(nTeddies): # Eddies
-        for lo in range(nLon): # Row
-            for la in range(nLat): # Column
-                #X_cnn[i,lo,la,0] = X[0][i][lo][la]
+        for lo in range(winW2): # Row
+            for la in range(winH2): # Column
                 for c in range(nChannels): # Channels
                     X_cnn[i,lo,la,c] = X[c][i][lo][la]
 
-
-    X_train, X_test, Y_train, Y_test = train_test_split(X_cnn, Y, test_size=0.33)
-
-    # Adding channel dimension=1
-    #X_train = np.expand_dims(np.array(list(X_train)), 3)
-    #X_test = np.expand_dims(np.array(list(X_test)), 3)
-
-    model = mnist(input_shape=(nLon, nLat, nChannels), nClasses=3)
-    #model = ResNet50(input_shape = (nLon, nLat, nChannels), classes = 3)
-
-    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-    #model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
     
+    # Create and set the scaler for each channel
+    X_cnn = X_cnn.reshape(nTeddies, -1, nChannels)
+    for c in range(nChannels):
+        X_cnn[:,:,c] = scaler[c].fit_transform(X_cnn[:,:,c])
+    X_cnn = X_cnn.reshape(nTeddies, winW2, winH2, nChannels)
+    joblib.dump(scaler, scaler_fpath) # Save the Scaler model
+
+    # Train/test split
+    X_train, X_test, Y_train, Y_test = train_test_split(X_cnn, Y, test_size=0.33)
+    nTrain = len(X_train)
+
+
+    '''
+    yhot = convert_to_one_hot(Y)
+    for i in range(20):
+        fig, ax = plt.subplots(figsize=(12, 8))
+        
+        print(f'\nlabel = {Y[i]}, yhot = {yhot[i]}\n')
+        ssl = X_cnn[i,:,:,0] #   X[i,0]
+        #ssl_scaled = tmp[i] #   X[i,0]
+        
+        im = ax.contourf(ssl.T, 30, cmap='rainbow')
+        fig.colorbar(im, ax=ax)
+        #im2 = ax[1].contourf(ssl_scaled.T, 100, cmap='rainbow')
+        #fig.colorbar(im2, ax=ax[1])
+
+        #uvel = X_train[i,:,:,1] #X[i,1]
+        #vvel = X_train[i,:,:,2] #X[i,2]
+        #n=-1
+        #color_array = np.sqrt(((uvel-n)/2)**2 + ((vvel-n)/2)**2)
+        #ax.quiver(uvel, vvel, color_array, scale=10)
+        plt.show()
+    exit()
+    '''
+
+    model = mnist(input_shape=(winW2, winH2, nChannels), classes=3)
+    #model = ResNet50(input_shape = (winW2, winH2, nChannels), classes = 3)
+    #model = my_model(input_shape = (winW2, winH2, nChannels), classes = 3)
+
+    model.compile(optimizer='adagrad', loss='categorical_crossentropy', metrics=['accuracy'])
+    #model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
+
     # Create 3 columns for each class for multilabel classification
     Y_train = convert_to_one_hot(Y_train)
     Y_test  = convert_to_one_hot(Y_test)
@@ -300,7 +369,6 @@ def train_model():
     #    if Y_train[i] == -1: Y_train[i]=2
     #for i in range(len(Y_test)):
     #    if Y_test[i] == -1: Y_test[i]=2
-    
 
     print('\n\n')
     print ("number of training examples = " + str(X_train.shape[0]))
@@ -310,7 +378,7 @@ def train_model():
     print ("X_test shape: " + str(X_test.shape))
     print ("Y_test shape: " + str(Y_test.shape))
     print('\n\n')
-    model.fit(X_train, Y_train, epochs = 15, batch_size = 1)
+    history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 10, batch_size = 1)
 
     preds = model.evaluate(X_test, Y_test)
     print ("Loss = " + str(preds[0]))
@@ -326,93 +394,134 @@ def train_model():
 
     model.save(model_fpath)
 
+    plot_history(history)
 
-def test_model(nc_fpath='C:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_001.nc'):
+
+def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_060.nc'):
+    
+    # Test cv2 image and sliding window movement on smaller grid
+    nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/smaller/phys_noland_2016_001.nc'
     
     print("\n\n")
-
-    model_fpath = 'models/2016/new/cnn_mult_full.h5'
 
     (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(nc_fpath)
 
     day = 0
 
-    ssl = np.array(ssl_full[day].T, dtype='float32') 
+
+
+    # numpy axis is (col, row) we want (row, col) as in (lon, lat)
+    ssl = np.array(ssl_full[day].T, dtype='float32')
     uvel = np.array(uvel_full[day,0].T, dtype='float32') 
     vvel = np.array(vvel_full[day,0].T, dtype='float32') 
     with np.errstate(all='ignore'): # Disable zero div warning
         phase = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel, uvel) ) + 180
-    
+
     # Recreate the exact same model purely from the file
     clf = load_model(model_fpath)
-    #ssl_clf   = keras.models.load_model('models/2016/cnn_{}class_ssl.h5'.format(cnntype))
+    #ssl_clf   = keras.models.load_model(D:/master/models/2016/cnn_{}class_ssl.h5'.format(cnntype))
 
-    shape = ssl.shape
-    stepSize = 4
+    nLon, nLat = ssl.shape 
+    wSize, hSize = 4, 3 
 
     print("\n\nperforming sliding window on satellite data \n\n")
 
-    # normalize (scale) the data
-    ssl_scaled = scaler.fit_transform(ssl)
-    uvel_scaled = scaler.fit_transform(uvel)
-    vvel_scaled = scaler.fit_transform(vvel)
-    phase_scaled = scaler.fit_transform(phase)
+    # Create canvas to show the cv2 rectangles around predictions
+    fig1, ax1 = plt.subplots(figsize=(12, 8))
+    # Canvas for zooming in on prediction
+    fig2, ax2 = plt.subplots(figsize=(6, 4))
+    fig2.show()
 
-    winW, winH = nLon, nLat
-    dSize = (winW, winH)
+    # Draw on the larger canvas before sliding
+    ax1.contourf(lon, lat, ssl.T, cmap='rainbow', levels=60)
+    n=-1
+    color_array = np.sqrt(((uvel-n)/2)**2 + ((vvel-n)/2)**2)
+    ax1.quiver(lon, lat, uvel.T, vvel.T, color_array)#, scale=30)#, headwidth=0.5, width=0.01), #units="xy", ) # Plot vector field      
+    fig1.subplots_adjust(0,0,1,1)
+    fig1.canvas.draw()
+
+    im = np.frombuffer(fig1.canvas.tostring_rgb(), dtype=np.uint8)
+    im = im.reshape(fig1.canvas.get_width_height()[::-1] + (3,))
+    im = cv2.cvtColor(im,cv2.COLOR_RGB2BGR)
+    imH, imW, _ = im.shape # col, row
+    winScaleW, winScaleH = imW/nLon, imH/nLat # Scalar coeff from dataset to cv2 image
+
+    to_be_scaled = [0,1,2] # Only use uvel and vvel
+    data = [ssl, uvel, vvel, phase]
+
+    scaler = joblib.load(scaler_fpath) # Import the std sklearn scaler model
 
     # loop over the sliding window of indeces
-    for (x, y, (lonIdxs, latIdxs)) in sliding_window(ssl, stepSize=stepSize, windowSize=dSize):
+    for rectIdx, (x, y, (lonIdxs, latIdxs)) in enumerate(sliding_window(ssl, wSize, hSize, windowSize=(winW, winH))):
 
-        if lonIdxs[-1] >= shape[0] or latIdxs[-1] >= shape[1]:
+        if lonIdxs[-1] >= nLon or latIdxs[-1] >= nLat:
             continue
-        dSize = (winH, winW)
-        # Window indexed data and resizing from a smaller window to model size
-        ssl_wind = np.array([[ssl[i,j] for j in latIdxs] for i in lonIdxs])
-        ssl_scaled_wind = np.array([[ssl_scaled[i,j] for j in latIdxs] for i in lonIdxs])
-        phase_wind = np.array([[phase[i,j] for j in latIdxs] for i in lonIdxs])
-        phase_scaled_wind = np.array([[phase_scaled[i,j] for j in latIdxs] for i in lonIdxs])
-        uvel_wind = np.array([[uvel[i,j] for j in latIdxs] for i in lonIdxs])
-        uvel_scaled_wind = np.array([[uvel_scaled[i,j] for j in latIdxs] for i in lonIdxs])
-        vvel_wind = np.array([[vvel[i,j] for j in latIdxs] for i in lonIdxs])
-        vvel_scaled_wind = np.array([[vvel_scaled[i,j] for j in latIdxs] for i in lonIdxs])
 
-        #channels = [ssl_scaled_wind, uvel_scaled_wind, vvel_scaled_wind, phase_scaled_wind]
-        channels = [uvel_scaled_wind, vvel_scaled_wind]
-        nChannels = len(channels)
-        X_cnn = np.zeros((winW,winH,nChannels))
-        for lo in range(winW): # Row
-            for la in range(winH): # Column
-                #X_cnn[i,lo,la,0] = X[0][i][lo][la]
+        winW2, winH2 = winW*2, winH*2
+        winSize = (winH2, winW2)
+
+        data_scaled_window, data_window = [], []
+        for c in range(len(data)):
+            data_window.append(np.array([[data[c][i,j] for j in latIdxs] for i in lonIdxs]))
+
+            # Resize the original window to CNN input dim
+            data_window[c] = cv2.resize(data_window[c], dsize=(winSize), interpolation=cv2.INTER_CUBIC)
+            if c in to_be_scaled:
+                # Create a copy of window to be scaled
+                data_scaled_window.append(data_window[c].copy()) 
+                i = len(data_scaled_window) - 1
+                # Flatten array before applying scalar
+                data_scaled_window[i] = data_scaled_window[i].flatten()
+                # Scale the data
+                data_scaled_window[i] = scaler[i].transform([data_scaled_window[i]])[0]
+                # Reshape scaled data to original shape
+                data_scaled_window[i] = data_scaled_window[i].reshape(winW2, winH2)
+        
+
+        x_, y_ = int(winScaleW*(x)), int(winScaleH*(nLat-y)) # y starts in top left for cv2, want it to be bottom left
+        winW_, winH_= int(winScaleW*winW), int(winScaleH*winH)
+
+        X_cnn = np.zeros((1,winW2,winH2,nChannels))
+        for lo in range(winW2): # Row
+            for la in range(winH2): # Column
                 for c in range(nChannels): # Channels
-                    X_cnn[lo,la,c] = channels[c][lo][la]
-
-        X_cnn = np.expand_dims(X_cnn, 0)
-
-        lo, la = lon[lonIdxs], lat[latIdxs]
+                    X_cnn[0,lo,la,c] = data_scaled_window[c][lo,la]
 
         # Predict and receive probability
         prob = clf.predict(X_cnn)
 
-        if prob[0,1] > probLim:
-            fig, ax = plt.subplots(1, 3, figsize=(16, 6))
-            print('anti-cyclone | prob: {} | lon: [{}, {}] | lat: [{}, {}]'.format(prob[0,1]*100,lo[0],lo[-1],la[0],la[-1]))
-            plot_window(ssl_wind, phase_wind, uvel_wind, vvel_wind, lo, la, ax)
+        print(f"image {rectIdx}, (x,y) = ({(x, y)}) to ({(x + winW, y + winH)})")
 
-        if prob[0,2] > probLim:
-            fig, ax = plt.subplots(1, 3, figsize=(16, 6))
-            print('cyclone | prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(prob[0,2]*100,lo[0],lo[-1],la[0],la[-1]))
-            plot_window(ssl_wind, phase_wind, uvel_wind, vvel_wind, lo, la, ax)
+        if any(i >= probLim for i in prob[0,1:]):
+            if prob[0,1] >= probLim:
+                cv2.rectangle(im, (x_, y_), (x_ + winW_, y_ - winH_), (217, 83, 25), 2) 
+                print('anti-cyclone | prob: {}'.format(prob[0,1]*100))
+                #print('anti-cyclone | prob: {} | lon: [{}, {}] | lat: [{}, {}]'.format(prob[0,1]*100,lo[0],lo[-1],la[0],la[-1]))
+            else:
+                cv2.rectangle(im, (x_, y_), (x_ + winW_, y_ - winH_), (0, 76, 217), 2) 
+                print('cyclone | prob: {}'.format(prob[0,2]*100))
+                #print('cyclone | prob: {} | lon: [{}, {}, lat: [{}, {}]'.format(prob[0,2]*100,lo[0],lo[-1],la[0],la[-1]))
+            ax2.clear()
+            ax2.contourf( data_window[0].T, cmap='rainbow', levels=20)
+            # plot vectors on top of ssl
+            #n=-1
+            #color_array = np.sqrt(((data_window[1]-n)/2)**2 + ((data_window[2]-n)/2)**2)
+            #ax2.quiver(data_window[1].T, data_window[2].T, color_array, scale=3)#, headwidth=0.5, width=0.01), #units="xy", ) # Plot vector field      
+            fig2.canvas.draw()
 
-        #if phase_prob[0,0] > phase_probLim:
-            #print("phase prob: {} > problim".format(ssl_prob[0,0]))
+        cv2.imshow("Window", im)
+        cv2.waitKey(1)
+        time.sleep(0.05) 
+
+    cv2.imwrite('D:/master/TTK-4900-Master/images/predicted_grid.png', im)
+    
 
 def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
     ax[0].contourf(lon, lat, ssl.T, cmap='rainbow', levels=30)
 
-    n=-uvel
+    n=-1
     color_array = np.sqrt(((uvel-n)/2)**2 + ((vvel-n)/2)**2)
-    ax[2].quiver(lon, lat, uvel.T, vvel.T, color_array, scale=1) 
+    ax[2].quiver(lon, lat, uvel.T, vvel.T, color_array, scale=2) 
 
     levels = MaxNLocator(nbins=10).tick_values(phase.min(), phase.max())
     cmap = plt.get_cmap('CMRmap')
@@ -421,6 +530,7 @@ def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
     ax[1].pcolormesh(lon, lat, phase.T, cmap=cmap, norm=norm)
 
     plt.show() 
+
 
 if __name__ == '__main__':
     #train_model() 

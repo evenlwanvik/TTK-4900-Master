@@ -118,7 +118,7 @@ def plot_grids(data, lon, lat, larger_grid=None, title="__"):
     axs[0,1].contourf(lon, lat, data[1].T, 20, cmap='rainbow')
     n=-1
     color_array = np.sqrt(((data[2]-n)/2)**2 + ((data[3]-n)/2)**2)
-    axs[1,0].quiver(lon, lat, data[2].T, data[3].T, color_array, scale=5) # Plot vector field
+    axs[1,0].quiver(lon, lat, data[2].T, data[3].T, color_array, scale=3) # Plot vector field
     if larger_grid is not None:
         axs[1,1].contourf(larger_grid[0], larger_grid[1], larger_grid[2].T, 20, cmap='rainbow') # show a larger parcel to analyze the surroundings
     #axs[1,2].contourf(lon, lat, data[5].T, 10) # Or plot the OW values

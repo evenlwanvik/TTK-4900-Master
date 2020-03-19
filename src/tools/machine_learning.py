@@ -89,7 +89,7 @@ def data_augmentation(arr):
     keras.preprocessing.image.ImageDataGenerator(rotation_range=180, horizontal_flip=True)
 
 
-def sliding_window(arr, stepSize, windowSize):
+def sliding_window(arr, wSize, hSize, windowSize):
     ''' 
     slide window across the image 
     args:
@@ -101,7 +101,7 @@ def sliding_window(arr, stepSize, windowSize):
     ''' 
     dims = arr.shape
 
-    for x in range(0, dims[0], stepSize):
-       for y in range(0, dims[1], stepSize): 
-           # yield current window
-           yield x, y, (list(range(x, x+windowSize[0])), list(range(y, y+windowSize[1])))
+    for y in range(0, dims[1], hSize): 
+        for x in range(0, dims[0], wSize):
+            # yield current window
+            yield x, y, (list(range(x, x+windowSize[0])), list(range(y, y+windowSize[1])))

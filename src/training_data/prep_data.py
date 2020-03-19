@@ -6,9 +6,9 @@ import h5py
 
 
 def h5_to_npz():
-    dirpath = 'C:/Master/TTK-4900-Master/data/training_data/2016/h5/'
+    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
     zippath = dirpath + 'training_data.zip'
-    savedir = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/'
+    savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/'
 
     lon = []
     lat = []
@@ -44,7 +44,7 @@ def h5_to_npz():
     np.savez_compressed( f'{savedir}/phase_train.npz', phase)
 
 def count_labels():
-    dirpath = 'C:/Master/TTK-4900-Master/data/training_data/2016/h5/'
+    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
     zippath = dirpath + 'training_data.zip'
 
     from collections import Counter
@@ -62,7 +62,7 @@ def count_labels():
 
 
 def rename_files():
-    dirpath = 'C:/Master/TTK-4900-Master/data/training_data/2016/h5/'
+    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
     for fname in os.listdir(dirpath):
         if fname.endswith(".h5"):
             os.rename(dirpath+fname, dirpath+'ds2_'+fname)
@@ -71,11 +71,11 @@ def rename_files():
 def common_npz():
     ''' Create a common npz file for all 4 measurements, kind of like RGB '''
 
-    sst_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/sst_train.npz'
-    ssl_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/ssl_train.npz'
-    uvel_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/uvel_train.npz'
-    vvel_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/vvel_train.npz'
-    phase_path = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/phase_train.npz'
+    sst_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/sst_train.npz'
+    ssl_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/ssl_train.npz'
+    uvel_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/uvel_train.npz'
+    vvel_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/vvel_train.npz'
+    phase_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/phase_train.npz'
 
     X = []
 
@@ -104,14 +104,14 @@ def common_npz():
                 for c in range(nChannels):
                     train[i][lo][la].append(X[c][i][lo][la])
     
-    savedir = 'C:/Master/TTK-4900-Master/data/training_data/2016/new/'
+    savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/'
 
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     np.savez_compressed( f'{savedir}/full_train.npz', train)
 
 if __name__ == '__main__':
-    #h5_to_npz()
+    h5_to_npz()
     #count_labels()
     #rename_files()
-    common_npz()
+    #common_npz()
