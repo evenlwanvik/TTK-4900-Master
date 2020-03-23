@@ -1,6 +1,6 @@
 from tools.machine_learning import preprocess_data, sliding_window
 from tools import dim
-from tools.load_nc import load_netcdf4
+from tools.load_nc import load_nc_data
 import xarray as xr
 
 from sklearn.preprocessing import MinMaxScaler
@@ -284,20 +284,20 @@ probLim = 0.97
 
 def train_model():
 
-    winW2, winH2 = winW*2, winH*2
+    winW2, winH2 = winW*4, winH*4
 
     # Open the numpy training data array and append for each channel we want to use
     X = []
     #with np.load(sst_path, allow_pickle=True) as data:
     #    X.append(data['arr_0'][:,0])    
     with np.load(ssl_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0])
+        X.append(data['arr_0'][:1574,0])
         Y = data['arr_0'][:,1]
     with np.load(uvel_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0])
+        X.append(data['arr_0'][:1574,0])
     with np.load(vvel_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0])
-        Y = data['arr_0'][:,1]
+        X.append(data['arr_0'][:1574,0])
+    #    Y = data['arr_0'][:,1]
     #with np.load(phase_path, allow_pickle=True) as data:
     #    X.append(data['arr_0'][:,0]) 
     #    Y = data['arr_0'][:,1]       
@@ -328,7 +328,7 @@ def train_model():
     joblib.dump(scaler, scaler_fpath) # Save the Scaler model
 
     # Train/test split
-    X_train, X_test, Y_train, Y_test = train_test_split(X_cnn, Y, test_size=0.33)
+    X_train, X_test, Y_train, Y_test = train_test_split(X_cnn, Y[:nTeddies], test_size=0.33)
     nTrain = len(X_train)
 
 
@@ -378,7 +378,7 @@ def train_model():
     print ("X_test shape: " + str(X_test.shape))
     print ("Y_test shape: " + str(Y_test.shape))
     print('\n\n')
-    history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 10, batch_size = 1)
+    history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 15, batch_size = 1)
 
     preds = model.evaluate(X_test, Y_test)
     print ("Loss = " + str(preds[0]))
@@ -396,24 +396,25 @@ def train_model():
 
     plot_history(history)
 
+from cmems_download import download
 
 def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_060.nc'):
     
+    # Download grid to be tested
+    latitude = [45, 50]
+    longitude = [-24, -12]
+    download.download_nc(longitude, latitude)
+
     # Test cv2 image and sliding window movement on smaller grid
     nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/smaller/phys_noland_2016_001.nc'
     
     print("\n\n")
 
-    (ds,t,lon,lat,depth,uvel_full,vvel_full,sst_full,ssl_full) =  load_netcdf4(nc_fpath)
+    lon,lat,sst,ssl,uvel,vvel =  load_nc_data(nc_fpath)
 
     day = 0
 
-
-
-    # numpy axis is (col, row) we want (row, col) as in (lon, lat)
-    ssl = np.array(ssl_full[day].T, dtype='float32')
-    uvel = np.array(uvel_full[day,0].T, dtype='float32') 
-    vvel = np.array(vvel_full[day,0].T, dtype='float32') 
+    # Create phase if used
     with np.errstate(all='ignore'): # Disable zero div warning
         phase = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel, uvel) ) + 180
 
@@ -447,7 +448,7 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
     winScaleW, winScaleH = imW/nLon, imH/nLat # Scalar coeff from dataset to cv2 image
 
     to_be_scaled = [0,1,2] # Only use uvel and vvel
-    data = [ssl, uvel, vvel, phase]
+    data = [ssl, uvel, vvel]
 
     scaler = joblib.load(scaler_fpath) # Import the std sklearn scaler model
 
@@ -457,12 +458,22 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
         if lonIdxs[-1] >= nLon or latIdxs[-1] >= nLat:
             continue
 
-        winW2, winH2 = winW*2, winH*2
+        winW2, winH2 = winW*4, winH*4
         winSize = (winH2, winW2)
 
-        data_scaled_window, data_window = [], []
+        masked = False # Continue if window hits land
+
+        data_window, data_scaled_window = [], []
+
         for c in range(len(data)):
-            data_window.append(np.array([[data[c][i,j] for j in latIdxs] for i in lonIdxs]))
+            # Creates window, checks if masked, if not returns the window
+            a = check_window(data[c], lonIdxs, latIdxs)
+            if a is None:
+                masked = True
+                break
+
+            # append window if not masked
+            data_window.append( a )
 
             # Resize the original window to CNN input dim
             data_window[c] = cv2.resize(data_window[c], dsize=(winSize), interpolation=cv2.INTER_CUBIC)
@@ -477,6 +488,8 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
                 # Reshape scaled data to original shape
                 data_scaled_window[i] = data_scaled_window[i].reshape(winW2, winH2)
         
+        # continue to next window if mask (land) is present
+        if masked: continue
 
         x_, y_ = int(winScaleW*(x)), int(winScaleH*(nLat-y)) # y starts in top left for cv2, want it to be bottom left
         winW_, winH_= int(winScaleW*winW), int(winScaleH*winH)
@@ -504,17 +517,31 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
             ax2.clear()
             ax2.contourf( data_window[0].T, cmap='rainbow', levels=20)
             # plot vectors on top of ssl
-            #n=-1
-            #color_array = np.sqrt(((data_window[1]-n)/2)**2 + ((data_window[2]-n)/2)**2)
-            #ax2.quiver(data_window[1].T, data_window[2].T, color_array, scale=3)#, headwidth=0.5, width=0.01), #units="xy", ) # Plot vector field      
+            n=-1
+            color_array = np.sqrt(((data_window[1]-n)/2)**2 + ((data_window[2]-n)/2)**2)
+            ax2.quiver(data_window[1].T, data_window[2].T, color_array, scale=3)#, headwidth=0.5, width=0.01), #units="xy", ) # Plot vector field      
             fig2.canvas.draw()
 
         cv2.imshow("Window", im)
         cv2.waitKey(1)
-        time.sleep(0.05) 
-
+        #time.sleep(0.05) 
+    cv2.waitKey(2)
     cv2.imwrite('D:/master/TTK-4900-Master/images/predicted_grid.png', im)
     
+
+def check_window(data, lonIdxs, latIdxs):
+    """ Check if window is masked, if not return array """
+    a = np.zeros((len(lonIdxs), len(latIdxs)))
+    for i, lo in enumerate(lonIdxs):
+        for j, la in enumerate(latIdxs):
+            x = data[lo,la]
+            if np.ma.is_masked(x):
+                return None
+            a[i,j] = x
+    return a
+
+
+
 
 def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
     ax[0].contourf(lon, lat, ssl.T, cmap='rainbow', levels=30)
@@ -533,6 +560,6 @@ def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
 
 
 if __name__ == '__main__':
-    #train_model() 
+   # train_model() 
     #analyse_h5()  
     test_model()
