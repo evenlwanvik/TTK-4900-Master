@@ -88,14 +88,14 @@ def prep_rcnn():
     for i, d in enumerate(data):
 
         # upscale image, we will be cropping for training
-        width, height= len(d[:,:,0])*4, len(d[:,:,0][0])*4
+        width, height= len(d[:,:,0]), len(d[:,:,0][0])
 
 
         ################# Upscalem encode and save data as image #################
 
-        ssl = cv2.resize(d[:,:,0], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
-        uvel = cv2.resize(d[:,:,1], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
-        vvel = cv2.resize(d[:,:,2], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+        ssl = d[:,:,0] #cv2.resize(d[:,:,0], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+        uvel = d[:,:,1] #cv2.resize(d[:,:,1], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+        vvel = d[:,:,2] #cv2.resize(d[:,:,2], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
 
         from sklearn.preprocessing import MinMaxScaler
         scaler = [MinMaxScaler(feature_range=(0,255)) for _ in range(3)]
@@ -120,7 +120,7 @@ def prep_rcnn():
         
 
         for j, (box, label) in enumerate( zip(np.array(box_idxs[i]), np.array(labels[i])) ):
-            e1, e2 = box.dot(4) # edge coordinates, also needs to be rescaled
+            e1, e2 = box#.dot(4) # edge coordinates, also needs to be rescaled
             size = np.subtract(e2,e1) # [width, height]
 
             # Create a row for each bounding box for a given image
@@ -202,9 +202,57 @@ def common_npz():
     np.savez_compressed( f'{savedir}/full_train.npz', train)
 
 
+def test():
+    import xmlplain
+
+    # Read the YAML file
+    with open("D:/master/TTK-4900-Master/my_mrcnn/xml/template.yml") as inf:
+        root = xmlplain.obj_from_yaml(inf)
+
+    # Output back XML
+    with open("D:/master/TTK-4900-Master/my_mrcnn/xml/test.xml", "w") as outf:
+        xmlplain.xml_from_obj(root, outf, pretty=True)
+
+"""
+def mrcnn_xml():
+    ''' Create XML files for mask-rcnn (annotation and bounding box) '''
+
+    from lxml import etree as ET
+    import json as j
+    import xml.etree.cElementTree as e
+
+    def load_xml(name):
+        ''' Takes an xml file as input. Outputs ElementTree and element'''
+        # specify parser setting
+        parser = ET.XMLParser(strip_cdata=False)
+        # pass parser to do the actual parsing
+        tree = ET.parse(name, parser)
+
+        root = tree.getroot()
+        return tree, root
+
+    npzPath = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
+
+    with np.load(npzPath + 'labels.npz', allow_pickle=True) as h5f:
+        labels = h5f['arr_0']
+    with np.load(npzPath + 'box_idxs.npz', allow_pickle=True) as h5f:
+        box_idxs = h5f['arr_0']
+
+    for i in range(len(box_idxs)):
+
+        tree, root = load_xml('D:/master/TTK-4900-Master/my_mrcnn/xml/template.xml')
+        #print(ET.tostring(ET.SubElement(root, 'annotation')))
+        print(ET.tostring(root))
+        #print(root.tag)
+        exit()
+        #for j, (box, label) in enumerate( zip(np.array(box_idxs[i]), np.array(labels[i])) ):
+"""        
+
 if __name__ == '__main__':
     #h5_to_npz()
     prep_rcnn()
+    #mrcnn_xml()
+    #test()
     #h5_to_npz_rcnn()
     #count_labels()
     #rename_files()

@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 
 import keras.backend as K
 K.set_image_data_format('channels_last')
-K.set_learning_phase(1)
+#K.set_learning_phase(1)
 
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
@@ -355,13 +355,15 @@ def train_model():
     exit()
     '''
 
+
+    
     model = mnist(input_shape=(winW2, winH2, nChannels), classes=3)
     #model = ResNet50(input_shape = (winW2, winH2, nChannels), classes = 3)
     #model = my_model(input_shape = (winW2, winH2, nChannels), classes = 3)
 
     model.compile(optimizer='adagrad', loss='categorical_crossentropy', metrics=['accuracy'])
     #model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
-
+    
     # Create 3 columns for each class for multilabel classification
     Y_train = convert_to_one_hot(Y_train)
     Y_test  = convert_to_one_hot(Y_test)
@@ -369,6 +371,7 @@ def train_model():
     #    if Y_train[i] == -1: Y_train[i]=2
     #for i in range(len(Y_test)):
     #    if Y_test[i] == -1: Y_test[i]=2
+    
 
     print('\n\n')
     print ("number of training examples = " + str(X_train.shape[0]))
@@ -378,6 +381,7 @@ def train_model():
     print ("X_test shape: " + str(X_test.shape))
     print ("Y_test shape: " + str(Y_test.shape))
     print('\n\n')
+
     history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 15, batch_size = 1)
 
     preds = model.evaluate(X_test, Y_test)
@@ -560,6 +564,6 @@ def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
 
 
 if __name__ == '__main__':
-   # train_model() 
+    train_model() 
     #analyse_h5()  
-    test_model()
+    #test_model()
