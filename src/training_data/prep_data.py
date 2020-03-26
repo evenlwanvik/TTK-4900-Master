@@ -3,9 +3,9 @@ import os
 import zipfile
 import scipy.io
 import h5py
+import cv2
 
-
-def h5_to_npz():
+def h5_to_npz_normal():
     dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
     zippath = dirpath + 'training_data.zip'
     savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/'
@@ -42,6 +42,97 @@ def h5_to_npz():
     np.savez_compressed( f'{savedir}/uvel_train.npz', uvel)
     np.savez_compressed( f'{savedir}/vvel_train.npz', vvel)
     np.savez_compressed( f'{savedir}/phase_train.npz', phase)
+
+def h5_to_npz_rcnn():
+    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/rcnn/'
+    zippath = dirpath + 'training_data.zip'
+    savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
+
+    data = []
+    box_idxs = []
+    labels = []
+
+    with zipfile.ZipFile(zippath) as z:
+        for fname in z.namelist():
+            if not os.path.isdir(fname) and fname.endswith('.h5'):
+                # read the file
+                with z.open(fname, 'r') as zf:
+                    with h5py.File(zf, 'r') as hf:
+                        data.append(hf['/data'][()].T)
+                        box_idxs.append(hf['/box_idxs'][()])
+                        labels.append(hf['/labels'][()].flatten())
+
+    if not os.path.exists(savedir):
+        os.makedirs(savedir)
+    np.savez_compressed( f'{savedir}/data.npz', data)
+    np.savez_compressed( f'{savedir}/box_idxs.npz', box_idxs)
+    np.savez_compressed( f'{savedir}/labels.npz', labels)
+
+
+def prep_rcnn():
+
+    from PIL import Image
+    import pandas as pd
+
+    npzPath = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
+
+    with np.load(npzPath + 'data.npz', allow_pickle=True) as h5f:
+        data = h5f['arr_0']
+    with np.load(npzPath + 'labels.npz', allow_pickle=True) as h5f:
+        labels = h5f['arr_0']
+    with np.load(npzPath + 'box_idxs.npz', allow_pickle=True) as h5f:
+        box_idxs = h5f['arr_0']
+
+    input_str_arr = []
+
+    for i, d in enumerate(data):
+
+        # upscale image, we will be cropping for training
+        width, height= len(d[:,:,0])*4, len(d[:,:,0][0])*4
+
+
+        ################# Upscalem encode and save data as image #################
+
+        ssl = cv2.resize(d[:,:,0], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+        uvel = cv2.resize(d[:,:,1], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+        vvel = cv2.resize(d[:,:,2], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+
+        from sklearn.preprocessing import MinMaxScaler
+        scaler = [MinMaxScaler(feature_range=(0,255)) for _ in range(3)]
+        ssl_scaled = scaler[0].fit_transform(ssl)
+        uvel_scaled = scaler[1].fit_transform(uvel)
+        vvel_scaled = scaler[2].fit_transform(vvel)
+
+        data_ensemble = [ssl_scaled, uvel_scaled, vvel_scaled]
+        nChannels = len(data_ensemble)
+        img = np.zeros((height, width, nChannels))
+        for w in range(width):
+            for h in range(height):
+                for c in range(nChannels):
+                    img[h,w,c] = data_ensemble[c][w,h]
+     
+        im = Image.fromarray(img.astype('uint8'), mode='RGB')
+        #new_im = im.resize((1000,600),Image.BICUBIC)
+        im.save(f'D:/master/TTK-4900-Master/keras-frcnn/train_images/{i}.png')
+
+        #### add xmin, ymin, xmax, ymax and class as per the format required ####
+
+        
+
+        for j, (box, label) in enumerate( zip(np.array(box_idxs[i]), np.array(labels[i])) ):
+            e1, e2 = box.dot(4) # edge coordinates, also needs to be rescaled
+            size = np.subtract(e2,e1) # [width, height]
+
+            # Create a row for each bounding box for a given image
+            if label == 1:
+                input_str_arr.append(f'train_images/{i}.png'+','+str(int(e1[0]))+','+str(int(e1[1]))+','+str(int(e2[0]))+','+str(int(e2[1]))+','+'anti-cyclone')
+            else: 
+                input_str_arr.append(f'train_images/{i}.png'+','+str(int(e1[0]))+','+str(int(e1[1]))+','+str(int(e2[0]))+','+str(int(e2[1]))+','+'cyclone')
+    
+    X = pd.DataFrame()
+    X['format'] = input_str_arr
+    X.to_csv('D:/master/TTK-4900-Master/keras-frcnn/annotate.txt', header=None, index=None, sep=' ')
+
 
 def count_labels():
     dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
@@ -98,7 +189,7 @@ def common_npz():
     for i in range(nTeddies): # Eddies
         train.append([])
         for lo in range(len(X[0][i])): 
-            train[i].append([])
+            +[i].append([])
             for la in range(len(X[0][i][0])): 
                 train[i][lo].append([])
                 for c in range(nChannels):
@@ -110,8 +201,11 @@ def common_npz():
         os.makedirs(savedir)
     np.savez_compressed( f'{savedir}/full_train.npz', train)
 
+
 if __name__ == '__main__':
-    h5_to_npz()
+    #h5_to_npz()
+    prep_rcnn()
+    #h5_to_npz_rcnn()
     #count_labels()
     #rename_files()
     #common_npz()

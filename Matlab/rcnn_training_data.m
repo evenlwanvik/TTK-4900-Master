@@ -17,9 +17,11 @@ setappdata(f, 'rectangles', []); % Rectangle corner coordinates
 setappdata(f, 'datasetID', config('datasetID')); % Id of current netcdf dataset, the config file registers where we left off
 setappdata(f, 'windowID', config('windowID')); % Id of current window of the dataset
 setappdata(f, 'rectPlotObj', []);  % The plotted rectangles 
-setappdata(f, 'windowSize', [90,32]); % lon / lat size of sample
+setappdata(f, 'windowSize', [144,51]); % lon / lat size of sample
 setappdata(f, 'box_idxs', [])
 setappdata(f, 'labels', [])
+setappdata(f, 'sampleID', config('sampleID')); % Id of current sample
+setappdata(f, 'datasetID', config('datasetID')); % Id of current netcdf dataset, the config file registers where we left off
 % Directory to all files
 dirPath = 'D:/Master/data/cmems_data/global_10km/2016/full/'; %gets directory
 setappdata(f, 'dirPath', dirPath);
@@ -91,11 +93,11 @@ function chooseDataset(f, next_or_prev) % load
     uvel = ncread(fPath,'uo',[1,1,1,1],[nx,ny,1,1]);
     vvel = ncread(fPath,'vo',[1,1,1,1],[nx,ny,1,1]);
     ax = getappdata(f, 'axPrimary');
-    contourf(ax(4),lon,lat,ssl',100); 
-    hold(ax(4),'on')
-    x = quiver(ax(4),lon,lat,uvel',vvel','color',[0 0 0]); 
+    contourf(ax(3),lon,lat,ssl',100); 
+    hold(ax(3),'on')
+    x = quiver(ax(3),lon,lat,uvel',vvel','color',[0 0 0]); 
     set(x,'AutoScale','on', 'AutoScaleFactor', 2)
-    hold(ax(4),'off')
+    hold(ax(3),'off')
     
     h5Path = getappdata(f, 'storePath'); zipPath = h5Path + "training_data.zip";
     % Check if zipped file containing training data exists
@@ -124,7 +126,6 @@ function plotDatasetWindow(f, next_or_prev) % load
         case 'No'
             fprintf(1, "Don't save the window as sample\n")
     end
-
 
     if strcmp(next_or_prev, 'Prev')
         id = getappdata(f, 'windowID') - 1; 
@@ -162,8 +163,10 @@ function plotDatasetWindow(f, next_or_prev) % load
     vvel = ncread(fPath,'vo',[lonStart,latStart,1,1],[windowSize(1),windowSize(2),1,1]);
     
     % Put data into channels
-    data_ensemble = cat(3, ssl, uvel, vvel)
+    data_ensemble = cat(3, ssl, uvel, vvel);
     setappdata(f, 'data_ensemble', data_ensemble) 
+    setappdata(f, 'box_idxs', [])
+    setappdata(f, 'labels', [])
     
     setappdata(f, 'uvel', uvel) % need velocities for seondary axis
     setappdata(f, 'vvel', vvel)
@@ -176,7 +179,7 @@ function plotDatasetWindow(f, next_or_prev) % load
     set(x,'AutoScale','on', 'AutoScaleFactor', 2)
     hold(ax(1),'off')
     % Plot the velocity vector window (last tab)
-    ch(2) = quiver(ax(3),lon,lat,uvel',vvel','color',[0 0 0],'linewidth',5);  
+    ch(2) = quiver(ax(2),lon,lat,uvel',vvel','color',[0 0 0],'linewidth',5);  
     set(ch(2),'AutoScale','on', 'AutoScaleFactor', 2)
     
     % Set the channel for the primary axes
@@ -200,6 +203,8 @@ function createRect(f)
     yIdx = find(ch(1).YData >= rect(2) & ch(1).YData <= rect(4));
     lon = ch(1).XData(xIdx); lat = ch(1).YData(yIdx);
     
+    box_idxs = [[xIdx(1), xIdx(end)];[yIdx(1), yIdx(end)]]
+    
     ssl = ch(1).ZData(yIdx,xIdx);
         
     uvel = getappdata(f, 'uvel'); uvel = uvel(xIdx, yIdx);
@@ -220,9 +225,6 @@ function createRect(f)
     latestRect(2) = rectangle(axPrim(2),'Position',[rect(1),rect(2),range([rect(1),rect(3)]),range([rect(2),rect(4)])], 'lineWidth', 3);
     latestRect(3) = rectangle(axPrim(3),'Position',[rect(1),rect(2),range([rect(1),rect(3)]),range([rect(2),rect(4)])], 'lineWidth', 3);
     
-    % Save coordinates and bottom left and top right indexes of box
-    setappdata(f, 'box_idxs', [[xIdx(0), xIdx(end)]; [yIdx(0), yIdx(end)]])
-    
     % Spawn popup upon creation of rectangle
     switch popup()
         case 'No'
@@ -237,8 +239,8 @@ function createRect(f)
             appendLatest(f, 'rectPlotObj', latestRect) % Tranpose for (lon,lat)
             appendLatest(f, 'rectangles', rect)
             % Append the rectangle indexes and set label
-            setappdata(f, 'box_idxs', cat(3, getappdata(f, 'box_idxs'), [[xIdx(0), xIdx(end)]; [yIdx(0), yIdx(end)]]))
-            setappdata(f, cat(2, getappdata(f, 'labels'), 1))
+            setappdata(f, 'box_idxs', cat(3, getappdata(f, 'box_idxs'), box_idxs))
+            setappdata(f, 'labels', cat(2, getappdata(f, 'labels'), -1))
         case 'Anti-Cyclone'
             latestRect(1).EdgeColor = [0 0.3 0.8510]; % Blue color for cyclone
             latestRect(2).EdgeColor = [0 0.3 0.8510]; % Blue color for cyclone
@@ -247,7 +249,7 @@ function createRect(f)
             % Append latest plotted rectangle object
             appendLatest(f, 'rectPlotObj', latestRect)
             appendLatest(f, 'rectangles', rect)
-            setappdata(f, 'box_idxs', cat(3, getappdata(f, 'box_idxs'), [[xIdx(0), xIdx(end)]; [yIdx(0), yIdx(end)]]))
+            setappdata(f, 'box_idxs', cat(3, getappdata(f, 'box_idxs'), box_idxs))
             setappdata(f, 'labels', cat(2, getappdata(f, 'labels'), 1))
         case 'Delete'
             disp('Discarding the last sample')
@@ -256,6 +258,7 @@ function createRect(f)
 end
 
 function saveSample(f)
+    id = getappdata(f, 'sampleID'); dsId = getappdata(f, 'datasetID');
     setappdata(f, 'sampleID', id + 1);
     fName = "/ds" + string(dsId) + "_" + "sample" + "_" + string(id) + ".h5";
     savePath = getappdata(f, 'storePath') + fName;
@@ -273,9 +276,9 @@ function saveSample(f)
     h5create(savePath,'/box_idxs',size(box_idxs));
     h5write(savePath,'/box_idxs',box_idxs);
     %Labels
-    box_idxs = getappdata(f, 'labels')
-    h5create(savePath,'/labels',size(box_idxs));
-    h5write(savePath,'/labels',box_idxs);
+    labels = getappdata(f, 'labels')
+    h5create(savePath,'/labels',size(labels));
+    h5write(savePath,'/labels',labels);
 end
 
 % --- Discard the latest rectangle drawn in figure

@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
+from matplotlib.patches import Rectangle
 from tools import gui
 import cv2
 
@@ -65,5 +66,71 @@ def plot_training_data():
         plt.close(fig)
 
 
+def plot_training_data_rcnn():
+
+    from PIL import Image
+
+    npzPath = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
+
+    with np.load(npzPath + 'data.npz', allow_pickle=True) as h5f:
+        data = h5f['arr_0']
+    with np.load(npzPath + 'labels.npz', allow_pickle=True) as h5f:
+        labels = h5f['arr_0']
+    with np.load(npzPath + 'box_idxs.npz', allow_pickle=True) as h5f:
+        box_idxs = h5f['arr_0']
+
+    for i, d in enumerate(data):
+
+        width, height= len(d[:,:,0])*4, len(d[:,:,0][0])*4
+
+        ssl = cv2.resize(d[:,:,0], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+        uvel = cv2.resize(d[:,:,1], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+        vvel = cv2.resize(d[:,:,2], dsize=(height, width), interpolation=cv2.INTER_CUBIC) 
+
+        from sklearn.preprocessing import MinMaxScaler
+        scaler = [MinMaxScaler(feature_range=(0,255)) for _ in range(3)]
+        ssl_scaled = scaler[0].fit_transform(ssl)
+        uvel_scaled = scaler[1].fit_transform(uvel)
+        vvel_scaled = scaler[2].fit_transform(vvel)
+
+        
+        '''
+        X = [ssl_scaled, uvel_scaled, vvel_scaled]
+        nChannels = len(X)
+        img = np.zeros((height, width, nChannels))
+        for w in range(width):
+            for h in range(height):
+                for c in range(nChannels):
+                    img[h,w,c] = X[c][w,h]
+        
+        fig, ax = plt.subplots()
+        plt.contourf( img[:,:,0], cmap='rainbow', levels=100)
+        n=-1
+        color_array = np.sqrt(((img[:,:,1]-n)/2)**2 + ((img[:,:,2]-n)/2)**2)
+        ax.quiver(img[:,:,1], img[:,:,2], color_array)#, scale=3)#, headwidth=0.5, width=0.01), #units="xy", ) # Plot vector field      
+        '''
+
+        img = np.asarray(Image.open(f'D:/master/TTK-4900-Master/keras-frcnn/train_images/{i}.png'))
+        #ax.imshow(im/255, aspect="auto")
+        print(img[-1,-1])
+        #im[-1,]
+        #plt.gca().invert_yaxis()
+        #plt.contourf( im[:,:,0], cmap='rainbow', levels=100)
+        
+        '''
+        for j, (box, label) in enumerate( zip(np.array(box_idxs[i]), np.array(labels[i])) ):
+            e1, e2 = box.dot(4) # edge coordinates 
+            size = np.subtract(e2,e1) # [width, height]
+
+            if label == 1:
+                rect = Rectangle(e1,size[0],size[1], edgecolor='b', facecolor="none")
+            else:
+                rect = Rectangle(e1,size[0],size[1], edgecolor='r', facecolor="none")
+            ax.add_patch(rect)
+
+        plt.show()
+        '''
+
 if __name__ == '__main__':
-    plot_training_data()
+    #plot_training_data()
+    plot_training_data_rcnn()
