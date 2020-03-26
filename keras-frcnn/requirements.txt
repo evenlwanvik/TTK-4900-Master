@@ -1,5 +1,5 @@
 # We use python 3.6
-tensorflow==1.8.0
+tensorflow==1.15.2
 h5py
 Keras==2.0.3
 numpy
