@@ -202,57 +202,66 @@ def common_npz():
     np.savez_compressed( f'{savedir}/full_train.npz', train)
 
 
-def test():
+def yml2xml_annotate():
+
     import xmlplain
+    import copy
+
+    npzPath = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
+
 
     # Read the YAML file
     with open("D:/master/TTK-4900-Master/my_mrcnn/xml/template.yml") as inf:
         root = xmlplain.obj_from_yaml(inf)
 
-    # Output back XML
-    with open("D:/master/TTK-4900-Master/my_mrcnn/xml/test.xml", "w") as outf:
-        xmlplain.xml_from_obj(root, outf, pretty=True)
-
-"""
-def mrcnn_xml():
-    ''' Create XML files for mask-rcnn (annotation and bounding box) '''
-
-    from lxml import etree as ET
-    import json as j
-    import xml.etree.cElementTree as e
-
-    def load_xml(name):
-        ''' Takes an xml file as input. Outputs ElementTree and element'''
-        # specify parser setting
-        parser = ET.XMLParser(strip_cdata=False)
-        # pass parser to do the actual parsing
-        tree = ET.parse(name, parser)
-
-        root = tree.getroot()
-        return tree, root
-
-    npzPath = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
-
+    with np.load(npzPath + 'data.npz', allow_pickle=True) as h5f:
+        nSamples = len(h5f['arr_0'])
+        width, height, depth = h5f['arr_0'][0].shape
     with np.load(npzPath + 'labels.npz', allow_pickle=True) as h5f:
         labels = h5f['arr_0']
     with np.load(npzPath + 'box_idxs.npz', allow_pickle=True) as h5f:
         box_idxs = h5f['arr_0']
 
-    for i in range(len(box_idxs)):
+    for i in range(nSamples):
 
-        tree, root = load_xml('D:/master/TTK-4900-Master/my_mrcnn/xml/template.xml')
-        #print(ET.tostring(ET.SubElement(root, 'annotation')))
-        print(ET.tostring(root))
-        #print(root.tag)
-        exit()
-        #for j, (box, label) in enumerate( zip(np.array(box_idxs[i]), np.array(labels[i])) ):
-"""        
+        root['annotation']['filename'] = f'{i}.png'
+        root['annotation']['size']['width'] = width
+        root['annotation']['size']['height'] = height
+        root['annotation']['size']['depth'] = depth
+
+        for j, (box, label) in enumerate( zip(np.array(box_idxs[i]), np.array(labels[i])) ):
+            e1, e2 = box#.dot(4) # edge coordinates, also needs to be rescaled
+
+            if j is not 0: 
+                obj_copy = copy.deepcopy(root['annotation']['object'])
+                root['annotation'].append(obj_copy)
+
+            if label == 1: root['annotation']['object']['name'] = 'anti-cyclone'
+            else: root['annotation']['object']['name'] = 'cyclone'
+            root['annotation']['object']['bndbox']['xmin'] = e1[0]
+            root['annotation']['object']['bndbox']['ymin'] = e1[1]
+            root['annotation']['object']['bndbox']['xmax'] = e2[0]
+            root['annotation']['object']['bndbox']['ymax'] = e2[1]
+
+        out_path = f'D:/master/TTK-4900-Master/my_mrcnn/xml/{i}.xml'
+        # Output back XML
+        with open(out_path, 'w') as outf:
+            xmlplain.xml_from_obj(root, outf, pretty=True)
+
+def xml_annotate():
+    import xml.dom.minidom as xdm
+
+    doc = xdm.parse('D:/master/TTK-4900-Master/my_mrcnn/xml/template.xml')
+
+    print(doc.nodeName)
+    
+    print(len(doc.getElementsByTagName("annotation")))
 
 if __name__ == '__main__':
     #h5_to_npz()
-    prep_rcnn()
-    #mrcnn_xml()
-    #test()
+    #prep_rcnn()
+    #yml2xml_annotate()
+    xml_annotate()
     #h5_to_npz_rcnn()
     #count_labels()
     #rename_files()

@@ -311,15 +311,14 @@ def train_model():
             #X[c][i] = X[c][i]/90
             X[c][i] = cv2.resize(X[c][i], dsize=(winH2, winW2), interpolation=cv2.INTER_CUBIC) 
 
-    # Reshape data for CNN (sample, width, height, channel)
-    X_cnn = np.zeros((nTeddies,winW2,winH2,nChannels))
+    # Reshape data (sample, width, height, channel) 
+    X_svm = np.zeros((nTeddies,winW2,winH2,nChannels))
     for i in range(nTeddies): # Eddies
         for lo in range(winW2): # Row
             for la in range(winH2): # Column
                 for c in range(nChannels): # Channels
-                    X_cnn[i,lo,la,c] = X[c][i][lo][la]
-
-    
+                    X_svm[i,lo,la,c] = X[c][i][lo][la]
+        
     # Create and set the scaler for each channel
     X_cnn = X_cnn.reshape(nTeddies, -1, nChannels)
     for c in range(nChannels):
@@ -327,8 +326,10 @@ def train_model():
     X_cnn = X_cnn.reshape(nTeddies, winW2, winH2, nChannels)
     joblib.dump(scaler, scaler_fpath) # Save the Scaler model
 
+
+
     # Train/test split
-    X_train, X_test, Y_train, Y_test = train_test_split(X_cnn, Y[:nTeddies], test_size=0.33)
+    X_train, X_test, Y_train, Y_test = train_test_split(X_svm, Y[:nTeddies], test_size=0.33)
     nTrain = len(X_train)
 
 
@@ -405,8 +406,10 @@ from cmems_download import download
 def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_060.nc'):
     
     # Download grid to be tested
-    latitude = [45, 50]
-    longitude = [-24, -12]
+    latitude = [45.9, 49.1]
+    longitude = [-23.2, -16.5]
+    #latitude = [45, 50]
+    #longitude = [-24, -12]
     download.download_nc(longitude, latitude)
 
     # Test cv2 image and sliding window movement on smaller grid
@@ -427,7 +430,8 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
     #ssl_clf   = keras.models.load_model(D:/master/models/2016/cnn_{}class_ssl.h5'.format(cnntype))
 
     nLon, nLat = ssl.shape 
-    wSize, hSize = 4, 3 
+    wSize = (int(9), int(5))
+    wStep, hStep = 4, 2 
 
     print("\n\nperforming sliding window on satellite data \n\n")
 
@@ -439,9 +443,10 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
 
     # Draw on the larger canvas before sliding
     ax1.contourf(lon, lat, ssl.T, cmap='rainbow', levels=60)
+    ax1.contour(lon, lat, ssl.T,levels=60)#,colors='k')#,linewidth=0.001)
     n=-1
     color_array = np.sqrt(((uvel-n)/2)**2 + ((vvel-n)/2)**2)
-    ax1.quiver(lon, lat, uvel.T, vvel.T, color_array)#, scale=30)#, headwidth=0.5, width=0.01), #units="xy", ) # Plot vector field      
+    ax1.quiver(lon, lat, uvel.T, vvel.T, color_array)#, scale=12) #units="xy", ) # Plot vector field      
     fig1.subplots_adjust(0,0,1,1)
     fig1.canvas.draw()
 
@@ -457,7 +462,7 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
     scaler = joblib.load(scaler_fpath) # Import the std sklearn scaler model
 
     # loop over the sliding window of indeces
-    for rectIdx, (x, y, (lonIdxs, latIdxs)) in enumerate(sliding_window(ssl, wSize, hSize, windowSize=(winW, winH))):
+    for rectIdx, (x, y, (lonIdxs, latIdxs)) in enumerate(sliding_window(ssl, wStep, hStep, windowSize=(wSize))):
 
         if lonIdxs[-1] >= nLon or latIdxs[-1] >= nLat:
             continue
@@ -564,6 +569,6 @@ def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
 
 
 if __name__ == '__main__':
-    train_model() 
+    #train_model() 
     #analyse_h5()  
-    #test_model()
+    test_model()
