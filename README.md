@@ -6,7 +6,7 @@ TTK4900 - Engineering Cybernetics, Master's Thesis
 ### Predictions
 
 ![cnn_predicitons](/images/predicted_grid.png)
-Format: ![](url)
+Format: ![test](url)
 
 ## Semi-automated training data generator
 
