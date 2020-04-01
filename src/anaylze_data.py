@@ -29,7 +29,7 @@ def plot_training_data():
     nTeddies = 10 # number of training eddies to analyze
     for i in range(nTeddies):
         data = []
-        for j, fpath in enumerate((dirpath+'sst_train.npz', dirpath+'ssl_train.npz', dirpath+'uvel_train.npz', dirpath                               +'vvel_train.npz', dirpath+'phase_train.npz')):
+        for j, fpath in enumerate((dirpath+'sst_train.npz', dirpath+'ssl_train.npz', dirpath+'uvel_train.npz', dirpath+'vvel_train.npz', dirpath+'phase_train.npz')):
             with np.load(fpath, allow_pickle=True) as h5f:
                 data.append(h5f['arr_0'][i,0])
                 if j==0:
@@ -132,5 +132,5 @@ def plot_training_data_rcnn():
         '''
 
 if __name__ == '__main__':
-    #plot_training_data()
+    plot_training_data()
     plot_training_data_rcnn()

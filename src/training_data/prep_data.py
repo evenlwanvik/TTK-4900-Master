@@ -33,6 +33,14 @@ def h5_to_npz_normal():
                         vvel.append([hf['/data/vvel'][()], int(hf['/label'][()])])
                         phase.append([hf['/data/phase'][()], int(hf['/label'][()])])
 
+    #dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/'
+    #with np.load(dirpath + 'ssl_train.npz', allow_pickle=True) as ssl_other:
+    #    ssl = np.concatenate((ssl, ssl_other['arr_0']), axis=0)
+    #with np.load(dirpath + 'uvel_train.npz', allow_pickle=True) as uvel_other:
+    #    uvel = np.concatenate((uvel, uvel_other['arr_0']), axis=0)
+    #with np.load(dirpath + 'vvel_train.npz', allow_pickle=True) as vvel_other:
+    #    vvel = np.concatenate((vvel, vvel_other['arr_0']), axis=0)
+
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     np.savez_compressed( f'{savedir}/lon.npz', lon)
@@ -58,6 +66,8 @@ def h5_to_npz_rcnn():
                 # read the file
                 with z.open(fname, 'r') as zf:
                     with h5py.File(zf, 'r') as hf:
+                        print(fname)
+                        print(hf.keys())
                         data.append(hf['/data'][()].T)
                         box_idxs.append(hf['/box_idxs'][()])
                         labels.append(hf['/labels'][()].flatten())
@@ -111,6 +121,7 @@ def prep_rcnn():
                 for c in range(nChannels):
                     img[h,w,c] = data_ensemble[c][w,h]
      
+        img = cv2.resize(img, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
         im = Image.fromarray(img.astype('uint8'), mode='RGB')
         #new_im = im.resize((1000,600),Image.BICUBIC)
         im.save(f'D:/master/TTK-4900-Master/keras-frcnn/train_images/{i}.png')
@@ -120,7 +131,7 @@ def prep_rcnn():
         
 
         for j, (box, label) in enumerate( zip(np.array(box_idxs[i]), np.array(labels[i])) ):
-            e1, e2 = box#.dot(4) # edge coordinates, also needs to be rescaled
+            e1, e2 = box.dot(5) # edge coordinates, also needs to be rescaled
             size = np.subtract(e2,e1) # [width, height]
 
             # Create a row for each bounding box for a given image
@@ -133,23 +144,35 @@ def prep_rcnn():
     X['format'] = input_str_arr
     X.to_csv('D:/master/TTK-4900-Master/keras-frcnn/annotate.txt', header=None, index=None, sep=' ')
 
+def rcnn_test_image():
+
+    nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/smaller/phys_noland_2016_001.nc'
+    ds = xr.open_dataset(nc_fpath)
+
+    # Mask NaN - indicating land
+    ssl = np.ma.masked_invalid(ds.zos[0].T)
+    uvel = np.ma.masked_invalid(ds.uo[0,0].T)
+    uvel = np.ma.masked_invalid(ds.uv[0,0].T)
+
+
+
+    im = Image.fromarray(img.astype('uint8'), mode='RGB')
+    #new_im = im.resize((1000,600),Image.BICUBIC)
+    im.save(f'D:/master/TTK-4900-Master/keras-frcnn/train_images/{i}.png')
 
 def count_labels():
-    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
-    zippath = dirpath + 'training_data.zip'
+    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/ssl_train.npz'
 
     from collections import Counter
 
-    label = []
-    with zipfile.ZipFile(zippath) as z:
-        for fname in z.namelist():
-            if not os.path.isdir(fname) and fname.endswith('.h5'):
-                # read the file
-                with z.open(fname, 'r') as zf:
-                    with h5py.File(zf, 'r') as hf:
-                        label.append(int(hf['/label'][()]))
+    labels = []
 
-    print(Counter(label))
+    with np.load(dirpath, allow_pickle=True) as h5f:
+        data = h5f['arr_0'][:,1]
+        for label in data:
+            labels.append(label)
+
+    print(Counter(labels))
 
 
 def rename_files():
@@ -202,67 +225,13 @@ def common_npz():
     np.savez_compressed( f'{savedir}/full_train.npz', train)
 
 
-def yml2xml_annotate():
-
-    import xmlplain
-    import copy
-
-    npzPath = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
-
-
-    # Read the YAML file
-    with open("D:/master/TTK-4900-Master/my_mrcnn/xml/template.yml") as inf:
-        root = xmlplain.obj_from_yaml(inf)
-
-    with np.load(npzPath + 'data.npz', allow_pickle=True) as h5f:
-        nSamples = len(h5f['arr_0'])
-        width, height, depth = h5f['arr_0'][0].shape
-    with np.load(npzPath + 'labels.npz', allow_pickle=True) as h5f:
-        labels = h5f['arr_0']
-    with np.load(npzPath + 'box_idxs.npz', allow_pickle=True) as h5f:
-        box_idxs = h5f['arr_0']
-
-    for i in range(nSamples):
-
-        root['annotation']['filename'] = f'{i}.png'
-        root['annotation']['size']['width'] = width
-        root['annotation']['size']['height'] = height
-        root['annotation']['size']['depth'] = depth
-
-        for j, (box, label) in enumerate( zip(np.array(box_idxs[i]), np.array(labels[i])) ):
-            e1, e2 = box#.dot(4) # edge coordinates, also needs to be rescaled
-
-            if j is not 0: 
-                obj_copy = copy.deepcopy(root['annotation']['object'])
-                root['annotation'].append(obj_copy)
-
-            if label == 1: root['annotation']['object']['name'] = 'anti-cyclone'
-            else: root['annotation']['object']['name'] = 'cyclone'
-            root['annotation']['object']['bndbox']['xmin'] = e1[0]
-            root['annotation']['object']['bndbox']['ymin'] = e1[1]
-            root['annotation']['object']['bndbox']['xmax'] = e2[0]
-            root['annotation']['object']['bndbox']['ymax'] = e2[1]
-
-        out_path = f'D:/master/TTK-4900-Master/my_mrcnn/xml/{i}.xml'
-        # Output back XML
-        with open(out_path, 'w') as outf:
-            xmlplain.xml_from_obj(root, outf, pretty=True)
-
-def xml_annotate():
-    import xml.dom.minidom as xdm
-
-    doc = xdm.parse('D:/master/TTK-4900-Master/my_mrcnn/xml/template.xml')
-
-    print(doc.nodeName)
-    
-    print(len(doc.getElementsByTagName("annotation")))
-
 if __name__ == '__main__':
-    #h5_to_npz()
+    h5_to_npz_normal()
     #prep_rcnn()
     #yml2xml_annotate()
-    xml_annotate()
-    #h5_to_npz_rcnn()
+    #xml_annotate()
     #count_labels()
+    #h5_to_npz_rcnn()
+    #prep_rcnn()
     #rename_files()
     #common_npz()

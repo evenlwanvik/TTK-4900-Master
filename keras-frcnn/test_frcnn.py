@@ -219,12 +219,34 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 
 	all_dets = []
 
+	##################### SOME CODE I ADDED  #####################
+	imW, imH, nChan = img.shape
+	img = cv2.resize(img, None, fx=10, fy=10, interpolation=cv2.INTER_CUBIC)
+	bndboxs = []
+	labels = []
+
+	# Create new image with plot
+	#import matplotlib.pyplot as plt
+	#fig, ax = plt.subplots()
+	#ax.contourf( img[:,:,0], cmap='rainbow', levels=100)
+	#n=-1
+	#color_array = np.sqrt(((img[:,:,1]-n)/2)**2 + ((img[:,:,2]-n)/2)**2)
+	#ax.quiver(img[:,:,1], img[:,:,2], color_array)#, scale=3)    
+	#plt.show()
+	#exit()
+	###############################################################	
+
 	for key in bboxes:
 		bbox = np.array(bboxes[key])
 
 		new_boxes, new_probs = roi_helpers.non_max_suppression_fast(bbox, np.array(probs[key]), overlap_thresh=0.5)
 		for jk in range(new_boxes.shape[0]):
-			(x1, y1, x2, y2) = new_boxes[jk,:]
+			(x1, y1, x2, y2) = new_boxes[jk,:].dot(10) # I added .dot(10) for reszing purposes
+
+			##################### SOME CODE I ADDED  #####################
+			bndboxs.append([x1, y1, x2, y2])
+			labels.append('{}: {}'.format(key,int(100*new_probs[jk])))
+			###############################################################	
 
 			(real_x1, real_y1, real_x2, real_y2) = get_real_coordinates(ratio, x1, y1, x2, y2)
 
@@ -240,8 +262,20 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 			cv2.rectangle(img, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
 			cv2.putText(img, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
 
+
+	##################### SOME CODE I ADDED  #####################
+	
+	np.savez_compressed( f'results_imgs/data_{idx}.npz', img)
+	np.savez_compressed( f'results_imgs/bndbox_{idx}.npz', bndboxs)
+	np.savez_compressed( f'results_imgs/labels_{idx}.npz', labels)
+
+
+	###############################################################	
+
+
+
 	print('Elapsed time = {}'.format(time.time() - st))
 	print(all_dets)
 	cv2.imshow('img', img)
 	cv2.waitKey(0)
-	# cv2.imwrite('./results_imgs/{}.png'.format(idx),img)
+	cv2.imwrite('./results_imgs/{}.png'.format(idx),img)

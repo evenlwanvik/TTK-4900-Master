@@ -158,7 +158,7 @@ function plotDatasetWindow(f, next_or_prev) % load
     
     ax = getappdata(f, 'axPrimary');
     % Plot the ssl window  
-    [~, ch(1)] = contourf(ax(1),lon,lat,ssl',100); 
+    [~, ch(1)] = contourf(ax(1),lon,lat,ssl',150); 
     hold(ax(1),'on')
     x = quiver(ax(1),lon,lat,uvel',vvel','color',[0 0 0]); 
     set(x,'AutoScale','on', 'AutoScaleFactor', 2)

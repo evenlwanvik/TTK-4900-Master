@@ -1,5 +1,5 @@
 
-fName = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/rcnn/ds1_sample_0.h5'
+fName = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/rcnn/ds1_sample_15.h5'
 %h5disp(fName, '/box_idxs')
 
 data = h5read(fName, '/data');

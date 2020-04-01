@@ -151,9 +151,6 @@ function plotDatasetWindow(f, next_or_prev) % load
     % window size and current index
     lonStart = floor(0.1^mod(id-1,nWindowLon)) + mod(id-1,nWindowLon) * windowSize(1);
     latStart = floor(0.1^mod(floor((id-1)/nWindowLat),nWindowLat)) + floor((id-1)/nWindowLat) * windowSize(2);
-    
-    fprintf(1, '\nWindow id %d - lonStart: %d with length %d\n', id, lonStart, windowSize(1));
-    fprintf(1, 'Window id %d - latStart: %d with length %d \n\n', id, latStart, windowSize(2));
 
     fPath = getappdata(f, 'fPath');
     lon = ncread(fPath,'longitude', lonStart, windowSize(1));
@@ -161,6 +158,9 @@ function plotDatasetWindow(f, next_or_prev) % load
     ssl = ncread(fPath,'zos',[lonStart,latStart,1],[windowSize(1),windowSize(2),1]);
     uvel = ncread(fPath,'uo',[lonStart,latStart,1,1],[windowSize(1),windowSize(2),1,1]);
     vvel = ncread(fPath,'vo',[lonStart,latStart,1,1],[windowSize(1),windowSize(2),1,1]);
+    
+    fprintf(1, '\nWindow id %d | idx %d:%d | lon %.4f:%.4f\n', id, lonStart, windowSize(1), lon(1), lon(end));
+    fprintf(1, 'Window id %d | idx %d:%d | lon %.4f:%.4f \n\n', id, latStart, windowSize(2), lat(1), lat(end));    
     
     % Put data into channels
     data_ensemble = cat(3, ssl, uvel, vvel);
