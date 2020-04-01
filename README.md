@@ -5,9 +5,15 @@ TTK4900 - Engineering Cybernetics, Master's Thesis
 
 ### Predictions
 
-![cnn_predicitons](/images/predicted_grid.png)
+![CNN on a small grid](images/realtime/svm_pred.gif)
 
-Small sample of what the CNN is able to predict on a small grid (area consisting of about 3 degrees latitude and 8 degrees longitude somewhere between Norway and Greenland).  The sea surface level (ssl) shows the color contour plot, where higher sea levels has an increasing tone of red and lower levels are shown as blue. The velocity vectors are created by the plotting method "quiver", using eastward (zonal) ocean current velocity uvel and northrward (meridional) ocean current velocity vvel. All of these measurements are aggregated as channels in the 2d grid, just like RGB colors in a normal image, which is then used to train a "small" neural network with a very simple structure, as this is a research project and I only want to find out if it can find those simple and high level relationships between the features. A semi-automated MATLAB application (described in the next section) is used to extract data and annotations using [CMEMS](http://marine.copernicus.eu) global satellite measurements (0.063 degrees resolution). So far 1500 samples has been generated, with a ~92% test accuracy.
+Small sample of what the CNN is able to predict on a small grid (area consisting of about 3 degrees latitude and 8 degrees longitude somewhere between Norway and Greenland).  The sea surface level (ssl) shows the color contour plot, where higher sea levels has an increasing tone of red and lower levels are shown as blue. The velocity vectors are created by the plotting method "quiver", using eastward (zonal) ocean current velocity uvel and northrward (meridional) ocean current velocity vvel. All of these measurements are aggregated as channels in the 2d grid, just like RGB colors in a normal image, which is then used to train a "small" neural network with a very simple structure, as this is a research project and I only want to find out if it can find those simple and high level relationships between the features. A semi-automated MATLAB application (described in the next section) is used to extract data and annotations using [CMEMS](http://marine.copernicus.eu) global satellite measurements (0.063 degrees resolution). So far 1500 samples has been generated, with a ~95% test accuracy.
+
+## SVM
+
+Also tested SVM
+
+![SVM on a small grid](images/realtime/svm_pred.gif)
 
 ## Semi-automated training data generator
 
