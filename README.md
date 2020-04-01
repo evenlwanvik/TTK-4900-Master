@@ -19,7 +19,7 @@ Also tested SVM ~92% test accuracy.
 
 I've created a semi-automated way of extracting annotated data from CMEMS global satellite data. 
 
-## What does the algorithm do?
+### What does the algorithm do?
 **TMDI;dr:** Uses the Okubo-Weiss parameter to determine what is eddies or not. A GUI then showcases the eddies to an who validates the results. The eddies are resized to fit a standard frame size and stored as a compressed numpy array.
 
 
@@ -38,7 +38,7 @@ I've created a semi-automated way of extracting annotated data from CMEMS global
 2. Resize (cv2.resize(interpolate)) the image to a standard fram size (or the largest/average frame found for all days).
 3. Save dataset as a compressed numpy array.
   
-## MATLAB GUI
+### MATLAB GUI
 
 One of the main concerns with the simple interface used for choosing training samples in python was that the algorithm only spits out the areas that has a very high likelihood of containing divergent flow. The Okuobu Weiss and R2 confidence level (how much the variation of dependent variables are explained by the independent variable of certain characteristics of the possible eddies compared to an ideal Gaussian eddy) spits out the same large eddies when found for grids seperated by only a few days. Although I had high hopes for the semi-automatic method, it does not provide a diverse enough pool of samples.
 
