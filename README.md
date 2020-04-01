@@ -11,7 +11,7 @@ Small sample of what the CNN is able to predict on a small grid (area consisting
 
 ## SVM
 
-Also tested SVM
+Also tested SVM ~92% test accuracy.
 
 ![SVM on a small grid](images/realtime/svm_pred.gif)
 
