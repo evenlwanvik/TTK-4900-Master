@@ -5,15 +5,21 @@ TTK4900 - Engineering Cybernetics, Master's Thesis
 
 ### Predictions
 
-![cnn_predicitons](/images/predicted_grid.png)
+![CNN on a small grid](images/realtime/svm_pred.gif)
 
-Small sample of what the CNN is able to predict on a small grid (area consisting of about 3 degrees latitude and 8 degrees longitude somewhere between Norway and Greenland).  The sea surface level (ssl) shows the color contour plot, where higher sea levels has an increasing tone of red and lower levels are shown as blue. The velocity vectors are created by the plotting method "quiver", using eastward (zonal) ocean current velocity uvel and northrward (meridional) ocean current velocity vvel. All of these measurements are aggregated as channels in the 2d grid, just like RGB colors in a normal image, which is then used to train a "small" neural network with a very simple structure, as this is a research project and I only want to find out if it can find those simple and high level relationships between the features. A semi-automated MATLAB application (described in the next section) is used to extract data and annotations using [CMEMS](http://marine.copernicus.eu) global satellite measurements (0.063 degrees resolution). So far 1500 samples has been generated, with a ~92% test accuracy.
+Small sample of what the CNN is able to predict on a small grid (area consisting of about 3 degrees latitude and 8 degrees longitude somewhere between Norway and Greenland).  The sea surface level (ssl) shows the color contour plot, where higher sea levels has an increasing tone of red and lower levels are shown as blue. The velocity vectors are created by the plotting method "quiver", using eastward (zonal) ocean current velocity uvel and northrward (meridional) ocean current velocity vvel. All of these measurements are aggregated as channels in the 2d grid, just like RGB colors in a normal image, which is then used to train a "small" neural network with a very simple structure, as this is a research project and I only want to find out if it can find those simple and high level relationships between the features. A semi-automated MATLAB application (described in the next section) is used to extract data and annotations using [CMEMS](http://marine.copernicus.eu) global satellite measurements (0.063 degrees resolution). So far 1500 samples has been generated, with a ~95% test accuracy.
+
+## SVM
+
+Also tested SVM ~92% test accuracy.
+
+![SVM on a small grid](images/realtime/svm_pred.gif)
 
 ## Semi-automated training data generator
 
 I've created a semi-automated way of extracting annotated data from CMEMS global satellite data. 
 
-## What does the algorithm do?
+### What does the algorithm do?
 **TMDI;dr:** Uses the Okubo-Weiss parameter to determine what is eddies or not. A GUI then showcases the eddies to an who validates the results. The eddies are resized to fit a standard frame size and stored as a compressed numpy array.
 
 
@@ -32,7 +38,7 @@ I've created a semi-automated way of extracting annotated data from CMEMS global
 2. Resize (cv2.resize(interpolate)) the image to a standard fram size (or the largest/average frame found for all days).
 3. Save dataset as a compressed numpy array.
   
-## MATLAB GUI
+### MATLAB GUI
 
 One of the main concerns with the simple interface used for choosing training samples in python was that the algorithm only spits out the areas that has a very high likelihood of containing divergent flow. The Okuobu Weiss and R2 confidence level (how much the variation of dependent variables are explained by the independent variable of certain characteristics of the possible eddies compared to an ideal Gaussian eddy) spits out the same large eddies when found for grids seperated by only a few days. Although I had high hopes for the semi-automatic method, it does not provide a diverse enough pool of samples.
 
