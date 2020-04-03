@@ -24,7 +24,7 @@ def download_nc(longitude, latitude):
     # Choose directory
     #storePath = "D:/Master/data/cmems_data/global_10km/2016/full/"
     #storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/"
-    storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/realtime/"
+    storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/"
     if not os.path.exists(storePath):
         os.makedirs(storePath)
 
@@ -64,7 +64,7 @@ def download_nc(longitude, latitude):
     # =================== Date and lon/lat ====================
     # =========================================================
 
-    dt = datetime.timedelta(days=1)
+    dt = datetime.timedelta(days=30)
     duration = datetime.timedelta(days=1)
     # Global reanalysis (model):
 
@@ -75,9 +75,10 @@ def download_nc(longitude, latitude):
     # Global reprocessed observations:
     #filePrefix = "multiobs_"
 
-    startT = datetime.datetime(2016,8,30,0,0,0) + datetime.timedelta(days=0)
+    startT = datetime.datetime(2017,4,27,0,0,0) + datetime.timedelta(days=0)
 
     '''
+    28-Mar-2017 12:00:00
     dataset 6 27-Sep-2016 12:00:00
     dataset 5 2016,9,29,0,0,0
     Test the datetime for files
@@ -87,7 +88,7 @@ def download_nc(longitude, latitude):
     datetime.date(2016, 8, 30)
     '''
 
-    N = 20 # First 20 days with dt=2
+    N = 1 # First 20 days with dt=2
     time = startT
     for i in range(0,N):
         tEnd = time + duration

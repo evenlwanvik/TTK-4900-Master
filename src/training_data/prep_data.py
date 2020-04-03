@@ -8,7 +8,7 @@ import cv2
 def h5_to_npz_normal():
     dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
     zippath = dirpath + 'training_data.zip'
-    savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/'
+    savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/'
 
     lon = []
     lat = []
