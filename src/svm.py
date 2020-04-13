@@ -4,7 +4,7 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler
-from tools.load_nc import load_nc_data
+from tools.load_nc import load_nc_cmems
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 import numpy as np
@@ -145,7 +145,7 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
     
     print("\n\n")
 
-    lon,lat,sst,ssl,uvel,vvel =  load_nc_data(nc_fpath)
+    lon,lat,sst,ssl,uvel,vvel =  load_nc_cmems(nc_fpath)
 
     day = 0
 
@@ -279,7 +279,7 @@ def real_time_test():
     ncdir = "D:/Master/data/cmems_data/global_10km/2016/noland/realtime/"
     for imId, fName in enumerate(os.listdir(ncdir)):
 
-        lon,lat,sst,ssl,uvel,vvel =  load_nc_data(ncdir + fName)
+        lon,lat,sst,ssl,uvel,vvel =  load_nc_cmems(ncdir + fName)
         nLon, nLat = ssl.shape 
 
         ax1.clear()

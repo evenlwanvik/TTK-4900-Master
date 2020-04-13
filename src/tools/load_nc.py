@@ -23,7 +23,7 @@ def load_netcdf4(filename):
     return (ds,t,lon,lat,depth,u,v,sst,ssl)
     
 
-def load_nc_data(fpath):
+def load_nc_cmems(fpath):
     ''' Simpler method '''
     ds = xr.open_dataset(fpath)
 
@@ -36,3 +36,20 @@ def load_nc_data(fpath):
     vvel = np.ma.masked_invalid(ds.vo[0,0].T)
     ds.close() 
     return lon,lat,sst,ssl,uvel,vvel
+
+
+def load_nc_sinmod(fpath):
+    ''' Simpler method '''
+    ds = xr.open_dataset(fpath)
+
+    xc = ds.xc
+    yc = ds.yc
+    lon = ds.gridLons.values.T
+    lat = ds.gridLats.values.T
+    # Mask NaN - indicating land
+    sst = np.ma.masked_invalid(ds.temperature[0,0].T)
+    ssl = np.ma.masked_outside(ds.elevation[0].T, -4, 4)
+    uvel = np.ma.masked_invalid(ds.u_east[0,0].T)
+    vvel = np.ma.masked_invalid(ds.v_north[0,0].T)
+    ds.close() 
+    return xc, yc, lon,lat,sst,ssl,uvel,vvel

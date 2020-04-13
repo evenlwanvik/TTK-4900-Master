@@ -3,7 +3,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
-from tools.load_nc import load_nc_data
+from tools.load_nc import load_nc_cmems
 from sklearn.externals import joblib # To save scaler
 from keras.models import load_model
 import matplotlib.pyplot as plt
@@ -14,6 +14,7 @@ import cnn_models
 import cv2
 import time
 import os
+
 
 
 ##################### TOOLS #####################
@@ -86,7 +87,7 @@ nChannels = 2
 scaler = [StandardScaler() for _ in range(nChannels)]
 #scaler = MinMaxScaler(feature_range=(-1,1))
 winW, winH = int(11), int(6)
-probLim = 0.96
+probLim = 0.85
 
 
 # Fortsett å endre oppløsning for å se om vi kan ha mindre, *4 var best
@@ -103,9 +104,9 @@ def train_model():
     X = []
     #with np.load(sst_path, allow_pickle=True) as data:
     #    X.append(data['arr_0'][:,0])    
-    #with np.load(ssl_path, allow_pickle=True) as data:
-    #    X.append(data['arr_0'][:,0])
-    #    Y = data['arr_0'][:,1]
+    with np.load(ssl_path, allow_pickle=True) as data:
+        X.append(data['arr_0'][:,0])
+        Y = data['arr_0'][:,1]
     with np.load(uvel_path, allow_pickle=True) as data:
         X.append(data['arr_0'][:,0])
         Y = data['arr_0'][:,1]
@@ -154,11 +155,12 @@ def train_model():
     #model = cnn_models.VGG16(input_shape=input_shape, classes=3)
     #model = cnn_models.my_model(input_shape = input_shape, classes = 3)
     #model = cnn_models.my_model_inception(input_shape = input_shape, classes = 3)
-    model, callbacks_list = cnn_models.inception_resnet_v2(input_shape=input_shape,classes=3,model_fpath=model_fpath)
-
-
-    model.compile(optimizer='adagrad', loss='categorical_crossentropy', metrics=['accuracy'])
-    #model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
+    #model, callbacks_list = cnn_models.inception_resnet_v2(input_shape=input_shape,classes=3,model_fpath=model_fpath)
+    model = cnn_models.best_sofar(input_shape=input_shape,classes=3)
+    #model = cnn_models.best_sofar_resnet(input_shape=input_shape,classes=3)
+    
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    #model.compile(optimizer='adagrad', loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
     
     # Create 3 columns for each class for multilabel classification
     Y_train = convert_to_one_hot(Y_train)
@@ -173,14 +175,13 @@ def train_model():
     print ("Y_test shape: " + str(Y_test.shape))
     print('\n\n')
 
-    history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 25, batch_size = 1, callbacks=callbacks_list)
-
+    #history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 25, batch_size = 1, callbacks=callbacks_list)
+    history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 40, batch_size = 1)
+    
     preds = model.evaluate(X_test, Y_test)
     print ("Loss = " + str(preds[0]))
     print ("Test Accuracy = " + str(preds[1]))
     print('\n\n')
-    #model.summary()
-    #plot_model(model, to_file='ResNet.png')
 
     y_pred = model.predict(X_test)
     acc = np.equal(np.argmax(Y_test, axis=-1), np.argmax(y_pred, axis=-1)).mean()
@@ -192,29 +193,23 @@ def train_model():
 
 from cmems_download import download
 
-def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_060.nc'):
-    
-    # Download grid to be tested
-    #latitude = [45, 49.166]
-    #longitude = [-24.0833, -12.1667]
-    #latitude = [45.9, 49.1]
-    #longitude = [-23.2, -16.5]
-    latitude = [50, 55]
-    longitude = [-24, -12]
-    download.download_nc(longitude, latitude)
-
-    # Test cv2 image and sliding window movement on smaller grid
-    nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_001.nc'
+def test_model(custom_data=None, model_fpath=model_fpath,
+        nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_060.nc'):
+    '''
+    '''
     
     print("\n\n")
 
-    lon,lat,sst,ssl,uvel,vvel =  load_nc_data(nc_fpath)
-
-    day = 0
-
-    # Create phase if used
-    #with np.errstate(all='ignore'): # Disable zero div warning
-    #    phase = xr.ufuncs.rad2deg( xr.ufuncs.arctan2(vvel, uvel) ) + 180
+    if custom_data is None:
+        # Download grid to be tested
+        latitude = [50, 55]
+        longitude = [-24, -12]
+        download.download_nc(longitude, latitude)
+        # Test cv2 image and sliding window movement on smaller grid
+        nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_001.nc'
+        lon,lat,_,ssl,uvel,vvel = load_nc_cmems(nc_fpath)
+    else:
+        lon,lat,ssl,uvel,vvel = custom_data
 
     # Recreate the exact same model purely from the file
     clf = load_model(model_fpath)
@@ -257,8 +252,9 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
     cycloneRects, anticycloneRects = [], []
 
     # Loop over different window sizes, they will be resized down to correct dimensiona anyways
-    for wSize, wStep, hStep in [((int(9), int(5)), 3, 2), 
-                                ((int(12), int(7)), 4, 2),]:
+    for wSize, wStep, hStep in [((int(10), int(10)), 3, 3),
+                                ((int(15), int(15)), 4, 4),
+                                ((int(20), int(20)), 5, 5)]:
         # loop over the sliding window of indeces
         for rectIdx, (x, y, (lonIdxs, latIdxs)) in enumerate(sliding_window(ssl, wStep, hStep, windowSize=wSize)):
 
@@ -322,24 +318,24 @@ def test_model(nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_
 
     cv2.imwrite('D:/master/TTK-4900-Master/images/predicted_grid.png', imCopy)
     imCopy = cv2.cvtColor(im,cv2.COLOR_RGB2BGR)
-    #cycloneRects, _ = cv2.groupRectangles(rectList=cycloneRects, groupThreshold=1, eps=0.3)
-    #anticycloneRects, _ = cv2.groupRectangles(rectList=anticycloneRects, groupThreshold=1, eps=0.3)
+    cycloneRects, _ = cv2.groupRectangles(rectList=cycloneRects, groupThreshold=1, eps=0.3)
+    anticycloneRects, _ = cv2.groupRectangles(rectList=anticycloneRects, groupThreshold=1, eps=0.3)
     for r in anticycloneRects:
         cv2.rectangle(imCopy, (r[0], r[1]), (r[2], r[3]), (217, 83, 25), 2)
-        #textLabel = 'anti-cylcone'
-        #(retval,baseLine) = cv2.getTextSize(textLabel,cv2.FONT_HERSHEY_COMPLEX,1,1)
-        #textOrg = (r[0], r[1])
-        #cv2.rectangle(imCopy, (textOrg[0] - 5, textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (0, 0, 0), 2)
-        #cv2.rectangle(imCopy, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
-        #cv2.putText(imCopy, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
+        textLabel = 'anti-cylcone'
+        (retval,baseLine) = cv2.getTextSize(textLabel,cv2.FONT_HERSHEY_COMPLEX,1,1)
+        textOrg = (r[0], r[1])
+        cv2.rectangle(imCopy, (textOrg[0] - 5, textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (0, 0, 0), 2)
+        cv2.rectangle(imCopy, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
+        cv2.putText(imCopy, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
     for r in cycloneRects:
         cv2.rectangle(imCopy, (r[0], r[1]), (r[2], r[3]), (0, 76, 217), 2)
-        #textLabel = 'cylcone'
-        #(retval,baseLine) = cv2.getTextSize(textLabel,cv2.FONT_HERSHEY_COMPLEX,1,1)
-        #textOrg = (r[0], r[1])
-        #cv2.rectangle(imCopy, (textOrg[0] - 5, textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (0, 0, 0), 2)
-        #cv2.rectangle(imCopy, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
-        #cv2.putText(imCopy, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
+        textLabel = 'cylcone'
+        (retval,baseLine) = cv2.getTextSize(textLabel,cv2.FONT_HERSHEY_COMPLEX,1,1)
+        textOrg = (r[0], r[1])
+        cv2.rectangle(imCopy, (textOrg[0] - 5, textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (0, 0, 0), 2)
+        cv2.rectangle(imCopy, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
+        cv2.putText(imCopy, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
     
     cv2.imwrite('D:/master/TTK-4900-Master/images/lol_grid.png', imCopy)
     cv2.imshow("Window", imCopy)
@@ -388,7 +384,7 @@ def real_time_test():
     ncdir = "D:/Master/data/cmems_data/global_10km/2016/noland/realtime/"
     for imId, fName in enumerate(os.listdir(ncdir)):
 
-        lon,lat,sst,ssl,uvel,vvel =  load_nc_data(ncdir + fName)
+        lon,lat,sst,ssl,uvel,vvel =  load_nc_cmems(ncdir + fName)
         nLon, nLat = ssl.shape 
 
         ax1.clear()
@@ -405,7 +401,7 @@ def real_time_test():
         imH, imW, _ = imCopy.shape # col, row
         winScaleW, winScaleH = imW/nLon, imH/nLat # Scalar coeff from dataset to cv2 image
 
-        to_be_scaled = [1,2] # Only use uvel and vvel
+        to_be_scaled = [0,1,2] # Only use uvel and vvel
         data = [ssl, uvel, vvel]
         scaler = joblib.load(scaler_fpath) # Import the std sklearn scaler model
         cycloneRects, anticycloneRects = [], []
@@ -506,8 +502,8 @@ def real_time_test():
         print("\n\n")
 
 
-if __name__ == '__main__':
-    train_model() 
+#if __name__ == '__main__':
+#    train_model() 
     #analyse_h5()  
     #test_model()
     #real_time_test()

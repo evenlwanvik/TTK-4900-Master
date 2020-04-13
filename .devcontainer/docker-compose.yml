@@ -8,7 +8,8 @@ services:
             dockerfile: .devcontainer/Dockerfile
         volumes:
             - ..:/workspace
-            - C:/Master/data:/workspace/data
+            - D:/Master/data:/workspace/data
+            - D:/Master/models:/workspace/models
         ports: 
             - 8000:8000
         command: sleep infinity

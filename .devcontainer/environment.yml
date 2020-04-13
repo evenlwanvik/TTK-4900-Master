@@ -1,7 +1,8 @@
-
 name: docker-conda-env
 
 dependencies: 
+    - keras-gpu
+    - python=3.6
     - pylint
     - numpy
     - xarray
@@ -10,4 +11,9 @@ dependencies:
     - bottleneck
     - matplotlib 
     - cartopy
-    - seaborn
+    - scikit
+    - scipy 
+    - matplotlib
+    - basemap
+    - opencv-python
+    - iris
