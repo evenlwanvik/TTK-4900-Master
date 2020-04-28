@@ -27,8 +27,8 @@ def load_nc_cmems(fpath):
     ''' Simpler method '''
     ds = xr.open_dataset(fpath)
 
-    lon = ds.longitude
-    lat = ds.latitude
+    lon = np.array(ds.longitude)
+    lat = np.array(ds.latitude)
     # Mask NaN - indicating land
     sst = np.ma.masked_invalid(ds.thetao[0,0].T)
     ssl = np.ma.masked_invalid(ds.zos[0].T)
@@ -41,15 +41,16 @@ def load_nc_cmems(fpath):
 def load_nc_sinmod(fpath):
     ''' Simpler method '''
     ds = xr.open_dataset(fpath)
-
+    #print(ds)
     xc = ds.xc
     yc = ds.yc
     lon = ds.gridLons.values.T
     lat = ds.gridLats.values.T
     # Mask NaN - indicating land
-    sst = np.ma.masked_invalid(ds.temperature[0,0].T)
-    ssl = np.ma.masked_outside(ds.elevation[0].T, -4, 4)
-    uvel = np.ma.masked_invalid(ds.u_east[0,0].T)
-    vvel = np.ma.masked_invalid(ds.v_north[0,0].T)
+    sst = np.ma.mean(np.ma.masked_invalid(ds.temperature[:,0]), axis=0).T
+    ssl = np.ma.mean(np.ma.masked_outside(ds.elevation, -4, 4), axis=0).T
+    uvel = np.ma.mean(np.ma.masked_invalid(ds.u_east[:,0]), axis=0).T
+    vvel = np.ma.mean(np.ma.masked_invalid(ds.v_north[:,0]), axis=0).T
+
     ds.close() 
     return xc, yc, lon,lat,sst,ssl,uvel,vvel

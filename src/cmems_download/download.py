@@ -11,13 +11,15 @@ def download_nc(longitude, latitude):
     #longitude = [-42, -15]
     #latitude = [45, 50]
     #longitude = [-12, -0]
+    #latitude = [50, 52]
+    #longitude = [-19.6, -17.0]
 
     pyPath = 'python'
 
     #latitude = [45, 50]
     #longitude = [-24, -12]
     # Open locally stored credentials
-    conf = yaml.load(open('D:/Master/TTK-4900-Master/config/credentials.yml'))
+    conf = yaml.load(open('C:/Users/47415/master/TTK-4900-Master/config/credentials.yml'))
     username = conf['CMEMS-download']['credentials']['username']
     password = conf['CMEMS-download']['credentials']['password']
 
