@@ -19,7 +19,7 @@ Also tested SVM ~92% test accuracy.
 
 One of the goals of this project is to compare the appliance of Machine learning techniques on both CMEMS and SINMOD data and compare the results.
 
-![CNN on a small grid](images/realtime/svm_pred.gif)
+![CNN on a small grid](images/realtime/SatSin1.gif)
 
 ## Semi-automated training data generator
 
