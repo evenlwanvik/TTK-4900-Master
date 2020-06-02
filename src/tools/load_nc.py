@@ -23,8 +23,8 @@ def load_netcdf4(filename):
     return (ds,t,lon,lat,depth,u,v,sst,ssl)
     
 
-def load_nc_cmems(fpath):
-    ''' Simpler method '''
+def load_nc_sat(fpath):
+    ''' Load CMEMS satellite measurements data '''
     ds = xr.open_dataset(fpath)
 
     lon = np.array(ds.longitude)
@@ -32,25 +32,46 @@ def load_nc_cmems(fpath):
     # Mask NaN - indicating land
     sst = np.ma.masked_invalid(ds.thetao[0,0].T)
     ssl = np.ma.masked_invalid(ds.zos[0].T)
+    sal = np.ma.masked_invalid(ds.so[0,0].T)
     uvel = np.ma.masked_invalid(ds.uo[0,0].T)
     vvel = np.ma.masked_invalid(ds.vo[0,0].T)
     ds.close() 
-    return lon,lat,sst,ssl,uvel,vvel
+    return lon,lat,sst,ssl,sal,uvel,vvel
 
 
 def load_nc_sinmod(fpath):
     ''' Simpler method '''
     ds = xr.open_dataset(fpath)
-    #print(ds)
     xc = ds.xc
     yc = ds.yc
+    depth = ds.depth
     lon = ds.gridLons.values.T
     lat = ds.gridLats.values.T
     # Mask NaN - indicating land
     sst = np.ma.mean(np.ma.masked_invalid(ds.temperature[:,0]), axis=0).T
     ssl = np.ma.mean(np.ma.masked_outside(ds.elevation, -4, 4), axis=0).T
+    sal = np.ma.mean(np.ma.masked_invalid(ds.salinity[:,0]), axis=0).T
     uvel = np.ma.mean(np.ma.masked_invalid(ds.u_east[:,0]), axis=0).T
     vvel = np.ma.mean(np.ma.masked_invalid(ds.v_north[:,0]), axis=0).T
 
     ds.close() 
-    return xc, yc, lon,lat,sst,ssl,uvel,vvel
+    return xc, yc, depth, lon,lat,sst,ssl,sal,uvel,vvel
+
+
+
+def load_nc_insitu(fpath):
+    ''' Load CMEMS satellite measurements data '''
+    ds = xr.open_dataset(fpath)
+
+    lon = np.array(ds.longitude)
+    lat = np.array(ds.latitude)
+    # Mask NaN - indicating land
+    sst = np.ma.masked_invalid(ds.to[0,0].T)
+    ssl = np.ma.masked_invalid(ds.zo[0,0].T)
+    sal = np.ma.masked_invalid(ds.so[0,0].T)
+    uvel = np.ma.masked_invalid(ds.ugo[0,0].T)
+    vvel = np.ma.masked_invalid(ds.vgo[0,0].T) 
+    ds.close() 
+    return lon,lat,sst,ssl,sal,uvel,vvel, ds.time
+
+#https://resources.marine.copernicus.eu/?option=com_csw&task=results?option=com_csw&view=details&product_id=MULTIOBS_GLO_PHY_NRT_015_001

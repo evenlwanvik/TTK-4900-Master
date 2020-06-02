@@ -1,14 +1,14 @@
 import numpy as np
 import os
 import zipfile
-import scipy.io
+import scipy.io 
 import h5py
 import cv2
 
 def h5_to_npz_normal():
-    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
+    dirpath = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/h5/'
     zippath = dirpath + 'training_data.zip'
-    savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/'
+    savedir = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/'
 
     lon = []
     lat = []
@@ -18,20 +18,28 @@ def h5_to_npz_normal():
     vvel = []
     phase = []
 
-    with zipfile.ZipFile(zippath) as z:
-        for fname in z.namelist():
-            if not os.path.isdir(fname) and fname.endswith('.h5'):
-                # read the file
-                with z.open(fname, 'r') as zf:
-                    with h5py.File(zf, 'r') as hf:
+    # Training samples found to be incorrectly labeled
+    excludelist = [None]
+    #excludelist = [4, 5, 27, 36, 56, 61, 68, 141, 163, 168, 169, 171, 176, 179, 183, 248, 250,
+    #            254, 256, 277, 289, 299, 306, 316, 321, 390, 416, 422, 431, 440, 465, 470, 563, 589,
+    #            687, 697, 992, 1006, 1010, 1011, 1013, 1024, 1048, 1060, 1072, 1159, 1160, 1161, 
+    #            1163, 1191, 1202, 1220, 1229, 1249, 1275, 1284, 1298, 1504, 1509, 1511, 1514, 1567, 1735] # (+1 Python iter)
 
-                        lon.append([hf['/coordinates/lon'][()], int(hf['/label'][()])])
-                        lat.append([hf['/coordinates/lat'][()], int(hf['/label'][()])])
-                        sst.append([hf['/data/sst'][()], int(hf['/label'][()])])
-                        ssl.append([hf['/data/ssl'][()], int(hf['/label'][()])])
-                        uvel.append([hf['/data/uvel'][()], int(hf['/label'][()])])
-                        vvel.append([hf['/data/vvel'][()], int(hf['/label'][()])])
-                        phase.append([hf['/data/phase'][()], int(hf['/label'][()])])
+    with zipfile.ZipFile(zippath) as z:
+        for i, fname in enumerate(z.namelist()):
+            if not i in excludelist:
+                if not os.path.isdir(fname) and fname.endswith('.h5'):
+                    # read the file
+                    with z.open(fname, 'r') as zf:
+                        with h5py.File(zf, 'r') as hf:
+
+                            lon.append([hf['/coordinates/lon'][()], int(hf['/label'][()])])
+                            lat.append([hf['/coordinates/lat'][()], int(hf['/label'][()])])
+                            sst.append([hf['/data/sst'][()], int(hf['/label'][()])])
+                            ssl.append([hf['/data/ssl'][()], int(hf['/label'][()])])
+                            uvel.append([hf['/data/uvel'][()], int(hf['/label'][()])])
+                            vvel.append([hf['/data/vvel'][()], int(hf['/label'][()])])
+                            phase.append([hf['/data/phase'][()], int(hf['/label'][()])])
 
     #dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/'
     #with np.load(dirpath + 'ssl_train.npz', allow_pickle=True) as ssl_other:

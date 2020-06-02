@@ -4,36 +4,25 @@ import yaml
 
 def download_nc(longitude, latitude):
 
-    #latitude = [45, 90]
-    #longitude = [-60, 60]
-    # lat/lon far from land for testing OW algorithm
-    #latitude = [45, 60]
-    #longitude = [-42, -15]
-    #latitude = [45, 50]
-    #longitude = [-12, -0]
-    #latitude = [50, 52]
-    #longitude = [-19.6, -17.0]
-
     pyPath = 'python'
 
-    #latitude = [45, 50]
-    #longitude = [-24, -12]
     # Open locally stored credentials
-    conf = yaml.load(open('C:/Users/47415/master/TTK-4900-Master/config/credentials.yml'))
+    conf = yaml.load(open('C:/Users/47415/master/TTK-4900-Master/config/credentials.yml'), yaml.FullLoader)
     username = conf['CMEMS-download']['credentials']['username']
     password = conf['CMEMS-download']['credentials']['password']
 
     # Choose directory
     #storePath = "D:/Master/data/cmems_data/global_10km/2016/full/"
-    storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/"
+    storePath = "D:/Master/data/compare/satellite/"
     #storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/realtime/"
     if not os.path.exists(storePath):
         os.makedirs(storePath)
 
-    # =========================================================
-    # ======= GLOBAL_ANALYSIS_FORECAST_PHY_001_024-TDS ========
-    # =========================================================
 
+    # =========================================================
+    # ======= GLOBAL_ANALYSIS_FORECAST_PHY_001_024-TDS ========  MAIN ONE
+    # =========================================================
+   
     # Choose service and product id
     serviceId = "GLOBAL_ANALYSIS_FORECAST_PHY_001_024-TDS"
     # In below product ID the variables are merged, while in "global-analysis-forecast-phy-001-024-hourly-t-u-v-ssh" the data is split.
@@ -41,27 +30,20 @@ def download_nc(longitude, latitude):
     variables = "--variable thetao --variable so --variable uo --variable vo --variable zos" 
     #productId = "global-analysis-forecast-phy-001-024-statics"
     #variables = "--variable deptho --variable mask" 
+   
+    # =========================================================
+    # ======= MULTIOBS_GLO_PHY_NRT_015_001 ========
+    # =========================================================
+    """
+    storePath = "D:/Master/data/compare/satellite2/"
+    # Choose service and product id
+    serviceId = "MULTIOBS_GLO_PHY_NRT_015_001-TDS"
+    # In below product ID the variables are merged, while in "global-analysis-forecast-phy-001-024-hourly-t-u-v-ssh" the data is split.
+    productId = "dataset-armor-3d-nrt-weekly"
+    variables = "--variable to --variable so --variable ugo --variable vgo --variable zo" 
+    """
 
-    # =========================================================
-    # ======= GLOBAL_REANALYSIS_PHY_001_030-TDS ========
-    # =========================================================
-    """
-    # Choose service and product id
-    serviceId = "GLOBAL_REANALYSIS_PHY_001_030-TDS"
-    # In below product ID the variables are merged, while in "global-analysis-forecast-phy-001-024-hourly-t-u-v-ssh" the data is split.
-    productId = "global-reanalysis-phy-001-030-daily"
-    variables = "--variable thetao --variable so --variable uo --variable vo --variable zos --variable mlotst" 
-    """
-    # =========================================================
-    # ======= GLOBAL_ANALYSIS_FORECAST_WAV_001_027-TDS ========
-    # =========================================================
-    """
-    # Choose service and product id
-    serviceId = "GLOBAL_ANALYSIS_FORECAST_WAV_001_027-TDS"
-    # In below product ID the variables are merged, while in "global-analysis-forecast-phy-001-024-hourly-t-u-v-ssh" the data is split.
-    productId = "global-reanalysis-phy-001-030-daily-statics"
-    variables = "--variable deptho" 
-    """
+
     # =========================================================
     # =================== Date and lon/lat ====================
     # =========================================================
@@ -71,13 +53,13 @@ def download_nc(longitude, latitude):
     # Global reanalysis (model):
 
     # Physics
-    filePrefix = "phys_noland_2016_"
+    filePrefix = "phys_"
     # Bathmetry or statics
     #filePrefix = "bathmetry_"
     # Global reprocessed observations:
     #filePrefix = "multiobs_"
 
-    startT = datetime.datetime(2016,8,30,0,0,0) + datetime.timedelta(days=0)
+    startT = datetime.datetime(2017,6,1,0,0,0) + datetime.timedelta(days=0)
 
     '''
     28-Mar-2017 12:00:00
@@ -90,12 +72,12 @@ def download_nc(longitude, latitude):
     datetime.date(2016, 8, 30)
     '''
 
-    N = 12 # First 20 days with dt=2
+    N = 365 # Number of days, or dt
     time = startT
-    for i in range(0,N):
+    for i in range(N,N+100):
         tEnd = time + duration
 
-        n = str(i+1)
+        n = str(i+100)
         filename = filePrefix+n.zfill(3)+".nc"
         if filePrefix in ("phys_", "phys_noland_2018_", "phys_noland_2016_"):
             command = pyPath+" -m motuclient --motu http://nrt.cmems-du.eu/motu-web/Motu " \
@@ -133,3 +115,18 @@ def download_nc(longitude, latitude):
         os.system(command)
         time = time + dt
         print("\n")
+
+
+if __name__ == '__main__':
+    latitude = [45, 90]
+    longitude = [-60, 60]
+    # lat/lon far from land for testing OW algorithm
+    #latitude = [45, 60]
+    #longitude = [-42, -15]
+    #latitude = [45, 50]
+    #longitude = [-12, -0]
+    #latitude = [50, 52]
+    #longitude = [-19.6, -17.0]
+    #latitude = [45, 50]
+    #longitude = [-24, -12]
+    download_nc(longitude, latitude) 

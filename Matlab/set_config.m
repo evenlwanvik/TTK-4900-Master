@@ -1,4 +1,4 @@
 keySet = {'datasetID', 'windowID', 'sampleID'};
-valueSet = {10, 0, 2001};
+valueSet = {9, 0, 2100};
 config = containers.Map(keySet,valueSet);
-save 'D:\Master\TTK-4900-Master\Matlab\config.mat' config
+save 'C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat' config

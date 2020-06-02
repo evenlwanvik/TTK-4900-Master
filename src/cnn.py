@@ -2,10 +2,12 @@ from tools.machine_learning import sliding_window
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 from matplotlib.colors import BoundaryNorm
+from sklearn.metrics import f1_score, accuracy_score, recall_score, precision_score
 from matplotlib.ticker import MaxNLocator
-from tools.load_nc import load_nc_cmems
+from tools.load_nc import load_nc_sat
 from sklearn.externals import joblib # To save scaler
 from keras.models import load_model
+from keras import backend as K
 import matplotlib.pyplot as plt
 from tools import dim
 import xarray as xr
@@ -15,15 +17,31 @@ import cv2
 import time
 import os
 
+import tensorflow as tf
 
+'''
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+    try:
+        # Restrict TensorFlow to only use the fourth GPU
+        tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
 
+        # Currently, memory growth needs to be the same across GPUs
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+        logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+    except RuntimeError as e:
+        # Memory growth must be set before GPUs have been initialized
+        print(e)
+'''
 ##################### TOOLS #####################
 
 def plot_history(history):
     fig, ax = plt.subplots(1, 2, figsize=(12, 8))
     # summarize history for accuracy
-    ax[0].plot(history.history['accuracy'])
-    ax[0].plot(history.history['val_accuracy'])
+    ax[0].plot(history.history['acc'])
+    ax[0].plot(history.history['val_acc'])
     ax[0].set_title('model accuracy')
     ax[0].set_ylabel('accuracy')
     ax[0].set_xlabel('epoch')
@@ -94,9 +112,6 @@ def plot_window(ssl, phase, uvel, vvel, lon, lat, ax):
 
     plt.show()
 
-def plot_OW():
-    from tools.eddies import load_netcdf4,eddy_detection
-
 def same_dist_elems(arr):
     diff = arr[1] - arr[0]
     for x in range(1, len(arr) - 1):
@@ -125,6 +140,23 @@ def draw_simple_rectangle(image, rectangles, eddytype='cyclone'):
     for r in rectangles:
         cv2.rectangle(image, (r[0], r[1]), (r[2], r[3]), color, 2)
 
+def recall_m(y_true, y_pred):
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+    recall = true_positives / (possible_positives + K.epsilon())
+    return recall
+
+def precision_m(y_true, y_pred):
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    precision = true_positives / (predicted_positives + K.epsilon())
+    return precision
+
+def f1_m(y_true, y_pred):
+    precision = precision_m(y_true, y_pred)
+    recall = recall_m(y_true, y_pred)
+    return 2*((precision*recall)/(precision+recall+K.epsilon()))
+
 ##################### TRAIN AND TEST #####################
 
 
@@ -135,89 +167,223 @@ vvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/vvel_
 phase_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/phase_train.npz'
 lon_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/lon.npz'
 lat_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/lat.npz'
-model_fpath = 'D:/Master/models/2016/cnn_mult_full.h5'
+model_fpath = 'D:/Master/models/2016/cnn_velocities.h5'
+#model_fpath = 'D:/Master/models/2016/cnn_ssl.h5'
 scaler_fpath = "D:/Master/models/2016/cnn_norm_scaler.pkl"
+largescaler_fpath = "D:/Master/models/2016/cnn_large_scaler.pkl"
 
 # Create a scaler for each channel
 nChannels = 2
 scaler = [StandardScaler() for _ in range(nChannels)]
-#scaler = MinMaxScaler(feature_range=(-1,1))
+#scaler = [MinMaxScaler(feature_range=(0,1)) for _ in range(nChannels)]
 winW, winH = int(11), int(6)
 
 # Fortsett å endre oppløsning for å se om vi kan ha mindre, *4 var best
 # Også prøv forskjellige kombinasjoner av kanaler
 
 
-def train_model():
+def find_average_model(nSamples=None):
+    """ Returns the average and variance of the models """
 
-    winW2, winH2 = winW*4, winH*4
+    train_acc = []
+    test_acc = []
+    val_acc = []
 
-    X = np.array([])
+    N = 15
+    for i in range(N):
 
-    # Open the numpy training data array and append for each channel we want to use
-    X = []
-    #with np.load(sst_path, allow_pickle=True) as data:
-    #    X.append(data['arr_0'][:,0])    
-    #with np.load(ssl_path, allow_pickle=True) as data:
-    #    X.append(data['arr_0'][:,0])
-    #    Y = data['arr_0'][:,1]
-    with np.load(uvel_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0])
-        Y = data['arr_0'][:,1]
-    with np.load(vvel_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0])
-    #with np.load(vvel_path, allow_pickle=True) as data:
-    #    X.append(data['arr_0'][:,0])
-    #    Y = data['arr_0'][:,1]
-    #with np.load(phase_path, allow_pickle=True) as data:
-    #    X.append(data['arr_0'][:,0]) 
-    #    Y = data['arr_0'][:,1]       
+        x, y, z = train_model(nSamples=nSamples)
+
+        train_acc.append(x)
+        val_acc.append(y)
+        test_acc.append(z)
+
+    return np.average(train_acc), np.average(val_acc), np.average(test_acc)
+
+def find_best_model():
+    """ Returns the best performing model """
+    accuracy, accuracy_class, f1_class, precision_class, recall_class, model = 0, 0, 0, 0, 0, None
+    for i in range(15):
+        accuracy_, accuracy_class_, f1_class_, precision_class_, recall_class_, model_, _ = train_model()
+        if accuracy_ > accuracy:
+            accuracy = accuracy_
+            accuracy_class = accuracy_class_
+            f1_class = f1_class_
+            precision_class = precision_class_
+            recall_class = recall_class_
+            model = model_
 
 
-    # Reshape the "image" to standard size
-    nTeddies = len(X[0])
-    
-    #X[np.isnan(X)] = 0
+    print("acc: " + str(accuracy))
+    print("Acc: " + str(accuracy_class))
+    print("f1_score: " + str(f1_class))
+    print("precision: " + str(precision_class))
+    print("recall: " + str(recall_class))
 
-    for c in range(nChannels): # For each channel
-        for i in range(nTeddies): # For each Training Eddy
-            X[c][i] = np.array(X[c][i], dtype='float32')
-            X[c][i][np.isnan(X[c][i])] = 0 # If we have land present, just set to zero TODO: change it?
-            X[c][i] = cv2.resize(X[c][i], dsize=(winH2, winW2), interpolation=cv2.INTER_CUBIC) 
+    model.save("best_ever_model.h5")
 
-    # Reshape data (sample, width, height, channel) 
-    X_cnn = np.zeros((nTeddies,winW2,winH2,nChannels))
-    for i in range(nTeddies): # Eddies
-        for lo in range(winW2): # Row
-            for la in range(winH2): # Column
-                for c in range(nChannels): # Channels
-                    X_cnn[i,lo,la,c] = X[c][i][lo][la]  
+def find_best_input_size(sizes=[40]):
+    """ Returns the average and variance of the models """
 
-    # Create and set the scaler for each channel
-    X_cnn = X_cnn.reshape(nTeddies, -1, nChannels)
-    for c in range(nChannels):
-        X_cnn[:,:,c] = scaler[c].fit_transform(X_cnn[:,:,c])
-    X_cnn = X_cnn.reshape(nTeddies, winW2, winH2, nChannels)
+    accuracies = []
+    accuracy = []
+    t = []
+    sigma = []
+    time = []
+    #sizes = np.arange(5, 80, 5)
 
-    # Train/test split
-    X_train, X_test, Y_train, Y_test = train_test_split(X_cnn, Y[:nTeddies], test_size=0.33)
-    nTrain = len(X_train)
-    
-    input_shape = (winW2, winH2, nChannels)
-    #model = cnn_models.mnist(input_shape=input_shape, classes=3)
-    #model = cnn_models.VGG16(input_shape=input_shape, classes=3)
-    #model = cnn_models.my_model(input_shape = input_shape, classes = 3)
-    #model = cnn_models.my_model_inception(input_shape = input_shape, classes = 3)
-    #model, callbacks_list = cnn_models.inception_resnet_v2(input_shape=input_shape,classes=3,model_fpath=model_fpath)
-    model = cnn_models.best_sofar(input_shape=input_shape,classes=3)
-    #model = cnn_models.best_sofar_resnet(input_shape=input_shape,classes=3)
-    
-    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-    #model.compile(optimizer='adagrad', loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
-    
-    # Create 3 columns for each class for multilabel classification
-    Y_train = convert_to_one_hot(Y_train)
-    Y_test  = convert_to_one_hot(Y_test)
+    for size in sizes:
+    #for size in [80]:
+        accuracy = []
+        N = 20
+        for j in range(N):
+            tf.keras.backend.clear_session
+            accuracy_, _, _, _, _, _, t_ = train_model(size=size)
+            accuracy.append(accuracy_)
+            t.append(t_)
+
+        time.append(np.average(t))
+        accuracies.append(np.average(accuracy))
+        sigma.append(np.std(accuracy))
+        print("Average accuracy: " + str(np.average(accuracy)))
+        print("Standard deviation: " + str(np.std(accuracy)))
+
+    return accuracies, sigma, time
+
+def train_model(size=40, nSamples=None,use_existing_split=False, trainsplit_dir='C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/train_test_split/'):
+    """ Train CNN model, 
+    'trainsplit_dir' is path to either existing split or where the new split is to be stored, 
+    'use_existing_split' flags if an existing split is to be used """
+
+    #winW2, winH2 = winW*6, winH*6
+    winW2, winH2 = size, size # Testing a model
+
+    if not use_existing_split:
+        # Open the numpy training data array and append for each channel we want to use
+        X = []
+
+        '''
+        with np.load(vvel_path, allow_pickle=True) as data:
+            # Random sample indexes to be used
+            if nSamples is not None:
+                idxs = np.arange(nSamples)
+                #idxs = np.random.choice(len(data['arr_0']), nSamples)
+            else:
+                idxs = np.arange(len(data['arr_0']))
+            data = data['arr_0'][idxs]
+            X.append(data[:,0])
+            Y = data[:,1]
+        #with np.load(uvel_path, allow_pickle=True) as data:
+        #    data = data['arr_0'][idxs]
+        #    X.append(data[:,0])
+        #with np.load(vvel_path, allow_pickle=True) as data:
+        #    data = data['arr_0'][idxs]
+        #    X.append(data[:,0])
+        #with np.load(sst_path, allow_pickle=True) as data:
+        #    data = data['arr_0'][idxs]
+        #    X.append(data[:,0])
+
+        '''
+        with np.load(uvel_path, allow_pickle=True) as data:
+            # Random sample indexes to be used
+            if nSamples is not None:
+                idxs = np.arange(nSamples)
+                #idxs = np.random.choice(len(data['arr_0']), nSamples)
+            else:
+                idxs = np.arange(len(data['arr_0']))
+            data = data['arr_0'][idxs]
+            X.append(data[:,0])
+            Y = data[:,1]
+        with np.load(vvel_path, allow_pickle=True) as data:
+            data = data['arr_0'][idxs]
+            X.append(data[:,0])
+         
+
+        # Reshape the "image" to standard size
+        nTeddies = len(X[0])
+
+        for c in range(nChannels): # For each channel
+            for i in range(nTeddies): # For each Training Eddy
+                X[c][i] = np.array(X[c][i], dtype='float32')
+                X[c][i][np.isnan(X[c][i])] = 0 # If we have land present, just set to zero TODO: change it?
+                X[c][i] = cv2.resize(X[c][i], dsize=(winH2, winW2), interpolation=cv2.INTER_CUBIC) 
+
+        # Reshape data (sample, width, height, channel) 
+        X_cnn = np.zeros((nTeddies,winW2,winH2,nChannels))
+        for i in range(nTeddies): # Eddies
+            for lo in range(winW2): # Row
+                for la in range(winH2): # Column
+                    for c in range(nChannels): # Channels
+                        X_cnn[i,lo,la,c] = X[c][i][lo][la]  
+
+
+        # Create and set the scaler for each channel
+        X_cnn = X_cnn.reshape(nTeddies, -1, nChannels)
+        for c in range(nChannels):
+            X_cnn[:,:,c] = scaler[c].fit_transform(X_cnn[:,:,c])
+        X_cnn = X_cnn.reshape(nTeddies, winW2, winH2, nChannels)
+
+        joblib.dump(scaler, scaler_fpath)
+        #exit()
+
+        # Train/test split
+        X_train, X_test, Y_train, Y_test = train_test_split(X_cnn, Y[:nTeddies], test_size=0.33)
+        nTrain = len(X_train)
+
+        # Create 3 columns for each class for multilabel classification
+        Y_train = convert_to_one_hot(Y_train)
+        Y_test  = convert_to_one_hot(Y_test)
+
+        np.savez_compressed( trainsplit_dir + 'X_train.npz', X_train)
+        np.savez_compressed( trainsplit_dir + 'X_test.npz', X_test)
+        np.savez_compressed( trainsplit_dir + 'Y_train.npz', Y_train)
+        np.savez_compressed( trainsplit_dir + 'Y_test.npz', Y_test)
+
+        input_shape = (winW2, winH2, nChannels)
+        #model = cnn_models.mnist(input_shape=input_shape, classes=3)
+        #model = cnn_models.VGG16(input_shape=input_shape, classes=3)
+        #model = cnn_models.my_model(input_shape=input_shape, classes=3)
+       # model = cnn_models.my_model_inception(input_shape = input_shape, classes = 3)
+        #model, callbacks_list = cnn_models.inception_resnet_v2(input_shape=input_shape,classes=3,model_fpath=model_fpath)
+        #model = cnn_models.best_sofar(input_shape=input_shape,classes=3) # USE THIS
+        #model = cnn_models.best_sofar_resnet(input_shape=input_shape,classes=3)
+        
+        #model = cnn_models.simple_model_for_visualization(input_shape=input_shape,classes=3)
+        model = cnn_models.test_shallow(input_shape=input_shape,classes=3)
+
+        model.compile(optimizer='adagrad', loss='categorical_crossentropy',  metrics=['acc',f1_m,precision_m, recall_m]) # USE THIS
+        #model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
+
+        #history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 25, batch_size = 1, callbacks=callbacks_list)
+        #history = model.fit(X_train, Y_train, validation_split=0.33, epochs=20, batch_size=10) # USE THIS
+        
+        from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
+        earlyStopping = EarlyStopping(monitor='val_loss', patience=10, verbose=0, mode='min')
+        mcp_save = ModelCheckpoint('.mdl_wts.hdf5', save_best_only=True, monitor='val_loss', mode='min')
+        reduce_lr_loss = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=7, verbose=1, epsilon=1e-4, mode='min')
+        callbacks_list = [earlyStopping, mcp_save, reduce_lr_loss]
+
+        t0 = time.time()
+        history = model.fit(X_train, Y_train, epochs=40, batch_size = 10, validation_split=0.33, callbacks=callbacks_list)
+        t1 = time.time()
+
+    else:
+        custom_objects  = {
+            "f1_m": f1_m,
+            "precision_m": precision_m, 
+            "recall_m": recall_m
+        }
+
+        model = load_model(model_fpath, custom_objects=custom_objects)
+        
+        with np.load( trainsplit_dir + 'X_train.npz', allow_pickle=True ) as h5f:
+            X_train = h5f['arr_0']
+        with np.load( trainsplit_dir + 'X_test.npz', allow_pickle=True ) as h5f:
+            X_test = h5f['arr_0']
+        with np.load( trainsplit_dir + 'Y_train.npz', allow_pickle=True ) as h5f:
+            Y_train = h5f['arr_0']
+        with np.load( trainsplit_dir + 'Y_test.npz', allow_pickle=True ) as h5f:
+            Y_test = h5f['arr_0']
 
     print('\n\n')
     print ("number of training examples = " + str(X_train.shape[0]))
@@ -228,23 +394,55 @@ def train_model():
     print ("Y_test shape: " + str(Y_test.shape))
     print('\n\n')
 
-    #history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 25, batch_size = 1, callbacks=callbacks_list)
-    history = model.fit(X_train, Y_train, validation_split=0.33, epochs = 40, batch_size = 1)
-    
+
     preds = model.evaluate(X_test, Y_test)
     print ("Loss = " + str(preds[0]))
     print ("Test Accuracy = " + str(preds[1]))
     print('\n\n')
 
-    y_pred = model.predict(X_test)
-    acc = np.equal(np.argmax(Y_test, axis=-1), np.argmax(y_pred, axis=-1)).mean()
-    print(acc)
+    Y_pred = model.predict(X_test)
+    acc = np.equal(np.argmax(Y_test, axis=-1), np.argmax(Y_pred, axis=-1)).mean()
 
     model.save(model_fpath)
 
-    plot_history(history)
+    # evaluate the model
+    loss, accuracy, f1_keras, precision, recall = model.evaluate(X_test, Y_test, verbose=1)
 
-from cmems_download import download
+    print ("Loss: " + str(loss))
+    print ("Acc: " + str(accuracy))
+    print ("f1_score: " + str(f1_keras))
+    print ("precision: " + str(precision))
+    print ("recall: " + str(recall))
+
+    print('\n\n')
+
+    # Create 1d array of predicted class
+    Y_pred = np.argmax(Y_pred, axis=-1)
+    Y_test = np.argmax(Y_test, axis=-1)
+
+    accuracy_class = accuracy_score(Y_test, Y_pred)
+    f1_class = f1_score(Y_test, Y_pred, average=None)
+    precision_class = precision_score(Y_test, Y_pred, average=None)
+    recall_class = recall_score(Y_test, Y_pred, average=None)
+
+    print("Acc: " + str(accuracy_class))
+    print("f1_score: " + str(f1_class))
+    print("precision: " + str(precision_class))
+    print("recall: " + str(recall_class))
+
+    #f1_score(Y_test, Y_pred)
+    #accuracy_score(Y_test, Y_pred)
+    #precision_score(Y_test, Y_pred)
+    #recall_score(Y_test, Y_pred)
+   
+    #if not use_existing_split:
+        #plot_history(history)
+
+    print("")
+
+    # Return train and test accuracy
+    return history.history['acc'][-1], history.history['val_acc'][-1], accuracy
+    #return accuracy, accuracy_class, f1_class, precision_class, recall_class, model, t1-t0
 
 def cnn_predict_grid(data_in=None, 
             win_sizes=[((int(8), int(5)), 2, 1),((int(10), int(6)), 3, 2),((int(13), int(8)), 4, 3)], 
@@ -258,26 +456,38 @@ def cnn_predict_grid(data_in=None,
     lon,lat,x,y,ssl,uvel,vvel = data_in
 
     # Recreate the exact same model purely from the file
-    clf = load_model(model_fpath)
-    #ssl_clf   = keras.models.load_model(D:/master/models/2016/cnn_{}class_ssl.h5'.format(cnntype))
 
+    
+    custom_objects  = {
+        "f1_m": f1_m,
+        "precision_m": precision_m, 
+        "recall_m": recall_m
+    }
+
+    clf = load_model(model_fpath, custom_objects=custom_objects)
+    scaler = joblib.load(largescaler_fpath) # Import the std sklearn scaler model
+    
+    '''
+    clf = load_model(model_fpath)
+    scaler = joblib.load(scaler_fpath) # Import the std sklearn scaler model
+    '''
     nx, ny = ssl.shape 
 
     # Create canvas to show the cv2 rectangles around predictions
-    fig1, ax1 = plt.subplots(figsize=(15, 12))
+    fig, ax = plt.subplots(figsize=(15, 12))
     n=-1
     color_array = np.sqrt(((uvel.T-n)/2)**2 + ((vvel.T-n)/2)**2)
     # x and y needs to be equally spaced for streamplot
     if not (same_dist_elems(x) or same_dist_elems(y)):
         x, y = np.arange(len(x)),  np.arange(len(y)) 
-    ax1.contourf(x, y, ssl.T, cmap='rainbow', levels=150)
-    ax1.streamplot(x, y, uvel.T, vvel.T, color=color_array, density=10) 
-    #ax1.quiver(x, y, uvel.T, vvel.T, scale=3) 
-    fig1.subplots_adjust(0,0,1,1)
-    fig1.canvas.draw()
+    ax.contourf(x, y, ssl.T, cmap='rainbow', levels=150)
+    ax.streamplot(x, y, uvel.T, vvel.T, color=color_array, density=10) 
+    #ax.quiver(x, y, uvel.T, vvel.T, scale=3) 
+    fig.subplots_adjust(0,0,1,1)
+    fig.canvas.draw()
 
-    im = np.frombuffer(fig1.canvas.tostring_rgb(), dtype=np.uint8)
-    im = im.reshape(fig1.canvas.get_width_height()[::-1] + (3,))
+    im = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
+    im = im.reshape(fig.canvas.get_width_height()[::-1] + (3,))
     imCopy = cv2.cvtColor(im,cv2.COLOR_RGB2BGR)
     imH, imW, _ = imCopy.shape # col, row
     winScaleW, winScaleH = imW*1.0/nx, imH*1.0/ny # Scalar coeff from dataset to cv2 image
@@ -286,13 +496,11 @@ def cnn_predict_grid(data_in=None,
     to_be_scaled = [1,2] 
     data = [ssl, uvel, vvel]
 
-    scaler = joblib.load(scaler_fpath) # Import the std sklearn scaler model
-
     # Holds rectangle coordinates with dataset and image indexes
     cyc_r, acyc_r = [], []
     cyc_r_im, acyc_r_im = [], []
 
-    print("\n\nperforming sliding window on satellite data \n\n")
+    print("++ Performing sliding window and predicting using pre-trained CNN model")
     # Loop over different window sizes, they will be resized down to correct dimensiona anyways
     for wSize, wStep, hStep in win_sizes:
         # loop over the sliding window of indeces
@@ -301,7 +509,7 @@ def cnn_predict_grid(data_in=None,
             if xIdxs[-1] >= nx or yIdxs[-1] >= ny:
                 continue
 
-            winW2, winH2 = winW*4, winH*4
+            winW2, winH2 = winW*6, winH*6
             winSize = (winH2, winW2)
 
             masked = False # Continue if window hits land
@@ -343,18 +551,21 @@ def cnn_predict_grid(data_in=None,
             # Predict and receive probability
             prob = clf.predict(X_cnn)
 
+            # This is the size of the current sliding window
+            nxWin, nyWin = len(xIdxs), len(yIdxs)
+
             # y starts in top left for cv2, want it to be bottom left
             xr, yr = int(winScaleW*(i)), int(winScaleH*(ny-j)) # rect coords
-            xrW, yrW= int(winScaleW*winW), int(winScaleH*winH) # rect width
+            xrW, yrW= int(winScaleW*nxWin), int(winScaleH*nyWin) # rect width
 
             if any(p >= problim for p in prob[0,1:]):       
                 if prob[0,1] >= problim:
-                    acyc_r.append([i, j, i + winW, j + winH])
+                    acyc_r.append([i, j, i + nxWin, j + nyWin])
                     acyc_r_im.append([xr, yr, xr + xrW, yr - xrW])
                     cv2.rectangle(imCopy, (xr, yr), (xr + xrW, yr - xrW), (217, 83, 25), 2)
                     #print('anti-cyclone | prob: {}'.format(prob[0,1]*100))
                 else:
-                    cyc_r.append([i, j, i + winW, j + winH])
+                    cyc_r.append([i, j, i + nxWin, j + nyWin])
                     cyc_r_im.append([xr, yr, xr + xrW, yr - xrW])
                     cv2.rectangle(imCopy, (xr, yr), (xr + xrW, yr - xrW), (0, 76, 217), 2)
                     #print('cyclone | prob: {}'.format(prob[0,2]*100))
@@ -382,6 +593,7 @@ def cnn_predict_grid(data_in=None,
     #cyc_r, _ = cv2.groupRectangles(rectList=cyc_r, groupThreshold=1, eps=0.2)
     #acyc_r, _ = cv2.groupRectangles(rectList=acyc_r, groupThreshold=1, eps=0.2)
 
+    plt.close(fig)
     return cyc_r, acyc_r
 
 
@@ -391,27 +603,27 @@ def real_time_test(problim=0.95):
     longitude = [-23.2, -16.5]
     #download.download_nc(longitude, latitude)
 
-    fig1, ax1 = plt.subplots(figsize=(12, 8))     
-    fig1.subplots_adjust(0,0,1,1)
+    fig, ax = plt.subplots(figsize=(12, 8))     
+    fig.subplots_adjust(0,0,1,1)
     
     clf = load_model(model_fpath)
 
     ncdir = "D:/Master/data/cmems_data/global_10km/2016/noland/realtime/"
     for imId, fName in enumerate(os.listdir(ncdir)):
 
-        lon,lat,sst,ssl,uvel,vvel =  load_nc_cmems(ncdir + fName)
+        lon,lat,sst,ssl,uvel,vvel =  load_nc_sat(ncdir + fName)
         nx, ny = ssl.shape 
 
-        ax1.clear()
-        ax1.contourf(lon, lat, ssl.T, cmap='rainbow', levels=100)
-        ax1.contour(lon, lat, ssl.T,levels=50)#,colors='k')#,linewidth=0.001)
+        ax.clear()
+        ax.contourf(lon, lat, ssl.T, cmap='rainbow', levels=100)
+        ax.contour(lon, lat, ssl.T,levels=50)#,colors='k')#,linewidth=0.001)
         n=-1
         color_array = np.sqrt(((uvel-n)/2)**2 + ((vvel-n)/2)**2)
-        ax1.quiver(lon, lat, uvel.T, vvel.T, color_array)#, scale=12) #units="xy", ) # Plot vector field 
-        fig1.canvas.draw()
+        ax.quiver(lon, lat, uvel.T, vvel.T, color_array)#, scale=12) #units="xy", ) # Plot vector field 
+        fig.canvas.draw()
 
-        im = np.frombuffer(fig1.canvas.tostring_rgb(), dtype=np.uint8)
-        im = im.reshape(fig1.canvas.get_width_height()[::-1] + (3,))
+        im = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
+        im = im.reshape(fig.canvas.get_width_height()[::-1] + (3,))
         imCopy = cv2.cvtColor(im,cv2.COLOR_RGB2BGR)
         imH, imW, _ = imCopy.shape # col, row
         winScaleW, winScaleH = imW/nx, imH/ny # Scalar coeff from dataset to cv2 image
@@ -516,9 +728,64 @@ def real_time_test(problim=0.95):
         cv2.imwrite(f'D:/master/TTK-4900-Master/images/realtime/cnn_pred{imId}.png', im)
         print("\n\n")
 
+    plt.clf()
+
+
+def plot_feature_map():
+    """Testing a single image"""
+
+    data = []
+
+    dirpath = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/'
+    with np.load(dirpath+'uvel_train.npz', allow_pickle=True) as h5f:
+        data.append(h5f['arr_0'][293,0])
+    with np.load(dirpath+'vvel_train.npz', allow_pickle=True) as h5f:
+        data.append(h5f['arr_0'][293,0])
+
+    #fig, ax = plt.subplots(1,2,figsize=(10,8))
+    #ax[0].quiver(uvel.T, vvel.T, scale=0.9) 
+
+    winW2, winH2 = winW*6, winH*6
+    cnn_data = np.zeros((1, winW2, winH2, 2))
+
+    custom_objects  = {
+        "f1_m": f1_m,
+        "precision_m": precision_m, 
+        "recall_m": recall_m
+    }
+
+    model_fpath = 'D:/Master/models/best_model_975.h5'
+    clf = load_model(model_fpath, custom_objects=custom_objects)
+
+    scaler = joblib.load(largescaler_fpath) # Import the std sklearn scaler model
+
+    for i in range(2):
+        tmp = cv2.resize(data[i], dsize=(winH2, winW2), interpolation=cv2.INTER_CUBIC)
+        tmp = tmp.flatten()
+        tmp = scaler[i].transform([tmp])[0]
+        cnn_data[0,:,:,i] = tmp.reshape(winW2, winH2)
+
+    from keras import models
+    # Extracts the outputs of the top 12 layers
+    layer_outputs = [layer.output for layer in clf.layers[:12]] 
+    # Creates a model that will return these outputs, given the model input
+    activation_model = models.Model(inputs=clf.input, outputs=layer_outputs) 
+
+    activations = activation_model.predict(cnn_data) 
+
+    first_layer_activation = activations[0]
+    print(first_layer_activation.shape)
+    # Try plotting the fourth channel
+    plt.matshow(first_layer_activation[0, :, :, 0], cmap='viridis')
+
+    plt.show()
+
 
 if __name__ == '__main__':
-    train_model() 
+    #train_model(use_existing_split=False) 
+    find_best_model()
+    #find_average_model()
     #analyse_h5()  
     #test_model()
     #real_time_test()
+    #plot_feature_map()

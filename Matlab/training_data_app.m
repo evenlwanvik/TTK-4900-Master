@@ -1,7 +1,7 @@
-addpath('D:/Master/TTK-4900-Master/Matlab')
+addpath('C:/Users/47415/Master/TTK-4900-Master/Matlab')
 % Function for custom popup window for choosing label
 import popup.*
-load('D:/Master/TTK-4900-Master/Matlab/config.mat')
+load('C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat')
 
 % Root figure for "app"
 f = figure; clf()
@@ -26,7 +26,7 @@ dirPath = 'D:/Master/data/cmems_data/global_10km/2016/full/'; %gets directory
 setappdata(f, 'dirPath', dirPath);
 setappdata(f, 'ncfiles', dir(fullfile(dirPath,'*.nc'))); %gets all wav files in struct 
 % I will be saving training samples as individual matlab cell arrays
-setappdata(f, 'storePath', "D:/Master/TTK-4900-Master/data/training_data/2016/h5/")
+setappdata(f, 'storePath', "C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/h5/")
 
 % Set primary and secondary axes to plot on
 axPrimary(1) = axes('Parent',sslTab,'Units','Normalize','Box','on');
@@ -69,8 +69,8 @@ function chooseDataset(f, next_or_prev) % load
     else % if 'Next'
         id = getappdata(f, 'datasetID') + 1; setappdata(f, 'datasetID', id);
     end
-    load('D:/Master/TTK-4900-Master/Matlab/config.mat'); config('datasetID') = id;
-    save 'D:/Master/TTK-4900-Master/Matlab/config.mat' config;
+    load('C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat'); config('datasetID') = id;
+    save 'C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat' config;
     % Open netcdf variables
     fName = ncFiles(id).name;
     dPath = getappdata(f, 'dirPath');
@@ -85,8 +85,8 @@ function chooseDataset(f, next_or_prev) % load
     setappdata(f, 'ny', ny)  
     
     % Reset the window ID before showing next dataset
-    load('D:/Master/TTK-4900-Master/Matlab/config.mat'); config('windowID') = 0;
-    save 'D:/Master/TTK-4900-Master/Matlab/config.mat' config;
+    load('C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat'); config('windowID') = 0;
+    save 'C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat' config;
     setappdata(f, 'windowID', 0)
     plotDatasetWindow(f, next_or_prev)
 
@@ -123,8 +123,8 @@ function plotDatasetWindow(f, next_or_prev) % load
         id = getappdata(f, 'windowID') + 1; setappdata(f, 'windowID', id);
     end
     if (id <= 0); disp('Window ID <= 0'); return; end
-    load('D:/Master/TTK-4900-Master/Matlab/config.mat'); config('windowID') = id;
-    save 'D:/Master/TTK-4900-Master/Matlab/config.mat' config;
+    load('C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat'); config('windowID') = id;
+    save 'C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat' config;
     
     windowSize = getappdata(f, 'windowSize');
     nx = getappdata(f, 'nx'); ny = getappdata(f, 'ny');
@@ -275,8 +275,8 @@ function deleteLatestRect(f)
     fName = "/ds" + string(dsId) + "_" + "sample" + "_" + string(id) + ".h5";
     h5Path = getappdata(f, 'storePath') + fName;
     delete(h5Path);
-    load('D:/Master/TTK-4900-Master/Matlab/config.mat'); config('sampleID') = id;
-    save 'D:/Master/TTK-4900-Master/Matlab/config.mat' config;
+    load('C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat'); config('sampleID') = id;
+    save 'C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat' config;
 end
 
 % --- Save rectangle as hdf5 training sample
@@ -288,8 +288,8 @@ function saveSample(f, label)
     savePath = getappdata(f, 'storePath') + fName;
     fprintf('Saving sample nr %i with label = %i and dimension: (%i, %i)\n', id, label, size(getappdata(f, 'ssl'))');
 
-    load('D:/Master/TTK-4900-Master/Matlab/config.mat'); config('sampleID') = id;
-    save 'D:/Master/TTK-4900-Master/Matlab/config.mat' config;
+    load('C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat'); config('sampleID') = id;
+    save 'C:/Users/47415/Master/TTK-4900-Master/Matlab/config.mat' config;
     
     %ssl
     data = getappdata(f, 'ssl_window');
