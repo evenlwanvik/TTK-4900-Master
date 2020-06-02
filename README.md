@@ -15,6 +15,12 @@ Also tested SVM ~92% test accuracy.
 
 ![SVM on a small grid](images/realtime/svm_pred.gif)
 
+## CMEMS satellite data compared to SINMOD model data
+
+One of the goals of this project is to compare the appliance of Machine learning techniques on both CMEMS and SINMOD data and compare the results.
+
+![CNN on a small grid](images/realtime/SatSin1.gif)
+
 ## Semi-automated training data generator
 
 I've created a semi-automated way of extracting annotated data from CMEMS global satellite data. 
