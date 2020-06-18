@@ -39,7 +39,7 @@ def VGG16(input_shape, classes):
 
 
 # A simple network used for the mnist dataset
-def mnist(input_shape, classes):
+def mnist_model(input_shape, classes):
     model = Sequential()
     model.add(Conv2D(32, kernel_size=(3, 3),activation='relu',kernel_initializer='he_normal',input_shape=input_shape))
     model.add(Conv2D(32, kernel_size=(3, 3),activation='relu',kernel_initializer='he_normal'))
@@ -67,6 +67,7 @@ def conv2d(x,numfilt,filtsz,pad='same',act=True,name=None):
     x = Activation('relu',name=name+'conv2d'+'act')(x)
   return x
 
+
 def inception_resnet_A(x,name=None):
     pad = 'same'
     branch0 = conv2d(x,32,1,pad,True,name=name+'b0')
@@ -80,48 +81,24 @@ def inception_resnet_A(x,name=None):
     filt_exp_1x1 = conv2d(branches,384,1,pad,False,name=name+'filt_exp_1x1')
     return concatenate([x, filt_exp_1x1], axis=-1)
 
-def inception_resnet_B(x,name=None):
-    pad = 'same'
-    branch0 = conv2d(x,96,1,pad,True,name=name+'b0')
-    branch1 = conv2d(x,80,1,pad,True,name=name+'b1_1')
-    branch1 = conv2d(branch1,120,[1,7],pad,True,name=name+'b1_2')
-    branch1 = conv2d(branch1,140,[7,1],pad,True,name=name+'b1_3')
-    branches = concatenate([branch0,branch1], axis=-1)
-    filt_exp_1x1 = conv2d(branches,256,1,pad,False,name=name+'filt_exp_1x1')
-    return concatenate([x, filt_exp_1x1], axis=-1)
-
-def inception_resnet_C(x,name=None):
-    pad = 'same'
-    branch0 = conv2d(x,120,1,pad,True,name=name+'b0')
-    branch1 = conv2d(x,120,1,pad,True,name=name+'b1_1')
-    branch1 = conv2d(branch1,160,[1,3],pad,True,name=name+'b1_2')
-    branch1 = conv2d(branch1,160,[3,1],pad,True,name=name+'b1_3')
-    branches = concatenate([branch0,branch1], axis=-1)
-    filt_exp_1x1 = conv2d(branches,384,1,pad,False,name=name+'filt_exp_1x1')
-    return concatenate([x, filt_exp_1x1], axis=-1)
 
 def inception_resnet_v2(input_shape, classes, model_fpath):
     data_in = Input(shape=input_shape)   
     x = conv2d(data_in,32,3,'same',True,name='conv1')
     x = conv2d(x,64,3,'same',True,name='conv2')
+    # parallel
     x_11 = AveragePooling2D(2,strides=1,padding='same',name='avgpool_1')(x)
     x_12 = conv2d(x,64,3,'same',True,name='stem_br_12')
     x = concatenate([x_11,x_12], axis=-1, name = 'stem_concat_1')
-    #x = AveragePooling2D(2,strides=1,padding='same',name='avgpool_2')(x)
+    x = AveragePooling2D(2,strides=1,padding='same',name='avgpool_2')(x)
     x = Dropout(0.2)(x)
-
+    # resnet
     x = inception_resnet_A(x,name='moduleA1')
     x = AveragePooling2D(2,strides=1,padding='same',name='avgpool_3')(x)
     x = Dropout(0.2)(x)
 
-    #x = inception_resnet_A(x,name='moduleA2')
-    #x = AveragePooling2D(2,padding='same',name='avgpool_4')(x)
-    #x = Dropout(0.2)(x)
-
     x = Flatten()(x)
-    #x = Dense(64, activation='relu')(x)
-    #x = Dropout(0.2)(x)
-
+    x = Dense(64, activation='relu')(x)
     x = Dense(classes, activation='softmax')(x)
 
     checkpoint = ModelCheckpoint(model_fpath, monitor='val_acc', 
@@ -139,7 +116,8 @@ def inception_resnet_v2(input_shape, classes, model_fpath):
     
     return model, callbacks_list
 
-def my_model_inception(input_shape, classes):
+
+def my_inception(input_shape, classes):
     # (no of inputs + no of outputs)^0.5 + (1 to 10)
     # ~ sqrt(1000) = 100
 
@@ -148,20 +126,14 @@ def my_model_inception(input_shape, classes):
     layer = inception_resnet_A(visible, name='moduleA1')
     layer = AveragePooling2D((2, 2))(layer)
     layer = Dropout(0.25)(layer)
+    # add inception block 2
     layer = inception_resnet_A(visible, name='moduleA2')
     layer = AveragePooling2D((2, 2))(layer)
     layer = Dropout(0.25)(layer)
-    #layer = BatchNormalization()(layer)
-    #layer = Conv2D(32, (3, 3), activation='relu',padding='same',kernel_initializer='he_normal')(layer)
-    #layer = Conv2D(64, (3, 3), activation='relu',padding='same',kernel_initializer='he_normal')(layer)
-    #layer = AveragePooling2D((2, 2))(layer)
-    #layer = Dropout(0.25)(layer)
-    # add inception block 1
-    #layer = inception_module_A(layer, 32, 32, 64, 16, 32, 16)
+    # add inception block 3
     layer = inception_resnet_A(layer, name='moduleA3')
     layer = AveragePooling2D(pool_size=(2, 2), padding='valid')(layer)
     layer = Dropout(0.25)(layer)
-    #layer = BatchNormalization()(layer)
     layer = Flatten()(layer)
     layer = Dense(512, activation='relu')(layer)
     layer = Dense(128, activation='relu')(layer)
@@ -170,11 +142,10 @@ def my_model_inception(input_shape, classes):
     model = Model(inputs=visible, outputs=layer)
     # summarize model
     model.summary()
-
     return model
 
 
-def my_model(input_shape, classes):
+def test_model(input_shape, classes):
     model = Sequential()
     model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal',input_shape=input_shape))
     model.add(Conv2D(32, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))
@@ -194,8 +165,8 @@ def my_model(input_shape, classes):
     model.add(Dense(classes, activation='softmax'))
     return model
 
-
-def best_sofar(input_shape, classes):
+# Best model (VGG modification)
+def my_VGG(input_shape, classes):
     model = Sequential()
     model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal',input_shape=input_shape))
     model.add(Conv2D(32, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))
@@ -221,70 +192,7 @@ def best_sofar(input_shape, classes):
     model.summary()
     return model
 
-
-def test_shallow(input_shape, classes):
-    model = Sequential()
-    model.add(Conv2D(32, kernel_size=(5,5), padding='same',activation='relu',kernel_initializer='he_normal',input_shape=input_shape))
-    model.add(Conv2D(32, kernel_size=(5,5), padding='same',activation='relu',kernel_initializer='he_normal'))
-    model.add(MaxPooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25)) 
-    model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))  
-    model.add(Conv2D(32, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))
-    model.add(MaxPooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25)) 
-    model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))  
-    model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))
-    model.add(MaxPooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25)) 
-    #model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))
-    #model.add(Conv2D(32, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))  
-    #model.add(AveragePooling2D((2, 2), padding='same'))
-    #model.add(Dropout(0.25)) 
-    model.add(Flatten())
-    model.add(Dense(512, activation='relu'))
-    model.add(Dense(128, activation='relu'))
-    model.add(Dense(classes, activation='softmax'))
-    model.summary()
-    return model
-
-def simple_model_for_visualization(input_shape, classes):
-
-    model = Sequential()
-
-    model.add(Conv2D(32, (3, 3), padding='same', input_shape = input_shape, activation = 'relu'))
-    model.add(Conv2D(32, (3, 3), activation='relu'))
-    #model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(AveragePooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25)) # test 0.5
-    # Adding a second convolutional layer
-    model.add(Conv2D(64, (3, 3), padding='same', activation = 'relu'))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(AveragePooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25)) 
-    # Adding a third convolutional layer
-    model.add(Conv2D(64, (3, 3), padding='same', activation = 'relu'))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(AveragePooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25)) 
-    # Step 3 - Flattening
-    model.add(Flatten())
-    # Step 4 - Full connection
-    model.add(Dense(units = 512, activation = 'relu'))
-    model.add(Dense(units = 256, activation = 'relu'))
-    model.add(Dropout(0.25)) 
-    model.add(Dense(units = classes, activation = 'softmax'))
-    model.summary()
-    return model
-
-
-def conv2d_2(x, filter_size, kernelsize, padding, name=None):
-    x = Conv2D(filter_size, kernelsize, padding=padding,kernel_initializer='he_normal', name=name+'conv2d')(x)
-    #x = BatchNormalization(axis=-1, name=name+'conv2d'+'bn')(x)
-    x = Activation('relu', name=name+'conv2d'+'act')(x)
-    return x
-
-
-def best_sofar_resnet(input_shape, classes):
+def my_resnet(input_shape, classes):
 
     data_in = Input(shape=input_shape)   
     # VGG block 1 
@@ -318,47 +226,49 @@ def best_sofar_resnet(input_shape, classes):
     #plot_model(model, to_file='ResNet.png')
     return model
 
-
-def resnet(x,name=None):
-    pad = 'same'
-    branch0 = conv2d(x,32,1,pad,True,name=name+'b0')
-    branch1 = conv2d(x,32,1,pad,True,name=name+'b1_1')
-    branch2 = conv2d(branch2,64,3,pad,True,name=name+'b2_3')
-    branches = concatenate([branch0,branch1,branch2], axis=-1)
-    # concatenate filters, assumes filters/channels last
-    filt_exp_1x1 = conv2d(branches,384,1,pad,False,name=name+'filt_exp_1x1')
-    return concatenate([x, filt_exp_1x1], axis=-1)
-
-
-'''
-def shallow_resnet(input_shape, classes):
-
-    data_in = Input(shape=input_shape) 
-
-    layer = model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal',input_shape=input_shape))((2, 2))(layer)
-
-
-
+def test_shallow_VGG(input_shape, classes):
     model = Sequential()
-    
+    model.add(Conv2D(32, kernel_size=(5,5), padding='same',activation='relu',kernel_initializer='he_normal',input_shape=input_shape))
+    model.add(Conv2D(32, kernel_size=(5,5), padding='same',activation='relu',kernel_initializer='he_normal'))
+    model.add(MaxPooling2D((2, 2), padding='same'))
+    model.add(Dropout(0.25)) 
+    model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))  
     model.add(Conv2D(32, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))
-    model.add(AveragePooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25))  
-    model.add(Conv2D(64, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal',input_shape=input_shape))
-    model.add(Conv2D(32, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))  
-    model.add(AveragePooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25)) 
-    model.add(Conv2D(32, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))  
-    model.add(AveragePooling2D((2, 2), padding='same'))
-    model.add(Dropout(0.25)) 
-    model.add(Conv2D(32, kernel_size=(3,3), padding='same',activation='relu',kernel_initializer='he_normal'))  
-    model.add(AveragePooling2D((2, 2), padding='same'))
+    model.add(MaxPooling2D((2, 2), padding='same'))
     model.add(Dropout(0.25)) 
     model.add(Flatten())
-    model.add(Dense(256, activation='relu'))
+    model.add(Dense(512, activation='relu'))
     model.add(Dense(128, activation='relu'))
     model.add(Dense(classes, activation='softmax'))
     model.summary()
-    #plot_model(model, to_file='ResNet.png')
     return model
-'''
+
+
+# Model used for visualizing feature maps
+def model_for_visualization(input_shape, classes):
+
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), padding='same', input_shape = input_shape, activation = 'relu'))
+    model.add(Conv2D(32, (3, 3), activation='relu'))
+    #model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(AveragePooling2D((2, 2), padding='same'))
+    model.add(Dropout(0.25)) # test 0.5
+    # Adding a second convolutional layer
+    model.add(Conv2D(64, (3, 3), padding='same', activation = 'relu'))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(AveragePooling2D((2, 2), padding='same'))
+    model.add(Dropout(0.25)) 
+    # Adding a third convolutional layer
+    model.add(Conv2D(64, (3, 3), padding='same', activation = 'relu'))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(AveragePooling2D((2, 2), padding='same'))
+    model.add(Dropout(0.25)) 
+    # Step 3 - Flattening
+    model.add(Flatten())
+    # Step 4 - Full connection
+    model.add(Dense(units = 512, activation = 'relu'))
+    model.add(Dense(units = 256, activation = 'relu'))
+    model.add(Dropout(0.25)) 
+    model.add(Dense(units = classes, activation = 'softmax'))
+    model.summary()
+    return model

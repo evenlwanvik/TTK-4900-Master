@@ -1,3 +1,6 @@
+%%%%  This training data app have very specific paths and directories and
+%%%%  not very flexible when swithcing workstations.
+
 addpath('D:/Master/TTK-4900-Master/Matlab')
 % Function for custom popup window for choosing label
 import popup.*
@@ -23,11 +26,11 @@ setappdata(f, 'labels', [])
 setappdata(f, 'sampleID', config('sampleID')); % Id of current sample
 setappdata(f, 'datasetID', config('datasetID')); % Id of current netcdf dataset, the config file registers where we left off
 % Directory to all files
-dirPath = 'D:/Master/data/cmems_data/global_10km/2016/full/'; %gets directory
+dirPath = 'D:/Master/data/cmems_data/global_10km/full/'; %gets directory
 setappdata(f, 'dirPath', dirPath);
 setappdata(f, 'ncfiles', dir(fullfile(dirPath,'*.nc'))); %gets all wav files in struct 
 % I will be saving training samples as individual matlab cell arrays
-setappdata(f, 'storePath', "D:/Master/TTK-4900-Master/data/training_data/2016/h5/rcnn/")
+setappdata(f, 'storePath', "D:/Master/TTK-4900-Master/data/h5/rcnn/")
 
 % Set primary and secondary axes to plot on
 axPrimary(1) = axes('Parent',sslTab,'Units','Normalize','Box','on');

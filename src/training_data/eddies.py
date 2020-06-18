@@ -2,6 +2,7 @@
 Created on Tue Feb 12 15:03:30 2019
 
 @author: jasaa
+https://github.com/JASaa/eddies-R2
 eddy detection functions
 
 eddy_detection:

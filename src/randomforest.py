@@ -84,16 +84,16 @@ def draw_simple_rectangle(image, rectangles, eddytype='cyclone'):
 
 
 
-sst_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/sst_train.npz'
-ssl_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/ssl_train.npz'
-uvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/uvel_train.npz'
-vvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/vvel_train.npz'
-phase_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/phase_train.npz'
-lon_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/lon.npz'
-lat_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/lat.npz'
-model_fpath = 'D:/master/models/2016/rf_mult_full.h5'
-scaler_fpath = "D:/master/models/2016/rf_norm_scaler.pkl"
-#2016/new
+sst_path = 'C:/Users/47415/Master/TTK-4900-Master/data/sst_train.npz'
+ssl_path = 'C:/Users/47415/Master/TTK-4900-Master/data/ssl_train.npz'
+uvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/uvel_train.npz'
+vvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/vvel_train.npz'
+phase_path = 'C:/Users/47415/Master/TTK-4900-Master/data/phase_train.npz'
+lon_path = 'C:/Users/47415/Master/TTK-4900-Master/data/lon.npz'
+lat_path = 'C:/Users/47415/Master/TTK-4900-Master/data/lat.npz'
+model_fpath = 'C:/Users/47415/Master/TTK-4900-Master/models/rf_model.h5'
+scaler_fpath = "C:/Users/47415/Master/TTK-4900-Master/models/rf_norm_scaler.pkl"
+#new
 #200_days_2018
 
 # Create a scaler for each channel

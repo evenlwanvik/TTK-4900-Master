@@ -1,6 +1,12 @@
 # TTK-4900-Master
 TTK4900 - Engineering Cybernetics, Master's Thesis
 
+## INFO
+
+system_tools.py contains most of the report and comparison tools produced
+
+compare.py contains most of the report and comparison tools produced
+
 ## CNN 
 
 ### Predictions

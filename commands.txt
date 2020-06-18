@@ -1,8 +1,10 @@
+Temporary command reminder
+
 conda:
 
 environment commands
     conda env export > environment.yml
     conda create --name myenv
 
-
+Faster-RCNN training:
 python train_frcnn.py -o simple -p annotate.txt --rot_90 True --num_epochs 50

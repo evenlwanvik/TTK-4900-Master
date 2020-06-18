@@ -7,7 +7,7 @@ def main():
 
 
 
-    npzPath = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
+    npzPath = 'D:/Master/TTK-4900-Master/data/rcnn/'
 
     with np.load(npzPath + 'data.npz', allow_pickle=True) as h5f:
         data = h5f['arr_0']

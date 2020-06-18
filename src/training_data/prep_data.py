@@ -6,9 +6,11 @@ import h5py
 import cv2
 
 def h5_to_npz_normal():
-    dirpath = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/h5/'
+    """ Convert the h5 training samples from the compressed folder created by the MATLAB 
+    training data collection application. """
+    dirpath = 'C:/Users/47415/Master/TTK-4900-Master/data/h5/'
     zippath = dirpath + 'training_data.zip'
-    savedir = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/'
+    savedir = 'C:/Users/47415/Master/TTK-4900-Master/data/'
 
     lon = []
     lat = []
@@ -18,12 +20,15 @@ def h5_to_npz_normal():
     vvel = []
     phase = []
 
-    # Training samples found to be incorrectly labeled
-    excludelist = [None]
-    #excludelist = [4, 5, 27, 36, 56, 61, 68, 141, 163, 168, 169, 171, 176, 179, 183, 248, 250,
-    #            254, 256, 277, 289, 299, 306, 316, 321, 390, 416, 422, 431, 440, 465, 470, 563, 589,
-    #            687, 697, 992, 1006, 1010, 1011, 1013, 1024, 1048, 1060, 1072, 1159, 1160, 1161, 
-    #            1163, 1191, 1202, 1220, 1229, 1249, 1275, 1284, 1298, 1504, 1509, 1511, 1514, 1567, 1735] # (+1 Python iter)
+    # Training samples found to be incorrectly labeled or just bad training samples, 
+    # e.g., background samples containing circulatory ocean current
+    #excludelist = [None]
+    excludelist = [4, 5, 27, 36, 56, 61, 68, 141, 163, 168, 169, 171, 176, 179, 183, 248, 250,
+                254, 256, 277, 289, 299, 306, 316, 321, 390, 416, 422, 431, 440, 465, 470, 563, 589,
+                687, 697, 992, 1006, 1010, 1011, 1013, 1024, 1048, 1060, 1072, 1159, 1160, 1161, 
+                1163, 1191, 1202, 1220, 1229, 1249, 1275, 1284, 1298, 1504, 1509, 1511, 1514, 1567, 1735] # (+1 Python iter)
+
+
 
     with zipfile.ZipFile(zippath) as z:
         for i, fname in enumerate(z.namelist()):
@@ -41,14 +46,6 @@ def h5_to_npz_normal():
                             vvel.append([hf['/data/vvel'][()], int(hf['/label'][()])])
                             phase.append([hf['/data/phase'][()], int(hf['/label'][()])])
 
-    #dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/'
-    #with np.load(dirpath + 'ssl_train.npz', allow_pickle=True) as ssl_other:
-    #    ssl = np.concatenate((ssl, ssl_other['arr_0']), axis=0)
-    #with np.load(dirpath + 'uvel_train.npz', allow_pickle=True) as uvel_other:
-    #    uvel = np.concatenate((uvel, uvel_other['arr_0']), axis=0)
-    #with np.load(dirpath + 'vvel_train.npz', allow_pickle=True) as vvel_other:
-    #    vvel = np.concatenate((vvel, vvel_other['arr_0']), axis=0)
-
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     np.savez_compressed( f'{savedir}/lon.npz', lon)
@@ -60,9 +57,10 @@ def h5_to_npz_normal():
     np.savez_compressed( f'{savedir}/phase_train.npz', phase)
 
 def h5_to_npz_rcnn():
-    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/rcnn/'
+    """ Same as above, just for the Faster R-CNN training data """
+    dirpath = 'D:/Master/TTK-4900-Master/data/h5/rcnn/'
     zippath = dirpath + 'training_data.zip'
-    savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
+    savedir = 'D:/Master/TTK-4900-Master/data/rcnn/'
 
     data = []
     box_idxs = []
@@ -88,11 +86,12 @@ def h5_to_npz_rcnn():
 
 
 def prep_rcnn():
+    """ For storing the Faster R-CNN npz training data as image and annotation text file """
 
     from PIL import Image
     import pandas as pd
 
-    npzPath = 'D:/Master/TTK-4900-Master/data/training_data/2016/rcnn/'
+    npzPath = 'D:/Master/TTK-4900-Master/data/rcnn/'
 
     with np.load(npzPath + 'data.npz', allow_pickle=True) as h5f:
         data = h5f['arr_0']
@@ -153,8 +152,9 @@ def prep_rcnn():
     X.to_csv('D:/master/TTK-4900-Master/keras-frcnn/annotate.txt', header=None, index=None, sep=' ')
 
 def rcnn_test_image():
+    """ Show Faster R-CNN RGB encoded image """
 
-    nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/smaller/phys_noland_2016_001.nc'
+    nc_fpath='D:/Master/data/cmems_data/global_10km/noland/smaller/phys_noland_2016_001.nc'
     ds = xr.open_dataset(nc_fpath)
 
     # Mask NaN - indicating land
@@ -162,14 +162,13 @@ def rcnn_test_image():
     uvel = np.ma.masked_invalid(ds.uo[0,0].T)
     uvel = np.ma.masked_invalid(ds.uv[0,0].T)
 
-
-
     im = Image.fromarray(img.astype('uint8'), mode='RGB')
     #new_im = im.resize((1000,600),Image.BICUBIC)
     im.save(f'D:/master/TTK-4900-Master/keras-frcnn/train_images/{i}.png')
 
 def count_labels():
-    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/ssl_train.npz'
+    """ Count the number of classes in training data """
+    dirpath = 'D:/Master/TTK-4900-Master/data/new/ssl_train.npz'
 
     from collections import Counter
 
@@ -183,63 +182,12 @@ def count_labels():
     print(Counter(labels))
 
 
-def rename_files():
-    dirpath = 'D:/Master/TTK-4900-Master/data/training_data/2016/h5/'
-    for fname in os.listdir(dirpath):
-        if fname.endswith(".h5"):
-            os.rename(dirpath+fname, dirpath+'ds2_'+fname)
-
-                        
-def common_npz():
-    ''' Create a common npz file for all 4 measurements, kind of like RGB '''
-
-    sst_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/sst_train.npz'
-    ssl_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/ssl_train.npz'
-    uvel_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/uvel_train.npz'
-    vvel_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/vvel_train.npz'
-    phase_path = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/phase_train.npz'
-
-    X = []
-
-    with np.load(ssl_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0])
-        Y = data['arr_0'][:,1]
-    with np.load(uvel_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0])
-    with np.load(vvel_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0])
-        Y = data['arr_0'][:,1]
-    with np.load(phase_path, allow_pickle=True) as data:
-        X.append(data['arr_0'][:,0]) 
-        Y = data['arr_0'][:,1]       
-   
-    nTeddies = len(X[0])
-    nChannels = len(X)
-    train = []
-
-    for i in range(nTeddies): # Eddies
-        train.append([])
-        for lo in range(len(X[0][i])): 
-            +[i].append([])
-            for la in range(len(X[0][i][0])): 
-                train[i][lo].append([])
-                for c in range(nChannels):
-                    train[i][lo][la].append(X[c][i][lo][la])
-    
-    savedir = 'D:/Master/TTK-4900-Master/data/training_data/2016/new/'
-
-    if not os.path.exists(savedir):
-        os.makedirs(savedir)
-    np.savez_compressed( f'{savedir}/full_train.npz', train)
-
 
 if __name__ == '__main__':
-    h5_to_npz_normal()
+    #h5_to_npz_normal()
     #prep_rcnn()
     #yml2xml_annotate()
     #xml_annotate()
     #count_labels()
     #h5_to_npz_rcnn()
     #prep_rcnn()
-    #rename_files()
-    #common_npz()

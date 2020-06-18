@@ -22,9 +22,9 @@ def load_netcdf4(filename):
     ds.close() 
     return (ds,t,lon,lat,depth,u,v,sst,ssl)
     
-
-def load_nc_sat(fpath):
-    ''' Load CMEMS satellite measurements data '''
+# https://resources.marine.copernicus.eu/?option=com_csw&task=results?option=com_csw&view=details&product_id=GLOBAL_ANALYSIS_FORECAST_PHY_001_024
+def load_nc_phys(fpath):
+    ''' Load CMEMS-phys assimilated data '''
     ds = xr.open_dataset(fpath)
 
     lon = np.array(ds.longitude)
@@ -38,9 +38,9 @@ def load_nc_sat(fpath):
     ds.close() 
     return lon,lat,sst,ssl,sal,uvel,vvel
 
-
+# https://www.sintef.no/sinmod
 def load_nc_sinmod(fpath):
-    ''' Simpler method '''
+    ''' Load SINMOD model data, averaging hourly data over 24 hours'''
     ds = xr.open_dataset(fpath)
     xc = ds.xc
     yc = ds.yc
@@ -58,8 +58,8 @@ def load_nc_sinmod(fpath):
     return xc, yc, depth, lon,lat,sst,ssl,sal,uvel,vvel
 
 
-
-def load_nc_insitu(fpath):
+#https://resources.marine.copernicus.eu/?option=com_csw&task=results?option=com_csw&view=details&product_id=MULTIOBS_GLO_PHY_NRT_015_001
+def load_nc_obs(fpath):
     ''' Load CMEMS satellite measurements data '''
     ds = xr.open_dataset(fpath)
 
@@ -74,4 +74,3 @@ def load_nc_insitu(fpath):
     ds.close() 
     return lon,lat,sst,ssl,sal,uvel,vvel, ds.time
 
-#https://resources.marine.copernicus.eu/?option=com_csw&task=results?option=com_csw&view=details&product_id=MULTIOBS_GLO_PHY_NRT_015_001

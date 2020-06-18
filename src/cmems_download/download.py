@@ -3,18 +3,21 @@ import os
 import yaml
 
 def download_nc(longitude, latitude):
+    """ Script for downloading NetCDF files from CMEMS 
+    Define input lon and lat boundaries in degrees, e.g., longitude=[45, 60]"""
 
     pyPath = 'python'
 
-    # Open locally stored credentials
+    # Open locally stored credentials, optionally hardcode username and password 
+    # (because this is on Github, I use credentials stored on my PC)
     conf = yaml.load(open('C:/Users/47415/master/TTK-4900-Master/config/credentials.yml'), yaml.FullLoader)
     username = conf['CMEMS-download']['credentials']['username']
     password = conf['CMEMS-download']['credentials']['password']
 
     # Choose directory
-    #storePath = "D:/Master/data/cmems_data/global_10km/2016/full/"
+    #storePath = "D:/Master/data/cmems_data/global_10km/full/"
     storePath = "D:/Master/data/compare/satellite/"
-    #storePath = "D:/Master/data/cmems_data/global_10km/2016/noland/realtime/"
+    #storePath = "D:/Master/data/cmems_data/global_10km/noland/realtime/"
     if not os.path.exists(storePath):
         os.makedirs(storePath)
 
@@ -59,22 +62,10 @@ def download_nc(longitude, latitude):
     # Global reprocessed observations:
     #filePrefix = "multiobs_"
 
-    startT = datetime.datetime(2017,6,1,0,0,0) + datetime.timedelta(days=0)
-
-    '''
-    28-Mar-2017 12:00:00
-    dataset 6 27-Sep-2016 12:00:00
-    dataset 5 2016,9,29,0,0,0
-    Test the datetime for files
-    >>> import datetime as dt
-    >>> origin = dt.date(1950, 1, 1)
-    >>> origin + dt.timedelta(hours=584364)
-    datetime.date(2016, 8, 30)
-    '''
-
-    N = 365 # Number of days, or dt
-    time = startT
-    for i in range(N,N+100):
+    #N = 365 # Number of days, or dt
+    N = 1
+    time = datetime.datetime(2017,6,1,0,0,0) + datetime.timedelta(days=0)
+    for i in range(0,N):
         tEnd = time + duration
 
         n = str(i+100)

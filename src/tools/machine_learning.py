@@ -74,21 +74,6 @@ def find_dimensions(data_path):
     plt.show('Length of sample sizes')
 
 
-def data_augmentation(arr):
-
-    #arr = arr + arr.T
-    print(arr[:,0].shape)
-    exit()
-
-    fig, ax = plt.subplots(1, 2, figsize=(14, 8))
-    ax[0].contourf(arr[:,0], cmap='rainbow', levels=20)
-    ax[1].contourf(arr[:,0].T, cmap='rainbow', levels=20)
-    plt.show()
-    exit()
-
-    keras.preprocessing.image.ImageDataGenerator(rotation_range=180, horizontal_flip=True)
-
-
 def sliding_window(arr, wSize, hSize, windowSize):
     ''' 
     slide window across the image 

@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from matplotlib.colors import BoundaryNorm
 from sklearn.metrics import f1_score, accuracy_score, recall_score, precision_score
 from matplotlib.ticker import MaxNLocator
-from tools.load_nc import load_nc_sat
+from tools.load_nc import load_nc_phys
 from sklearn.externals import joblib # To save scaler
 from keras.models import load_model
 from keras import backend as K
@@ -63,7 +63,7 @@ def analyse_h5():
     import scipy.io
     import h5py
 
-    dirpath = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/h5/'
+    dirpath = 'C:/Users/47415/Master/TTK-4900-Master/data/h5/'
     zippath = dirpath + 'training_data.zip'
 
     with zipfile.ZipFile(zippath) as z:
@@ -157,30 +157,7 @@ def f1_m(y_true, y_pred):
     recall = recall_m(y_true, y_pred)
     return 2*((precision*recall)/(precision+recall+K.epsilon()))
 
-##################### TRAIN AND TEST #####################
-
-
-sst_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/sst_train.npz'
-ssl_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/ssl_train.npz'
-uvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/uvel_train.npz'
-vvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/vvel_train.npz'
-phase_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/phase_train.npz'
-lon_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/lon.npz'
-lat_path = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/lat.npz'
-model_fpath = 'D:/Master/models/2016/cnn_velocities.h5'
-#model_fpath = 'D:/Master/models/2016/cnn_ssl.h5'
-scaler_fpath = "D:/Master/models/2016/cnn_norm_scaler.pkl"
-largescaler_fpath = "D:/Master/models/2016/cnn_large_scaler.pkl"
-
-# Create a scaler for each channel
-nChannels = 2
-scaler = [StandardScaler() for _ in range(nChannels)]
-#scaler = [MinMaxScaler(feature_range=(0,1)) for _ in range(nChannels)]
-winW, winH = int(11), int(6)
-
-# Fortsett å endre oppløsning for å se om vi kan ha mindre, *4 var best
-# Også prøv forskjellige kombinasjoner av kanaler
-
+##################### WRAPPERS FOR TRAINING #####################
 
 def find_average_model(nSamples=None):
     """ Returns the average and variance of the models """
@@ -220,7 +197,7 @@ def find_best_model():
     print("precision: " + str(precision_class))
     print("recall: " + str(recall_class))
 
-    model.save("best_ever_model.h5")
+    model.save("cnn_model.h5")
 
 def find_best_input_size(sizes=[40]):
     """ Returns the average and variance of the models """
@@ -250,8 +227,31 @@ def find_best_input_size(sizes=[40]):
 
     return accuracies, sigma, time
 
-def train_model(size=40, nSamples=None,use_existing_split=False, trainsplit_dir='C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/train_test_split/'):
+
+##################### TRAIN AND TEST #####################
+
+# Hardcoded path to training data, need to fix this
+sst_path = 'C:/Users/47415/Master/TTK-4900-Master/data/sst_train.npz'
+ssl_path = 'C:/Users/47415/Master/TTK-4900-Master/data/ssl_train.npz'
+uvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/uvel_train.npz'
+vvel_path = 'C:/Users/47415/Master/TTK-4900-Master/data/vvel_train.npz'
+phase_path = 'C:/Users/47415/Master/TTK-4900-Master/data/phase_train.npz'
+lon_path = 'C:/Users/47415/Master/TTK-4900-Master/data/lon.npz'
+lat_path = 'C:/Users/47415/Master/TTK-4900-Master/data/lat.npz'
+model_fpath = 'C:/Users/47415/Master/TTK-4900-Master/models/cnn_model.h5'
+#model_fpath = 'C:/Users/47415/Master/TTK-4900-Master/models/cnn_ssl.h5'
+scaler_fpath = "C:/Users/47415/Master/TTK-4900-Master/models/cnn_norm_scaler.pkl"
+
+# Create a scaler for each channel
+nChannels = 2
+scaler = [StandardScaler() for _ in range(nChannels)]
+#scaler = [MinMaxScaler(feature_range=(0,1)) for _ in range(nChannels)]
+winW, winH = int(11), int(6)
+
+
+def train_model(size=40, nSamples=None,use_existing_split=False, trainsplit_dir='C:/Users/47415/Master/TTK-4900-Master/data/train_test_split/'):
     """ Train CNN model, 
+    Size:
     'trainsplit_dir' is path to either existing split or where the new split is to be stored, 
     'use_existing_split' flags if an existing split is to be used """
 
@@ -261,29 +261,6 @@ def train_model(size=40, nSamples=None,use_existing_split=False, trainsplit_dir=
     if not use_existing_split:
         # Open the numpy training data array and append for each channel we want to use
         X = []
-
-        '''
-        with np.load(vvel_path, allow_pickle=True) as data:
-            # Random sample indexes to be used
-            if nSamples is not None:
-                idxs = np.arange(nSamples)
-                #idxs = np.random.choice(len(data['arr_0']), nSamples)
-            else:
-                idxs = np.arange(len(data['arr_0']))
-            data = data['arr_0'][idxs]
-            X.append(data[:,0])
-            Y = data[:,1]
-        #with np.load(uvel_path, allow_pickle=True) as data:
-        #    data = data['arr_0'][idxs]
-        #    X.append(data[:,0])
-        #with np.load(vvel_path, allow_pickle=True) as data:
-        #    data = data['arr_0'][idxs]
-        #    X.append(data[:,0])
-        #with np.load(sst_path, allow_pickle=True) as data:
-        #    data = data['arr_0'][idxs]
-        #    X.append(data[:,0])
-
-        '''
         with np.load(uvel_path, allow_pickle=True) as data:
             # Random sample indexes to be used
             if nSamples is not None:
@@ -308,7 +285,7 @@ def train_model(size=40, nSamples=None,use_existing_split=False, trainsplit_dir=
                 X[c][i][np.isnan(X[c][i])] = 0 # If we have land present, just set to zero TODO: change it?
                 X[c][i] = cv2.resize(X[c][i], dsize=(winH2, winW2), interpolation=cv2.INTER_CUBIC) 
 
-        # Reshape data (sample, width, height, channel) 
+        # Reshape data (sample, width, height, channel) for CNN
         X_cnn = np.zeros((nTeddies,winW2,winH2,nChannels))
         for i in range(nTeddies): # Eddies
             for lo in range(winW2): # Row
@@ -340,16 +317,9 @@ def train_model(size=40, nSamples=None,use_existing_split=False, trainsplit_dir=
         np.savez_compressed( trainsplit_dir + 'Y_test.npz', Y_test)
 
         input_shape = (winW2, winH2, nChannels)
-        #model = cnn_models.mnist(input_shape=input_shape, classes=3)
-        #model = cnn_models.VGG16(input_shape=input_shape, classes=3)
-        #model = cnn_models.my_model(input_shape=input_shape, classes=3)
-       # model = cnn_models.my_model_inception(input_shape = input_shape, classes = 3)
-        #model, callbacks_list = cnn_models.inception_resnet_v2(input_shape=input_shape,classes=3,model_fpath=model_fpath)
-        #model = cnn_models.best_sofar(input_shape=input_shape,classes=3) # USE THIS
-        #model = cnn_models.best_sofar_resnet(input_shape=input_shape,classes=3)
-        
-        #model = cnn_models.simple_model_for_visualization(input_shape=input_shape,classes=3)
-        model = cnn_models.test_shallow(input_shape=input_shape,classes=3)
+        model = cnn_models.my_VGG(input_shape=input_shape,classes=3)
+        #model = cnn_models.my_resnet(input_shape=input_shape,classes=3)
+        #model = cnn_models.my_inception(input_shape=input_shape,classes=3)
 
         model.compile(optimizer='adagrad', loss='categorical_crossentropy',  metrics=['acc',f1_m,precision_m, recall_m]) # USE THIS
         #model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
@@ -403,6 +373,7 @@ def train_model(size=40, nSamples=None,use_existing_split=False, trainsplit_dir=
     Y_pred = model.predict(X_test)
     acc = np.equal(np.argmax(Y_test, axis=-1), np.argmax(Y_pred, axis=-1)).mean()
 
+    # store model
     model.save(model_fpath)
 
     # evaluate the model
@@ -430,26 +401,26 @@ def train_model(size=40, nSamples=None,use_existing_split=False, trainsplit_dir=
     print("precision: " + str(precision_class))
     print("recall: " + str(recall_class))
 
-    #f1_score(Y_test, Y_pred)
-    #accuracy_score(Y_test, Y_pred)
-    #precision_score(Y_test, Y_pred)
-    #recall_score(Y_test, Y_pred)
-   
     #if not use_existing_split:
         #plot_history(history)
 
     print("")
 
     # Return train and test accuracy
-    return history.history['acc'][-1], history.history['val_acc'][-1], accuracy
-    #return accuracy, accuracy_class, f1_class, precision_class, recall_class, model, t1-t0
+    #return history.history['acc'][-1], history.history['val_acc'][-1], accuracy
+    return accuracy, accuracy_class, f1_class, precision_class, recall_class, model, t1-t0
 
 def cnn_predict_grid(data_in=None, 
             win_sizes=[((int(8), int(5)), 2, 1),((int(10), int(6)), 3, 2),((int(13), int(8)), 4, 3)], 
             problim = 0.95,
             model_fpath=model_fpath,
-            nc_fpath='D:/Master/data/cmems_data/global_10km/2016/noland/phys_noland_2016_060.nc',
+            scaler_fpath=scaler_fpath,
+            nc_fpath='D:/Master/data/cmems_data/global_10km/noland/phys_noland_2016_060.nc',
             storedir=None):
+
+    """ Test the model using multiple sliding windows, there will be multiple returned predictions
+    data in: [lon,lat,x,y,ssl,uvel,vvel]
+    storedir: path to directory for storing image of predicted grid, if None, no image is stored"""
 
     print("\n\n")
 
@@ -457,7 +428,6 @@ def cnn_predict_grid(data_in=None,
 
     # Recreate the exact same model purely from the file
 
-    
     custom_objects  = {
         "f1_m": f1_m,
         "precision_m": precision_m, 
@@ -465,12 +435,8 @@ def cnn_predict_grid(data_in=None,
     }
 
     clf = load_model(model_fpath, custom_objects=custom_objects)
-    scaler = joblib.load(largescaler_fpath) # Import the std sklearn scaler model
-    
-    '''
-    clf = load_model(model_fpath)
     scaler = joblib.load(scaler_fpath) # Import the std sklearn scaler model
-    '''
+    
     nx, ny = ssl.shape 
 
     # Create canvas to show the cv2 rectangles around predictions
@@ -492,7 +458,7 @@ def cnn_predict_grid(data_in=None,
     imH, imW, _ = imCopy.shape # col, row
     winScaleW, winScaleH = imW*1.0/nx, imH*1.0/ny # Scalar coeff from dataset to cv2 image
 
-    # Only use uvel and vvel to be scaled and use for CNN
+    # Define what variables are used as channel, if only uvel and vvel it should be [1,2]
     to_be_scaled = [1,2] 
     data = [ssl, uvel, vvel]
 
@@ -542,6 +508,7 @@ def cnn_predict_grid(data_in=None,
             # continue to next window if mask (land) is present
             if masked: continue
 
+            # Transfrom input window to CNN input format 
             X_cnn = np.zeros((1,winW2,winH2,nChannels))
             for lo in range(winW2): # Row
                 for la in range(winH2): # Column
@@ -558,6 +525,7 @@ def cnn_predict_grid(data_in=None,
             xr, yr = int(winScaleW*(i)), int(winScaleH*(ny-j)) # rect coords
             xrW, yrW= int(winScaleW*nxWin), int(winScaleH*nyWin) # rect width
 
+            # If either cyclone or acyclone are above probability limit, we have a prediction
             if any(p >= problim for p in prob[0,1:]):       
                 if prob[0,1] >= problim:
                     acyc_r.append([i, j, i + nxWin, j + nyWin])
@@ -570,11 +538,13 @@ def cnn_predict_grid(data_in=None,
                     cv2.rectangle(imCopy, (xr, yr), (xr + xrW, yr - xrW), (0, 76, 217), 2)
                     #print('cyclone | prob: {}'.format(prob[0,2]*100))
                     
-    # Group the rectangles according to how many and how much they overlap
-    cyc_r_im_grouped, _ = cv2.groupRectangles(rectList=cyc_r_im, groupThreshold=1, eps=0.2)
+    # We  want to return both grouped and ungrouped predictions, in case user wants different grouping
+    # Predictions need at least 2 rectangles with 20% overlap to be a final prediciton
+    cyc_r_im_grouped, _ = cv2.groupRectangles(rectList=cyc_r_im, groupThreshold=1, eps=0.2) 
     acyc_r_im_grouped, _ = cv2.groupRectangles(rectList=acyc_r_im, groupThreshold=1, eps=0.2)
 
-    # if a store directory is defined, create and store image at location
+    # if a store directory is defined, create and store an image of both grouped and ungrouped 
+    # predicted grid at location
     imgdir = 'C:/Users/47415/Master/images/compare/'
     if isinstance(storedir, str):
         if not os.path.isdir(imgdir + storedir):
@@ -590,14 +560,12 @@ def cnn_predict_grid(data_in=None,
         #cv2.imshow("Window", imCopy)
         #cv2.waitKey(0)
 
-    #cyc_r, _ = cv2.groupRectangles(rectList=cyc_r, groupThreshold=1, eps=0.2)
-    #acyc_r, _ = cv2.groupRectangles(rectList=acyc_r, groupThreshold=1, eps=0.2)
-
     plt.close(fig)
-    return cyc_r, acyc_r
+    return cyc_r, acyc_r, cyc_r_im_grouped, acyc_r_im_grouped
 
 
 def real_time_test(problim=0.95):
+    """ Only used for testing real-time predictions, super slow on large grids if multiple windows used."""
 
     latitude = [45.9, 49.1]
     longitude = [-23.2, -16.5]
@@ -608,10 +576,10 @@ def real_time_test(problim=0.95):
     
     clf = load_model(model_fpath)
 
-    ncdir = "D:/Master/data/cmems_data/global_10km/2016/noland/realtime/"
+    ncdir = "D:/Master/data/cmems_data/global_10km/noland/realtime/"
     for imId, fName in enumerate(os.listdir(ncdir)):
 
-        lon,lat,sst,ssl,uvel,vvel =  load_nc_sat(ncdir + fName)
+        lon,lat,sst,ssl,uvel,vvel =  load_nc_phys(ncdir + fName)
         nx, ny = ssl.shape 
 
         ax.clear()
@@ -732,11 +700,11 @@ def real_time_test(problim=0.95):
 
 
 def plot_feature_map():
-    """Testing a single image"""
+    """ Plotting feature maps created by the CNN model, only for report testing """
 
     data = []
 
-    dirpath = 'C:/Users/47415/Master/TTK-4900-Master/data/training_data/2016/'
+    dirpath = 'C:/Users/47415/Master/TTK-4900-Master/data/'
     with np.load(dirpath+'uvel_train.npz', allow_pickle=True) as h5f:
         data.append(h5f['arr_0'][293,0])
     with np.load(dirpath+'vvel_train.npz', allow_pickle=True) as h5f:
@@ -754,10 +722,10 @@ def plot_feature_map():
         "recall_m": recall_m
     }
 
-    model_fpath = 'D:/Master/models/best_model_975.h5'
+    model_fpath = 'C:/Users/47415/Master/TTK-4900-Master/models/best_model_975.h5'
     clf = load_model(model_fpath, custom_objects=custom_objects)
 
-    scaler = joblib.load(largescaler_fpath) # Import the std sklearn scaler model
+    scaler = joblib.load(scaler_fpath) # Import the std sklearn scaler model
 
     for i in range(2):
         tmp = cv2.resize(data[i], dsize=(winH2, winW2), interpolation=cv2.INTER_CUBIC)
@@ -782,8 +750,9 @@ def plot_feature_map():
 
 
 if __name__ == '__main__':
+    """ If models are to be run directly """
     #train_model(use_existing_split=False) 
-    find_best_model()
+    #find_best_model()
     #find_average_model()
     #analyse_h5()  
     #test_model()

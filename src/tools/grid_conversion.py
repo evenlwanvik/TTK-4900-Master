@@ -1,6 +1,56 @@
 import numpy as np
 
 
+def bl2xy(lon, lat, FE, FN, xy_res, slon, SP=60):
+    """ 
+    Convert from geodic lon-lat to polar stereographic x-y projection
+
+    Parameters
+    ----------
+    lon, lat : array-like (1d or 2d) or float 
+        Geodetic longitude and latitude (degrees, -/+180 or 0/360 and -/+90).
+    FE : float 
+        First coordinate of the pole (in grid points) (False Northing)
+    FN : float
+        First coordinate of the pole (in grid points) (False Easting)
+    xy_res : float
+        Length of each grid point (km)
+    slon : string
+        Angle between the pole and second axis, positive towards east
+    SP : float
+        Standard parallel
+
+    Returns
+    ----------    
+    X : float
+        single or array of cartesian polar stereographic projected x coordinates
+    Y : float
+        single or array of cartesian polar stereographic projected y coordinates
+    """
+
+    if SP<0:
+        lon=-lon
+        lat=-lat
+        slon = slon + 180
+
+    r = 6370000 # Earth radius im km
+
+    RAD = np.pi/180.
+    AN = r * ( 1+np.sin(abs(SP)*RAD) ) / xy_res
+    VXR = slon * RAD
+    PLR = lon * RAD
+    PBR = lat * RAD
+    R = AN * np.cos(PBR)/(1.0+np.sin(PBR))
+    X = R * ( np.sin(PLR)*np.cos(VXR)-np.sin(VXR)*np.cos(PLR) ) + FE
+    Y = -R * ( np.cos(PLR)*np.cos(VXR)+np.sin(PLR)*np.sin(VXR) ) + FN
+
+    return X, Y
+
+
+
+'''
+# USE FUNCTIONS ABOVE, THESE ARE NOT IN USE YET
+
 def polar_xy_to_lonlat(x, y, true_scale_lat, re, e, hemisphere):
     """Convert from Polar Stereographic (x, y) coordinates to
     geodetic longitude and latitude.
@@ -86,52 +136,4 @@ def polar_lonlat_to_xy(longitude, latitude, true_scale_lat, re, e, hemisphere):
     x = rho * hemisphere * np.sin(hemisphere * lon)
     y = -rho * hemisphere * np.cos(hemisphere * lon)
     return [x, y]
-
-
-def bl2xy(lon, lat, FE, FN, xy_res, slon, SP=60):
-    """ 
-    Convert from geodic lon-lat to polar stereographic x-y projection
-
-    Parameters
-    ----------
-    lon, lat : array-like (1d or 2d) or float 
-        Geodetic longitude and latitude (degrees, -/+180 or 0/360 and -/+90).
-    FE : float 
-        First coordinate of the pole (in grid points) (False Northing)
-    FN : float
-        First coordinate of the pole (in grid points) (False Easting)
-    xy_res : float
-        Length of each grid point (km)
-    slon : string
-        Angle between the pole and second axis, positive towards east
-    SP : float
-        Standard parallel
-
-    Returns
-    ----------    
-    X : float
-        single or array of cartesian polar stereographic projected x coordinates
-    Y : float
-        single or array of cartesian polar stereographic projected y coordinates
-    """
-
-    if SP<0:
-        lon=-lon
-        lat=-lat
-        slon = slon + 180
-
-    r = 6370000 # Earth radius im km
-
-    RAD = np.pi/180.
-    AN = r * ( 1+np.sin(abs(SP)*RAD) ) / xy_res
-    VXR = slon * RAD
-    PLR = lon * RAD
-    PBR = lat * RAD
-    R = AN * np.cos(PBR)/(1.0+np.sin(PBR))
-    X = R * ( np.sin(PLR)*np.cos(VXR)-np.sin(VXR)*np.cos(PLR) ) + FE
-    Y = -R * ( np.cos(PLR)*np.cos(VXR)+np.sin(PLR)*np.sin(VXR) ) + FN
-
-    return X, Y
-
-
-
+'''

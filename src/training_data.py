@@ -30,11 +30,11 @@ from sklearn.preprocessing import MinMaxScaler
 import pdb
 
 argp = argparse.ArgumentParser()
-argp.add_argument("-fd", "--fDir", default='C:/Master/data/cmems_data/global_10km/2016/', help="CMEMS grid data directory path")
-#argp.add_argument("-fd", "--fDir", default='D:/Master/data/cmems_data/global_10km/2016/', help="CMEMS grid data directory path")
+argp.add_argument("-fd", "--fDir", default='C:/Master/data/cmems_data/global_10km/', help="CMEMS grid data directory path")
+#argp.add_argument("-fd", "--fDir", default='D:/Master/data/cmems_data/global_10km/', help="CMEMS grid data directory path")
 argp.add_argument("-rs", "--size", default=1.3, help="rectangular patche size multiplier")
-argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/data/training_data/2016/', help="training data save dir")
-#argp.add_argument("-sd", "--savedir", default='D:/Master/TTK-4900-Master/data/training_data/2016/', help="training data save dir")
+argp.add_argument("-sd", "--savedir", default='C:/Master/TTK-4900-Master/data/', help="training data save dir")
+#argp.add_argument("-sd", "--savedir", default='D:/Master/TTK-4900-Master/data/', help="training data save dir")
 args = argp.parse_args()
 
 logPath = f"{os.path.dirname(os.path.realpath(__file__))}/training_data/log"
@@ -198,6 +198,9 @@ def save_npz_array(ds, savedir=args.savedir):
 
 
 def semi_automatic_training():
+    """ This appplication lets you maneuver through windows selected by the OW process.
+    In short: OW below the OW_start threshold, which passes the R2_cirterion are considered eddies,
+    have a look at https://github.com/JASaa/eddies-R2 for more info about the sample selection process"""
 
     # Loop through every netcdf file in directory, usually they are spaced by 5 days
     for fName in os.listdir(args.fDir):
@@ -508,7 +511,7 @@ def adjustment_data():
     stepSize = 8
     scaler = MinMaxScaler(feature_range=(-1,1))
 
-    clf = load_model('models/2016/new/cnn_mult_full.h5')
+    clf = load_model('models/new/cnn_mult_full.h5')
 
     winW, winH = int(14), int(8)
     dSize = (winW, winH)
@@ -604,7 +607,7 @@ def adjustment_data():
             # Every 10 sample add to the compressed array
             if i%10==0:
                 # ADD TO THE COMPRESSED NUMPY ARRAY
-                savedir = 'C:/Master/TTK-4900-Master/data/training_data/adjustment_data/'
+                savedir = 'C:/Master/TTK-4900-Master/data/adjustment_data/'
                 ds = [sst_train, ssl_train, uvel_train, vvel_train, phase_train]
                 save_npz_array(ds, savedir)
 
