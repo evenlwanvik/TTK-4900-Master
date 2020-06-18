@@ -9,6 +9,17 @@ Because there is no "one fits all" machine learning (ML) algorithm, three of the
 
 The CNN model performed well when tested on a hold-out set of the training data, reaching accuracies above 96\%. The aggregated system of prediction and post-processing provided satisfactory results when tested on both SINMOD and other models and observational datasets. After analyzing the system's performance across the datasets, there were negligible similarities between the assimilated and observed ocean dynamics, although a year-long comparison seemed to find seemingly comparable trends in eddy activity due to bathymetry and the season.
 
+## Brief intro to repo
+The repo mostly consists of scripts made for testing and generating results for the final report and is not a deployable application. The code is moderately commented, and you should read the report to get a better understanding of what is happening.
+
+Briefly about folder structure:
+* "Matlab" holds the training data annotation application.
+* "data" contains the training data both stored as multiple h5 files within a zipped file and the numpy arrays used for training and testing.
+* "keras-frcnn" contains the Faster R-CNN object detection code.
+* "models" holds both the SVM, random forest and CNN models trained, and the normalization scalers used when training the models.
+* "report" contains a zipped source of the report and a PDF.
+* "src" contains all Python code used for using the eddy detection system and for creating results for the report.
+
 ## CNN 
 
 ### Predictions
