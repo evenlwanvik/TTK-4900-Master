@@ -1,11 +1,13 @@
 # TTK-4900-Master
 TTK4900 - Engineering Cybernetics, Master's Thesis
 
-## INFO
+## Report abstract
 
-system_tools.py contains most of the report and comparison tools produced
+Predicting ocean dynamics using numerical models is challenging because of the unpredictable non-linearities and limited access to physical observations. Ocean eddies pose a complicated conceptual and practical challenges to theory and the models. Knowing the position and scale of mesoscale eddies can be used as a part of the observations in the assimilation process, improving the model's certainty and exactness. Due to the advantages such information, it was of interest to research novel machine learning methods to interpret data produced by models (e.g., SINMOD) or observed through remote measurements to recognize ocean features such as ocean eddies.
 
-compare.py contains most of the report and comparison tools produced
+Because there is no "one fits all" machine learning (ML) algorithm, three of the most common supervised learning algorithms were evaluated: support vector machines (SVM), random forest, and Convolutional Neural Networks (CNN). Because the models need a sufficient amount of training samples, a data annotation application was created to generate a sufficient amount of training samples containing eddy features. The final training set included 2045 samples containing sea surface height, temperature, and ocean currents. After a smaller investigation of their ocean eddy predictability, an ensemble consisting of the ocean current vectors were found to provide much better performance without both sea surface height and temperature. In an initial trial of finding the best ML algorithm, CNN were found to be the best performing. The second trial examined three modified versions of the original CNN architectures: VGG, ResNet, and Inception. The best performing model was found to be a simplified modification of a VGG network structure. The final model could be used to detect multiple sliding windows on a selected grid of sea surface currents. The final predictions are merged using grouping techniques, which is further refined using well-established flow-field equations such as the Okubo-Weiss parameter and vorticity to provide more precise boundaries encapsulating the predictions.
+
+The CNN model performed well when tested on a hold-out set of the training data, reaching accuracies above 96\%. The aggregated system of prediction and post-processing provided satisfactory results when tested on both SINMOD and other models and observational datasets. After analyzing the system's performance across the datasets, there were negligible similarities between the assimilated and observed ocean dynamics, although a year-long comparison seemed to find seemingly comparable trends in eddy activity due to bathymetry and the season.
 
 ## CNN 
 
